@@ -1,5 +1,3 @@
-///<reference path="../node_modules/\@types/proj4/index.d.ts"/>
-
 import { Injectable } from '@angular/core';
 //const proj4 = require('proj4');
 //const Proj = proj4.Proj;
