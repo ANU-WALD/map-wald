@@ -38,10 +38,9 @@ export class WMSService {
 
     top = this.pointToWebMercator(top);
     bot = this.pointToWebMercator(bot);
-
-    return [top.x,bot.y,bot.x,top.y].join(',');
-
-//    return [top[0],bot[1],bot[0],top[1]].join(',');
+    var bbox = [top.x,bot.y,bot.x,top.y];
+    bbox = bbox.map((n)=>n.toFixed(20).replace(/\.?0+$/,"")); // Avoid e notation on small numbers
+    return bbox.join(',');
   };
 
   public buildImageMap(getMap:()=>any,
