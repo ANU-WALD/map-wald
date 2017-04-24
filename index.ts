@@ -3,20 +3,22 @@ import { CommonModule } from '@angular/common';
 import { SampleComponent } from './src/sample.component';
 import { SampleDirective } from './src/sample.directive';
 import { SamplePipe } from './src/sample.pipe';
-import { SampleService } from './src/sample.service';
 import { WMSService } from './src/wms.service';
+import { WMSLayerComponent } from './src/wms-layer/wms-layer.component';
+import { AgmCoreModule } from '@agm/core';
 
 export * from './src/sample.component';
 export * from './src/sample.directive';
 export * from './src/sample.pipe';
-export * from './src/sample.service';
 export * from './src/wms.service';
 
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,
+    AgmCoreModule
   ],
   declarations: [
+    WMSLayerComponent,
     SampleComponent,
     SampleDirective,
     SamplePipe
@@ -27,7 +29,6 @@ export * from './src/wms.service';
     SamplePipe
   ],
   providers: [
-    SampleService,
     WMSService
   ]
 })
@@ -36,7 +37,6 @@ export class SampleModule {
     return {
       ngModule: SampleModule,
       providers: [
-        SampleService,
         WMSService
       ]
     };
