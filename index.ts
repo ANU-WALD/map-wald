@@ -11,6 +11,7 @@ export * from './src/sample.component';
 export * from './src/sample.directive';
 export * from './src/sample.pipe';
 export * from './src/wms.service';
+export * from './src/wms-layer/wms-layer.component';
 
 @NgModule({
   imports: [
@@ -24,6 +25,7 @@ export * from './src/wms.service';
     SamplePipe
   ],
   exports: [
+    WMSLayerComponent,
     SampleComponent,
     SampleDirective,
     SamplePipe
@@ -32,10 +34,10 @@ export * from './src/wms.service';
     WMSService
   ]
 })
-export class SampleModule {
+export class MapWaldModule {
   static forRoot(): ModuleWithProviders {
     return {
-      ngModule: SampleModule,
+      ngModule: MapWaldModule,
       providers: [
         WMSService
       ]
