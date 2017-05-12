@@ -52,7 +52,7 @@ export class WMSService {
       getTileUrl: function(coord:any,zoom:number):string{
         var theMap = getMap();
         if(!theMap){
-          return null;
+          return '';
         }
 
         var bbox = me.computeTileBounds(theMap,coord,zoom);

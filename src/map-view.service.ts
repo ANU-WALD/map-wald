@@ -3,34 +3,34 @@ import {ActivatedRoute} from '@angular/router';
 
 @Injectable()
 export class MapViewParameterService {
-  constructor(names?:Array<string>) {
-    this.parameterNames=names||[];
+  constructor() {
   }
 
-  parameterNames:Array<string> = [];
+  static parameterNames:Array<string> = [];
 
   retrieveFromRoute(route:any){
     var result:any = {};
-    for(var name of this.parameterNames){
+    for(var name of MapViewParameterService.parameterNames){
         result[name] = route.snapshot.params[name];
     }
     return result;
   };
 
   constructRoute(parameters:any){
-    return this.parameterNames.map(n=>parameters[n]||'_').join('/');
+    return MapViewParameterService.parameterNames.map(n=>parameters[n]||'_').join('/');
   }
 
-  routerPaths(component:any):Array<any>{
+  routerPaths(/*component:any*/):Array<any>{
     var result:Array<any> = [];
     var path = '';
-    result.push({path:path,component:component});
-    for(var name of this.parameterNames){
+    result.push(path);
+//    result.push({path:path,component:component});
+    for(var name of MapViewParameterService.parameterNames){
       path += `:${name}`;
-      result.unshift({path:path,component:component});
+//      result.unshift({path:path,component:component});
+      result.unshift(path);
       path += '/';
     }
-    console.log(result);
     return result;
   }
 }

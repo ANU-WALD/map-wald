@@ -42,13 +42,12 @@ export * from './src/wms-layer/wms-layer.component';
 })
 export class MapWaldModule {
   static forRoot(moduleInitialisation:any): ModuleWithProviders {
-    moduleInitialisation = moduleInitialisation||{}
     return {
       ngModule: MapWaldModule,
       providers: [
         CSVService,
         WMSService,
-        {provide:MapViewParameterService,useValue:new MapViewParameterService(moduleInitialisation.paths||[])}
+        MapViewParameterService//,
       ]
     };
   }
