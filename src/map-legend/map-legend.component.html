@@ -1,0 +1,20 @@
+<div class="map-legend panel panel-group">
+
+<strong>{{title}} (<span *ngIf="mapUnits" [innerHTML]="mapUnits"></span>)
+        <i *ngIf="mapDescription" class="fa fa-info-circle"
+            ngbTooltip="This be the tooltip"
+            container="body"></i></strong> <!--{{mapDescription}}"-->
+
+  <div style="display:table;line-height:15px">
+    <div style="display:table-row;padding:0;"
+         *ngFor="let colour of colours; let i=index">
+      <div class="legend-colour">
+        <i class="legend-entry" [ngStyle]="{background:colour}"></i>
+      </div>
+      <div class="legend-label">
+        <span [innerHTML]="labels[i]"></span>
+      </div>
+    </div>
+  </div>
+</div>
+
