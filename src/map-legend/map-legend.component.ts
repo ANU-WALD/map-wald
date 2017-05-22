@@ -52,8 +52,12 @@ export class MapLegendComponent implements OnInit {
 
     var delta = (this._cbRange[1]-this._cbRange[0])/(this._cbCount-1);
     var result = [];
-    for(let i=0;i<(this._cbCount-1);i++){
-      result.push(''+(this._cbRange[0]+i*delta));
+    var lower=this._cbRange[0];
+    var upper;
+    for(let i=1;i<(this._cbCount);i++){
+      upper = this._cbRange[0]+i*delta;
+      result.push(`${lower.toFixed()}-${upper.toFixed()}`);
+      lower = upper;
     }
     result.push('&ge;'+this._cbRange[1]);
     result.reverse();
@@ -66,7 +70,11 @@ export class MapLegendComponent implements OnInit {
     }
 
     let colours = palettes[this._cbPalette][this._cbCount].slice();
-    colours.reverse();
+
+    if(!this._cbReverse){
+      colours.reverse();
+    }
+
     this.colours = colours;
     this.labels = this.generateLabels() || colours;
   }
