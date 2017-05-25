@@ -1,12 +1,38 @@
 import { Injectable } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
+import {Location} from '@angular/common';
 
 @Injectable()
 export class MapViewParameterService {
-  constructor() {
+  constructor(private _location?: Location) {
+
   }
 
   static parameterNames:Array<string> = [];
+
+  current():any{
+    if(!this._location){
+      return {};
+    }
+
+    var path = this._location.path().split('/');
+    if(path.length>MapViewParameterService.parameterNames.length){
+      path.shift();
+    }
+    var result:any = {};
+    MapViewParameterService.parameterNames.forEach((p,i)=>result[p]=path[i]||'_');
+    return result;
+  }
+
+  update(changes:any){
+    if(!this._location){
+      return;
+    }
+
+    var updated = this.current();
+    Object.assign(updated,changes);
+    this._location.go(this.constructRoute(updated));
+  }
 
   retrieveFromRoute(route:any){
     var result:any = {};
