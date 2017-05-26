@@ -5,8 +5,8 @@ import { Injectable } from '@angular/core';
 //proj4.InterfaceProjection;
 //const InterfaceCoordinates = proj4.InterfaceCoordinates;
 //const TemplateCoordinates = proj4.TemplateCoordinates;
-//const proj4 = require('proj4');//.default;
-import * as proj4 from 'proj4';
+const proj4 = require('proj4');//.default;
+//import * as proj4 from 'proj4';
 const D2R = Math.PI/180;
 
 @Injectable()
