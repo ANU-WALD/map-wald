@@ -2,7 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild, AfterViewInit, Input } from '
 import {GoogleMapsAPIWrapper} from '@agm/core/services';
 
 @Component({
-  selector: 'app-map-control',
+  selector: 'map-control',
   templateUrl: './map-control.component.html',
   styleUrls: ['./map-control.component.scss']
 })
