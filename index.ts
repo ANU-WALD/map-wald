@@ -6,6 +6,8 @@ import { SamplePipe } from './src/sample.pipe';
 //import { CSVService } from './src/csv.service';
 import { MapViewParameterService } from './src/map-view.service';
 import { WMSService } from './src/wms.service';
+import {GeocodingService} from './src/geocoding.service';
+
 import { ProjectionService } from './src/projection.service';
 import { WMSLayerComponent } from './src/wms-layer/wms-layer.component';
 import { MapLegendComponent } from './src/map-legend/map-legend.component';
@@ -19,6 +21,7 @@ export * from './src/wms.service';
 export * from './src/projection.service';
 //export * from './src/csv.service';
 export * from './src/map-view.service';
+export * from './src/geocoding.service';
 export * from './src/wms-layer/wms-layer.component';
 export * from './src/map-legend/map-legend.component';
 
@@ -47,7 +50,8 @@ export * from './src/map-legend/map-legend.component';
 //    CSVService,
     WMSService,
     MapViewParameterService,
-    ProjectionService
+    ProjectionService,
+    GeocodingService
   ]
 })
 export class MapWaldModule {
@@ -58,7 +62,8 @@ export class MapWaldModule {
 //        CSVService,
         WMSService,
         MapViewParameterService,
-        ProjectionService
+        ProjectionService,
+        GeocodingService
       ]
     };
   }
