@@ -18,7 +18,6 @@ export class GeocodingService {
 
   geocode(address:string,bnds?:any):Observable<any>{
     var promise = new Promise((resolve,reject)=>{
-      console.log('before load');
       this._api.load().then(()=>{
         var service = new google.maps.Geocoder();
         service.geocode({
@@ -28,7 +27,6 @@ export class GeocodingService {
           },
           region:'AU'
         },(results:any,status:any)=>{
-          console.log(results,status);
           if(status!==google.maps.GeocoderStatus.OK){
             reject();
           } else {
@@ -41,51 +39,5 @@ export class GeocodingService {
     });
 
     return Observable.fromPromise(promise);
-//    console.log(address);
-//    var api = Observable.fromPromise();
-//    var higher = api.map(()=>{
-//      console.log('HERE');
-//      var service = new google.maps.Geocoder();
-//      var callbackMethod:((param:any,callback:(() => any))=>void) = service.geocode;
-//      return Observable.bindCallback(callbackMethod)({
-//        address:address,
-//        componentRestrictions: {
-//          country: 'AU'
-//        },
-//        region:'AU'
-//      });
-//    });
-//    return higher.combineAll();
-
-
-//    return new Promise((resolve,reject)=>{
-//      .then(()=>{
-//  //      if(bnds){
-//  //        var sw = new google.maps.LatLng(bnds.south,bnds.west);
-//  //        var ne = new google.maps.LatLng(bnds.north,bnds.east);
-//  //        bnds = new google.maps.LatLngBounds(sw,ne);
-//  //      }
-//
-//        var service = new google.maps.Geocoder();
-//        service.geocode({
-//          address:address,
-//          componentRestrictions: {
-//            country: 'AU'
-//          },
-//          region:'AU'
-//        },function(results,status){
-//          if(status!==google.maps.GeocoderStatus.OK){
-//            reject();
-//            return;
-//          }
-//
-//          resolve(results.filter(function(r){
-//            return r.formatted_address!=='Australia';
-//          }));
-//        });
-//
-//
-//      });
-//    });
   }
 }
