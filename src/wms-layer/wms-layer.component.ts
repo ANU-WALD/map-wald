@@ -10,6 +10,7 @@ export class WMSLayerComponent implements OnInit{
   @Input() url:string;
   @Input() params:any;
   @Input() opacity:number=1.0;
+  @Input() position:number=0;
 
   constructor(private _wmsService:WMSService,
               public _wrapper:GoogleMapsAPIWrapper) {}
@@ -17,7 +18,7 @@ export class WMSLayerComponent implements OnInit{
   overlay:any;
   zoom: number = 4;
 
-  public buildMap(){
+  buildMap(){
     this._wrapper.getNativeMap().then((theMap)=>{
       this.map = theMap;
 
@@ -28,23 +29,22 @@ export class WMSLayerComponent implements OnInit{
           ()=>this.opacity
         );
 
-      this.map.overlayMapTypes.removeAt(0);
-      this.map.overlayMapTypes.push(this.overlay);
+      if(this.map.overlayMapTypes.length===this.position){
+        this.map.overlayMapTypes.push(this.overlay);
+      } else if(this.map.overlayMapTypes.length>this.position){
+        this.map.overlayMapTypes.removeAt(this.position);
+        this.map.overlayMapTypes.insertAt(this.position,this.overlay);
+      } else {
+        while(this.map.overlayMapTypes.length<this.position){
+          // Temporarily add replicate layers.
+          // These should be replaced by other wms-layer components
+          this.map.overlayMapTypes.push(this.overlay);
+        }
+        this.map.overlayMapTypes.push(this.overlay);
+      }
     }).catch((e)=>console.log(e));
-
   }
   ngOnInit() {
-    this._wrapper.getNativeMap().then((theMap)=>{
-      console.log('map-wald',theMap);
-      this.map = theMap;
-
-      this.overlay = this._wmsService.buildImageMap(
-          ()=>this.map,
-          (z)=>this.url+'?',
-          (z)=>this.params,
-          ()=>this.opacity
-        );
-      this.map.overlayMapTypes.push(this.overlay);
-    }).catch((e)=>console.log(e));
+    this.buildMap();
   }
 }
