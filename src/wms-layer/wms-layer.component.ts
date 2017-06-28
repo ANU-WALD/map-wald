@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, Input} from '@angular/core';
+import { Component, OnInit, AfterViewInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 import {GoogleMapsAPIWrapper} from '@agm/core/services';
 import {WMSService} from '../wms.service';
 
@@ -45,7 +45,17 @@ export class WMSLayerComponent implements OnInit{
       }
     }).catch((e)=>console.log(e));
   }
+
   ngOnInit() {
     this.buildMap();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    let currentOpacity: number = changes.opacity.currentValue;
+    let previousOpacity: number = changes.opacity.previousValue;
+
+    if (currentOpacity !== previousOpacity) {
+      this.buildMap();
+    }
   }
 }
