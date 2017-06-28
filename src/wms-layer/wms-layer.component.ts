@@ -19,6 +19,7 @@ export class WMSLayerComponent implements OnInit{
   zoom: number = 4;
 
   buildMap(){
+    console.log("Building WMS layer");
     this._wrapper.getNativeMap().then((theMap)=>{
       this.map = theMap;
 
