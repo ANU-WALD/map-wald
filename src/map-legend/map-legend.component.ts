@@ -11,7 +11,9 @@ export class MapLegendComponent implements OnInit {
   @Input() labels: Array<string> = ['rouge', 'blanc', 'blue'];
   @Input() title: string = 'the title';
   @Input() mapUnits :string = '';
-
+  @Input() helpText:string='No comment';
+  @Input() tooltipPlacement:string='right';
+  
   _cbPalette:string
   _cbCount:number;
   _cbReverse:boolean;

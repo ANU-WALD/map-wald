@@ -1,4 +1,6 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 import { CommonModule } from '@angular/common';
 import { SampleComponent } from './src/sample.component';
 import { SampleDirective } from './src/sample.directive';
@@ -28,7 +30,8 @@ export * from './src/map-legend/map-legend.component';
 @NgModule({
   imports: [
     CommonModule,
-    AgmCoreModule
+    AgmCoreModule,
+    NgbModule
   ],
   declarations: [
     WMSLayerComponent,
