@@ -18,9 +18,10 @@ export class MapControlComponent implements OnInit,AfterViewInit {
 
   ngAfterViewInit(){
     this._wrapper.getNativeMap().then((m)=>{
-      var content:Node = this._el.nativeElement.querySelector('.map-control-content');
+      let content:Element = this._el.nativeElement.querySelector('.map-control-content');
 
-      var controlDiv = document.createElement('div');
+      let controlDiv = document.createElement('div');
+      controlDiv.className = content.className;
       controlDiv.appendChild(content);
       controlDiv.style.zIndex = this.zIndex.toString();
       //controlDiv.onclick = () => { this.controlClick.next(null); };
