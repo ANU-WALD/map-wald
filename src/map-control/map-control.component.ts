@@ -9,7 +9,6 @@ import {GoogleMapsAPIWrapper} from '@agm/core/services';
 export class MapControlComponent implements OnInit,AfterViewInit {
   @ViewChild('mapControl') mapControl: Component;
   @Input() position:string = 'TOP_RIGHT';
-  @Input() zIndex: number = 0;
 
   constructor(private _el:ElementRef, public _wrapper:GoogleMapsAPIWrapper) { }
 
@@ -26,7 +25,6 @@ export class MapControlComponent implements OnInit,AfterViewInit {
         content = controlDiv
       } 
 
-      content.style.zIndex = this.zIndex.toString();
       //controlDiv.onclick = () => { this.controlClick.next(null); };
       (<any>m).controls[(<any>window).google.maps.ControlPosition[this.position]].push(content);
     });
