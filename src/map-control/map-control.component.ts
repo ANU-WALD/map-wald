@@ -22,6 +22,7 @@ export class MapControlComponent implements OnInit,AfterViewInit {
       console.log("map control nodeName is " + content.nodeName);
 
       if (content.nodeName !== "DIV") {
+        console.log("I shouldn't be in here!");
         let controlDiv: HTMLElement = document.createElement('div');
         controlDiv.appendChild(content);
         content = controlDiv;
