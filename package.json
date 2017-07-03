@@ -41,7 +41,7 @@
     "@types/googlemaps": "^3.26.7",
     "@types/proj4": "^2.3.4",
     "proj4": "^2.3.17",
-    "typescript": "^2.2.2"
+    "typescript": "2.3.4"
   },
   "devDependencies": {
     "@angular/animations": "^4.0.0",
@@ -52,10 +52,10 @@
     "@angular/platform-browser": "^4.0.0",
     "@angular/platform-server": "^4.0.0",
     "@ng-bootstrap/ng-bootstrap": "^1.0.0-alpha.23",
-    "codelyzer": "^3.0.0-beta.0",
+    "codelyzer": "~2.1.0",
     "rxjs": "^5.1.0",
     "tslint": "^4.5.1",
-    "typescript": "^2.2.0",
+    "typescript": "2.3.4",
     "zone.js": "0.8.5",
     "@types/es6-shim": "^0.31.32",
     "@types/jasmine": "^2.5.40",
