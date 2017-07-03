@@ -19,16 +19,14 @@ export class MapControlComponent implements OnInit,AfterViewInit {
     this._wrapper.getNativeMap().then((m)=>{
       let content: HTMLElement = this._el.nativeElement.querySelector('.map-control-content');
 
-      console.log("map control nodeName is " + content.nodeName);
-
+      // If content of the map control is not already wrapped in a div, do it
+      // now.
       if (content.nodeName !== "DIV") {
-        console.log("I shouldn't be in here!");
         let controlDiv: HTMLElement = document.createElement('div');
         controlDiv.appendChild(content);
         content = controlDiv;
       } 
 
-      //controlDiv.onclick = () => { this.controlClick.next(null); };
       (<any>m).controls[(<any>window).google.maps.ControlPosition[this.position]].push(content);
     });
   }
