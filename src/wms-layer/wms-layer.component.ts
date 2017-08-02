@@ -18,11 +18,15 @@ export class WMSLayerComponent implements OnInit{
   overlay:any;
   zoom: number = 4;
 
+  private building:boolean=false;
   buildMap(){
-    console.log("Building WMS layer");
-    this._wrapper.getNativeMap().then((theMap)=>{
-      this.map = theMap;
+    if(this.building)
+      return;
+    this.building=true;
 
+    this._wrapper.getNativeMap().then((theMap)=>{
+      this.building=false;
+      this.map = theMap;
       this.overlay = this._wmsService.buildImageMap(
           ()=>this.map,
           (z)=>this.url+'?',
@@ -30,18 +34,15 @@ export class WMSLayerComponent implements OnInit{
           ()=>this.opacity
         );
 
-      if(this.map.overlayMapTypes.length===this.position){
-        this.map.overlayMapTypes.push(this.overlay);
-      } else if(this.map.overlayMapTypes.length>this.position){
+      if(this.map.overlayMapTypes.length>this.position){
         this.map.overlayMapTypes.removeAt(this.position);
         this.map.overlayMapTypes.insertAt(this.position,this.overlay);
       } else {
-        while(this.map.overlayMapTypes.length<this.position){
+        while(this.map.overlayMapTypes.length<=this.position){
           // Temporarily add replicate layers.
           // These should be replaced by other wms-layer components
           this.map.overlayMapTypes.push(this.overlay);
         }
-        this.map.overlayMapTypes.push(this.overlay);
       }
     }).catch((e)=>console.log(e));
   }
@@ -51,11 +52,13 @@ export class WMSLayerComponent implements OnInit{
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    let currentOpacity: number = changes.opacity.currentValue;
-    let previousOpacity: number = changes.opacity.previousValue;
+    this.buildMap();
+    // let currentOpacity: number = changes.opacity.currentValue;
+    // let previousOpacity: number = changes.opacity.previousValue;
 
-    if (currentOpacity !== previousOpacity) {
-      this.buildMap();
-    }
+    // if (currentOpacity !== previousOpacity) {
+    //   console.log('building a map off my own bat');
+    //   this.buildMap();
+    // }
   }
 }
