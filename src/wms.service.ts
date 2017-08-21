@@ -60,14 +60,16 @@ export class WMSService {
           return '';
         }
 
+
         var bbox = me.computeTileBounds(theMap,coord,zoom);
 
         var url = getURL(zoom) + '&service=WMS&version=1.1.1&request=GetMap';
         url += "&BBOX=" + bbox;      // set bounding box
         url += "&FORMAT=image/png" ; //WMS format
+
         var layerParams = getOptions?getOptions(zoom):{};
-        layerParams.width = layerParams.width || WMSService.TILE_WIDTH;
-        layerParams.height = layerParams.height || WMSService.TILE_HEIGHT;
+        layerParams.width = WMSService.TILE_WIDTH;
+        layerParams.height = WMSService.TILE_HEIGHT;
         for(var key in layerParams){
           url += '&'+key+'='+layerParams[key];
         }
