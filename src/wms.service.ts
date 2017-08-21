@@ -50,8 +50,8 @@ export class WMSService {
       }
     }
     var bbox = [topLeftWebMercator.x,bottomRightWebMercator.y,bottomRightWebMercator.x,topLeftWebMercator.y];
-    bbox = bbox.map((n)=>n.toFixed(20).replace(/\.?0+$/,"")); // Avoid e notation on small numbers
-    return bbox.join(',');
+    var bboxTxt = bbox.map((n)=>n.toFixed(20).replace(/\.?0+$/,"")); // Avoid e notation on small numbers
+    return bboxTxt.join(',');
   };
 
   public buildImageMap(getMap:()=>any,
