@@ -26,6 +26,9 @@ export class WMSService {
 
   public pointToWebMercator(pt:any):number[]{
     var _pt = {x:pt.lng()*D2R,y:pt.lat()*D2R};
+    if(_pt.x<0){
+      _pt.x += 360.0
+    }
     return this.webMercator.forward(_pt);
   };
 
@@ -47,8 +50,8 @@ export class WMSService {
 
   public buildImageMap(getMap:()=>any,
                        getURL:(zoom:number)=>string,
-                       getOptions:(zoom:number)=>any,
-                       getOpacity:()=>number):any{
+                       getOptions?:(zoom:number)=>any,
+                       getOpacity?:()=>number):any{
     var me = this;
     return new (<any>window).google.maps.ImageMapType({
       getTileUrl: function(coord:any,zoom:number):string{
@@ -62,7 +65,7 @@ export class WMSService {
         var url = getURL(zoom) + '&service=WMS&version=1.1.1&request=GetMap';
         url += "&BBOX=" + bbox;      // set bounding box
         url += "&FORMAT=image/png" ; //WMS format
-        var layerParams = getOpacity?getOptions(zoom):{};
+        var layerParams = getOptions?getOptions(zoom):{};
         layerParams.width = layerParams.width || WMSService.TILE_WIDTH;
         layerParams.height = layerParams.height || WMSService.TILE_HEIGHT;
         for(var key in layerParams){
