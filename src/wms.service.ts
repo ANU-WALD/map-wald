@@ -24,12 +24,10 @@ export class WMSService {
 
   public webMercator: any;
 
-  public pointToWebMercator(pt:any):number[]{
-    var _pt = {x:pt.lng()*D2R,y:pt.lat()*D2R};
-    if(_pt.x<0){
-      _pt.x += 360.0
-    }
-    return this.webMercator.forward(_pt);
+  public pointToWebMercator(pt:any):{x:number,y:number}{
+    var ptRadians = {x:pt.lng()*D2R,y:pt.lat()*D2R};
+    var ptWM = this.webMercator.forward({x:ptRadians.x,y:ptRadians.y});
+    return ptWM;
   };
 
   public computeTileBounds(map:any,coord:any,zoom:number):string{
@@ -38,12 +36,20 @@ export class WMSService {
     var xScale = WMSService.TILE_WIDTH/zfactor;
     var yScale = WMSService.TILE_HEIGHT/zfactor;
 
-    var top = proj.fromPointToLatLng({x:coord.x * xScale, y:coord.y * yScale});
-    var bot = proj.fromPointToLatLng({x:(coord.x + 1) * xScale, y:(coord.y + 1) * yScale});
+    var topLeftLatLng = proj.fromPointToLatLng({x:coord.x * xScale, y:coord.y * yScale});
+    var bottomRightLatLng = proj.fromPointToLatLng({x:(coord.x + 1) * xScale, y:(coord.y + 1) * yScale});
 
-    top = this.pointToWebMercator(top);
-    bot = this.pointToWebMercator(bot);
-    var bbox = [top.x,bot.y,bot.x,top.y];
+    var topLeftWebMercator = this.pointToWebMercator(topLeftLatLng);
+    var bottomRightWebMercator = this.pointToWebMercator(bottomRightLatLng);
+
+    if(topLeftWebMercator.x > bottomRightWebMercator.x){
+      if(topLeftLatLng.lng()===180.0){
+        topLeftWebMercator.x = -topLeftWebMercator.x;
+      } else {
+        bottomRightWebMercator.x = -bottomRightWebMercator.x;
+      }
+    }
+    var bbox = [topLeftWebMercator.x,bottomRightWebMercator.y,bottomRightWebMercator.x,topLeftWebMercator.y];
     bbox = bbox.map((n)=>n.toFixed(20).replace(/\.?0+$/,"")); // Avoid e notation on small numbers
     return bbox.join(',');
   };
