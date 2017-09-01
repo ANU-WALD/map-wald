@@ -1,6 +1,6 @@
 <div class="map-legend panel panel-group">
 
-<strong>{{title}} (<span *ngIf="mapUnits" [innerHTML]="mapUnits"></span>)
+<strong>{{title}} <span *ngIf="mapUnits" [innerHTML]="'('+mapUnits+')'"></span>
         <span *ngIf="helpText" 
               [ngbTooltip]="helpText"
               [placement]="tooltipPlacement"
