@@ -9,7 +9,7 @@
     "tsc": "tsc",
     "watch": "watch 'npm run tsc' src --filter=./watchfilter.js",
     "build:watch": "watch 'npm run build' src --filter=./watchfilter.js",
-    "start":"npm run watch"
+    "start": "npm run watch"
   },
   "repository": {
     "type": "git",
@@ -41,6 +41,7 @@
     "@angular/router": "^4.0.0",
     "@types/googlemaps": "^3.26.7",
     "@types/proj4": "^2.3.4",
+    "ngx-pipes": "^1.6.5",
     "proj4": "^2.3.17",
     "typescript": "2.3.4"
   },
@@ -53,15 +54,15 @@
     "@angular/platform-browser": "^4.0.0",
     "@angular/platform-server": "^4.0.0",
     "@ng-bootstrap/ng-bootstrap": "^1.0.0-alpha.23",
+    "@types/es6-shim": "^0.31.32",
+    "@types/jasmine": "^2.5.40",
+    "@types/selenium-webdriver": "^2.53.39",
     "codelyzer": "~2.1.0",
     "rxjs": "^5.1.0",
     "tslint": "^4.5.1",
     "typescript": "2.3.4",
-    "zone.js": "0.8.5",
-    "@types/es6-shim": "^0.31.32",
-    "@types/jasmine": "^2.5.40",
-    "@types/selenium-webdriver": "^2.53.39",
-    "watch": "latest"
+    "watch": "latest",
+    "zone.js": "0.8.5"
   },
   "engines": {
     "node": ">=0.8.0"

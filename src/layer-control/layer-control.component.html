@@ -1,0 +1,47 @@
+<div class="layers-control">
+  <div class="layers-control-header"> <!-- header -->
+    <div class="float-right">
+      <!-- TODO Attach handlers and tooltips to each icon -->
+      <i class="fa fa-lg fa-cog discrete-icon" (click)="allLegends(false)"></i>
+      <i class="fa fa-lg fa-th-list discrete-icon" (click)="allLegends(true)"></i>
+    </div>
+    <br/>
+  </div>
+
+  <div *ngIf="layers">
+    <div *ngFor="let l of layers; let i = index"
+         class="layer-control d-flex justify-content-between">
+      <div class="p-2">
+        <div *ngIf="l.options.legend">
+          <map-legend [title]="l.layer?.name"
+                      [mapUnits]="l.flattenedSettings?.units"
+                      [cbPalette]="l.flattenedSettings?.palette"
+                      [cbCount]="l.flattenedSettings?.numcolorbands"
+                      [cbRange]="l.flattenedSettings?.colorscalerange">
+          </map-legend>
+        </div>
+
+        <div *ngIf="!l.options.legend">
+          <layer-properties [layer]="l"
+                            (propertyChanged)="layerPropertyChanged($event)">
+          </layer-properties>
+        </div>
+      </div>
+      <div class="p-2">
+          <div>
+            <!-- TODO Attach handlers and tooltips to each icon -->
+            <i class="fa fa-bars discrete-icon"></i><br/>
+            <i class="fa fa-cog discrete-icon" (click)="layerLegend(l,false)"></i><br/>
+            <i class="fa fa-th-list discrete-icon"  (click)="layerLegend(l,true)"></i><br/>
+            <i class="fa fa-angle-double-up discrete-icon" (click)="moveToTop(i)"></i><br/>
+            <i class="fa fa-angle-up discrete-icon"  (click)="moveUp(i)"></i><br/>
+            <i class="fa fa-angle-down discrete-icon"  (click)="moveDown(i)"></i><br/>
+            <i class="fa fa-angle-double-down discrete-icon" (click)="moveToBottom(i)"></i><br/>
+            <i class="fa fa-times discrete-icon" (click)="removeLayer(i)"></i>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+<!-- Should this control be outside the map? eg to the left? -->

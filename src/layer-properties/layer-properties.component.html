@@ -1,0 +1,24 @@
+<p><strong>{{layer?.layer.name}}</strong></p>
+
+<div *ngIf="layer?.layer.publications.length>1">
+  <select [(ngModel)]="layer.options.publication" (ngModelChange)="publicationSelected($event)">
+    <option *ngFor="let p of layer.layer.publications; let i=index" [ngValue]="i">{{p.label || p.timestep}}</option>
+  </select>
+</div>
+
+<div *ngIf="publication">
+  <date-selection [(date)]="layer.options.date"
+                  (dateChanged)="update($event)"
+                  [timestep]="publication.timestep"
+                  [minDate]="publication.options.start"
+                  [maxDate]="publication.options.end"></date-selection>
+</div>
+
+<!--
+<div *ngIf="publication">
+  <p>Start: {{publication.options.start}}</p>
+  <p>End: {{publication.options.end}}</p>
+  <p>{{publication|json}}</p>
+</div>
+<button (click)="update()">Force update...</button>
+-->

@@ -17,14 +17,13 @@
   },
    "angularCompilerOptions": {
      "genDir": "codegen",
+     "strictMetadataEmit": true,
      "debug": false
    },
    "exclude": [
     "node_modules",
+    "scripts/*",
     "dist",
     "**/*.spec.ts"
-  ],
-  "angularCompilerOptions": {
-    "strictMetadataEmit": true
-  }
+  ]
 }

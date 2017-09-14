@@ -1,0 +1,187 @@
+{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "http://www.flowmatters.com.au/schemas/catalog-schema.json#",
+  "title": "Catalog",
+  "description": "schema for a catalog of spatial data",
+  "type": "object",
+  "required": [
+    "themes"
+  ],
+  "properties": {
+    "options": {
+      "$ref": "#/definitions/options"
+    },
+    "publications": {
+      "$ref": "#/definitions/publications"
+    },
+    "themes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "name",
+          "icon"
+        ],
+        "properties": {
+          "options": {
+            "$ref": "#/definitions/options"
+          },
+          "name": {
+            "type": "string"
+          },
+          "icon": {
+            "type": "string"
+          },
+          "publications": {
+            "$ref": "#/definitions/publications"
+          },
+          "layers": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "name",
+                "description"
+              ],
+              "properties": {
+                "options": {
+                  "$ref": "#/definitions/options"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "metadataURL": {
+                  "type": "string",
+                  "format": "uri"
+                },
+                "publications": {
+                  "$ref": "#/definitions/publications"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "legends": {
+      "type": "object",
+      "patternProperties": {
+        "\\w+": {
+          "type": "object",
+          "properties": {
+            "entries": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "colour": {
+                    "type": "string"
+                  },
+                  "label": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "options": {
+      "type": "object",
+      "properties": {
+        "host": {
+          "type": "object",
+          "properties": {
+            "url": {
+              "type": "string",
+              "format": "uri"
+            },
+            "software": {
+              "enum": [
+                "tds"
+              ]
+            }
+          }
+        },
+        "filepath": {
+          "type": "string"
+        },
+        "palette": {
+          "type": "string"
+        },
+        "colorscalerange": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": {
+            "type": "number"
+          }
+        },
+        "legend": {
+          "type": "string"
+        },
+        "mapOptions": {
+          "type": "object"
+        },
+        "timeFormat": {
+          "type": "string"
+        },
+        "publisher": {
+          "type": "string"
+        },
+        "publisherURL": {
+          "type": "string",
+          "format": "uri"
+        },
+        "units": {
+          "type": "string"
+        }
+      }
+    },
+    "publications": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "timestep"
+        ],
+        "properties": {
+          "options": {
+            "$ref": "#/definitions/options"
+          },
+          "label":{
+            "type":"string"
+          },
+          "timestep": {
+            "enum": [
+              "daily",
+              "monthly",
+              "annual",
+              "specific"
+            ]
+          },
+          "minZoom":{
+            "type":"number"
+          },
+          "maxZoom":{
+            "type":"number"
+          },
+          "start": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "end": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      }
+    }
+  }
+}
