@@ -1,13 +1,14 @@
-import { Component, OnInit, AfterViewInit, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Input,
+         OnChanges, SimpleChanges, OnDestroy } from '@angular/core';
 import {GoogleMapsAPIWrapper} from '@agm/core/services';
 import {WMSService} from '../wms.service';
 
 @Component({
-  selector: 'app-wms-layer',
+  selector: 'wms-layer',
   template:''
 })
-export class WMSLayerComponent implements OnInit{
-  @Input() url:string;
+export class WMSLayerComponent implements OnInit, OnDestroy{
+  @Input() url: string;
   @Input() params:any;
   @Input() opacity:number=1.0;
   @Input() position:number=0;
@@ -48,11 +49,15 @@ export class WMSLayerComponent implements OnInit{
   }
 
   ngOnInit() {
-    this.buildMap();
+    if(this.url){
+      this.buildMap();
+    }
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    this.buildMap();
+    if(this.url){
+      this.buildMap();
+    }
     // let currentOpacity: number = changes.opacity.currentValue;
     // let previousOpacity: number = changes.opacity.previousValue;
 
@@ -60,5 +65,13 @@ export class WMSLayerComponent implements OnInit{
     //   console.log('building a map off my own bat');
     //   this.buildMap();
     // }
+  }
+
+  ngOnDestroy(): void {
+    this._wrapper.getNativeMap().then((theMap)=>{
+      if(this.map.overlayMapTypes.length>this.position){
+        this.map.overlayMapTypes.removeAt(this.position);
+      }
+    });
   }
 }
