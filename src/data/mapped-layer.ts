@@ -23,6 +23,10 @@ export const WMS_PARAMETER_NAMES = {
     'time',
     'transparent',
     'logscale'
+  ],
+  geoserver:[
+    'transparent',
+    'layers'
   ]
 };
 
@@ -43,7 +47,10 @@ export class MappedLayer {
   }
 
   update(){
-    var pub = this.options.publication||this.layer.publications.findIndex(p=>!p.skip);
+    var pub = (this.options.publication===undefined)?
+      this.layer.publications.findIndex(p=>!p.skip):
+      this.options.publication;
+
     var publication = this.layer.publications[pub];
 
     var host = publication.options.host || {};
@@ -51,24 +58,28 @@ export class MappedLayer {
 
     var software = host.software || 'tds';
 
-    if(software==='tds'){
-      this.url = baseURL + '/wms/'+publication.options.filepath;
-      var mapParams = Object.assign({},
-        this.layer,
-        publication.options,
-        publication.options.mapOptions||{},
-        this.options.date?{
-          decade:decadeText(this.options.date),
-          year:this.options.date.getFullYear(),
-          month:this.leading0(this.options.date.getMonth()+1),
-          day:this.leading0(this.options.date.getDate()),
-        }:{},
-        this.options);
+    this.url = baseURL + '/wms/'+(publication.options.filepath||'');
+    var mapParams = Object.assign({},
+      this.layer,
+      publication.options,
+      publication.options.mapOptions||{},
+      this.options.date?{
+        decade:decadeText(this.options.date),
+        year:this.options.date.getFullYear(),
+        month:this.leading0(this.options.date.getMonth()+1),
+        day:this.leading0(this.options.date.getDate()),
+      }:{},
+      this.options);
+
       if(mapParams.timeFormat){
-        mapParams['time']=InterpolationService.interpolate(mapParams.timeFormat,mapParams);
-      }
-      mapParams.layers = mapParams.layers || mapParams.layer || mapParams.variable;
-      this.url = InterpolationService.interpolate(this.url,mapParams);
+      mapParams['time']=InterpolationService.interpolate(mapParams.timeFormat,mapParams);
+    }
+    mapParams.layers = mapParams.layers || mapParams.layer || mapParams.variable;
+    this.url = InterpolationService.interpolate(this.url,mapParams);
+    
+    if(mapParams.vectors) {
+      this.wmsParameters=null;
+    } else {
       this.wmsParameters={};
       WMS_PARAMETER_NAMES[software].forEach(param=>{
         if(mapParams[param]){

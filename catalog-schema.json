@@ -8,6 +8,33 @@
     "themes"
   ],
   "properties": {
+    "namedHosts": {
+      "type": "object",
+      "patternProperties": {
+        "\\w+": {
+          "type": "object",
+          "properties": {
+            "host": {
+              "type": "string"
+            },
+            "software": {
+              "enum": [
+                "tds",
+                "geoserver"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "namedIntervals":{
+      "type":"object",
+      "patternProperties": {
+        "\\w+":{
+          "$ref": "#/definitions/interval"
+        }
+      }
+    },
     "options": {
       "$ref": "#/definitions/options"
     },
@@ -96,70 +123,94 @@
       "type": "object",
       "properties": {
         "host": {
-          "type": "object",
-          "properties": {
-            "url": {
-              "type": "string",
-              "format": "uri"
+          "oneOf": [
+            {
+              "type": "object",
+              "properties": {
+                "url": {
+                  "type": "string",
+                  "format": "uri"
+                },
+                "software": {
+                  "enum": [
+                    "tds",
+                    "geoserver"
+                  ]
+                }
+              }
             },
-            "software": {
-              "enum": [
-                "tds"
-              ]
+            {
+              "type": "string"
             }
-          }
-        },
-        "filepath": {
-          "type": "string"
-        },
-        "palette": {
-          "type": "string"
-        },
-        "colorscalerange": {
-          "type": "array",
-          "minItems": 2,
-          "maxItems": 2,
-          "items": {
-            "type": "number"
-          }
-        },
-        "legend": {
-          "type": "string"
-        },
-        "mapOptions": {
-          "type": "object"
-        },
-        "timeFormat": {
-          "type": "string"
-        },
-        "publisher": {
-          "type": "string"
-        },
-        "publisherURL": {
-          "type": "string",
-          "format": "uri"
-        },
-        "units": {
-          "type": "string"
+          ]
         }
+      },
+      "filepath": {
+        "type": "string"
+      },
+      "palette": {
+        "type": "string"
+      },
+      "colorscalerange": {
+        "type": "array",
+        "minItems": 2,
+        "maxItems": 2,
+        "items": {
+          "type": "number"
+        }
+      },
+      "legend": {
+        "type": "string"
+      },
+      "mapOptions": {
+        "type": "object"
+      },
+      "timeFormat": {
+        "type": "string"
+      },
+      "publisher": {
+        "type": "string"
+      },
+      "publisherURL": {
+        "type": "string",
+        "format": "uri"
+      },
+      "units": {
+        "type": "string"
+      },
+      "vectors": {
+        "enum": [
+          "point",
+          "line",
+          "polygon"
+        ]
       }
     },
     "publications": {
       "type": "array",
       "items": {
         "type": "object",
-        "required": [
-          "timestep"
+        "anyOf": [
+          {
+            "required": [
+              "timestep"
+            ]
+          },
+          {
+            "required": [
+              "label"
+            ]
+          }
         ],
         "properties": {
-          "skip":{
-            "type":"boolean"
+          "skip": {
+            "type": "boolean"
           },
           "options": {
             "$ref": "#/definitions/options"
           },
-          "label":{
-            "type":"string"
+          "label": {
+            "type": "string"
           },
           "timestep": {
             "enum": [
@@ -169,11 +220,11 @@
               "specific"
             ]
           },
-          "minZoom":{
-            "type":"number"
+          "minZoom": {
+            "type": "number"
           },
-          "maxZoom":{
-            "type":"number"
+          "maxZoom": {
+            "type": "number"
           },
           "start": {
             "type": "string",
@@ -182,9 +233,36 @@
           "end": {
             "type": "string",
             "format": "date-time"
+          },
+          "interval": {
+            "$ref": "#/definitions/interval"
           }
         }
       }
+    },
+    "interval": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "step": {
+              "type": "number"
+            },
+            "startYear": {
+              "type": "number"
+            },
+            "startMonth": {
+              "type": "number"
+            },
+            "startDay": {
+              "type": "number"
+            }
+          }
+        }
+      ]
     }
   }
 }

@@ -1,4 +1,9 @@
 
+const NAMED_OPTIONS={
+  host:'namedHosts',
+  interval:'namedIntervals'
+}
+
 function clone(v:any):any{
   return JSON.parse(JSON.stringify(v));
 }
@@ -26,7 +31,7 @@ function mergeArraysByKeys(keys:Array<string>,...sources:Array<Array<Publication
       var match = result.findIndex((pub:any)=>matchFirstDefinedKey(keys,pub,publication));
       if(match>=0){
         var options = Object.assign({},publication.options||{},result[match].options||{})
-        result[match] = Object.assign({},publication,result[match]);
+        result[match] = Object.assign(new Publication(),publication,result[match]);
         result[match].options = options;
       } else {
         result.push(new Publication(clone(publication)));
@@ -38,9 +43,25 @@ function mergeArraysByKeys(keys:Array<string>,...sources:Array<Array<Publication
 
 function propagate(target:any,source:any,skipPublications?:boolean){
   target.options = Object.assign({},source.options||{},target.options||{});
+
   if(!skipPublications){
     target.publications = mergeArraysByKeys(['timestep','label'],target.publications||[],source.publications||[]);
     console.log(target.publications);
+  }
+}
+
+function instantiateNamedOptions(dest:any,source:any){
+  for(var key in NAMED_OPTIONS){
+    if(!source[NAMED_OPTIONS[key]]){
+      continue;
+    }
+
+    if(!dest[key]||(typeof(dest[key])!=='string')){
+      continue;
+    }
+
+    var lookup = dest[key];
+    dest[key] = source[NAMED_OPTIONS[key]][lookup];
   }
 }
 
@@ -65,6 +86,7 @@ export class CatalogOptions{
 export class Catalog{
   themes:Array<Theme> = [];
   options:CatalogOptions;
+  publications:Array<Publication>;
 
   constructor(config?:any){
     if(!config){
@@ -73,6 +95,7 @@ export class Catalog{
     Object.assign(this,config);    
     this.themes = config.themes.map((t:any)=>new Theme(t));
     this.propagateOptions();
+    this.instantiateNamedOptions();
   }
 
   propagateOptions(){
@@ -81,11 +104,19 @@ export class Catalog{
       t.propagateOptions();
     });
   }
+
+  instantiateNamedOptions(){
+    if(this.publications){
+      this.publications.forEach(p=>p.instantiateNamedOptions(this));
+    }
+    this.themes.forEach(t=>t.instantiateNamedOptions(this));
+  }
 }
 
 export class Theme{
   layers:Array<Layer> = [];
   options:CatalogOptions;
+  publications:Array<Publication>;
   
   constructor(config?:any){
     if(!config){
@@ -106,6 +137,13 @@ export class Theme{
       l.propagateOptions();
     })
   }
+
+  instantiateNamedOptions(source:any){
+    instantiateNamedOptions(this.options,source);
+    this.publications.forEach(p=>p.instantiateNamedOptions(source));
+    this.layers.forEach(l=>l.instantiateNamedOptions(source));
+  }
+
 }
 
 export class Layer{
@@ -130,6 +168,11 @@ export class Layer{
       propagate(p,this,true);
     })
   }
+
+  instantiateNamedOptions(source:any){
+    instantiateNamedOptions(this.options,source);
+    this.publications.forEach(p=>p.instantiateNamedOptions(source));
+  }
 }
 
 export class Publication{
@@ -143,5 +186,9 @@ export class Publication{
       return;
     }
     Object.assign(this,config);
+  }
+
+  instantiateNamedOptions(source:any){
+    instantiateNamedOptions(this.options,source);
   }
 }
