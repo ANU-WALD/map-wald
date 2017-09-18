@@ -43,7 +43,7 @@ export class MappedLayer {
   }
 
   update(){
-    var pub = this.options.publication||0;
+    var pub = this.options.publication||this.layer.publications.findIndex(p=>!p.skip);
     var publication = this.layer.publications[pub];
 
     var host = publication.options.host || {};

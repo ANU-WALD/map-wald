@@ -3,7 +3,16 @@ function clone(v:any):any{
   return JSON.parse(JSON.stringify(v));
 }
 
-function mergeArraysByKey(key:string,...sources:Array<Array<Publication>>):Array<any>{
+function matchFirstDefinedKey(keys:Array<string>,lhs:any,rhs:any):boolean{
+  for(let k of keys){
+    if(lhs[k]&&rhs[k]){
+      return lhs[k]===rhs[k];
+    }
+  }
+  return false;
+}
+
+function mergeArraysByKeys(keys:Array<string>,...sources:Array<Array<Publication>>):Array<any>{
   if(!sources.length){
     return [];
   }
@@ -14,7 +23,7 @@ function mergeArraysByKey(key:string,...sources:Array<Array<Publication>>):Array
     var source = sources[i];
     for(var j=0;j<source.length;j++){
       var publication:Publication = source[j];
-      var match = result.findIndex((pub:any)=>pub.timestep===publication.timestep);
+      var match = result.findIndex((pub:any)=>matchFirstDefinedKey(keys,pub,publication));
       if(match>=0){
         var options = Object.assign({},publication.options||{},result[match].options||{})
         result[match] = Object.assign({},publication,result[match]);
@@ -30,7 +39,7 @@ function mergeArraysByKey(key:string,...sources:Array<Array<Publication>>):Array
 function propagate(target:any,source:any,skipPublications?:boolean){
   target.options = Object.assign({},source.options||{},target.options||{});
   if(!skipPublications){
-    target.publications = mergeArraysByKey('timestep',target.publications||[],source.publications||[]);
+    target.publications = mergeArraysByKeys(['timestep','label'],target.publications||[],source.publications||[]);
     console.log(target.publications);
   }
 }
@@ -125,8 +134,10 @@ export class Layer{
 
 export class Publication{
   timestep:string;
+  label:string;
+  skip:boolean;
   options:CatalogOptions;
-  
+
   constructor(config?:any){
     if(!config){
       return;

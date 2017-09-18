@@ -12,7 +12,7 @@ declare var Plotly: any;
 })
 export class DateSelectionComponent implements AfterViewInit  {
   @Input() date: Date;
-  @Output() dateChanged = new EventEmitter();
+  @Output() dateChange = new EventEmitter();
   @Input() timestep: string;
   @Input() minDate: Date;
   @Input() maxDate: Date;
@@ -51,14 +51,14 @@ export class DateSelectionComponent implements AfterViewInit  {
   dateStructChanged(){
     console.log(this.dateStruct);
     this.date = new Date(this.dateStruct.year,this.dateStruct.month-1,this.dateStruct.day);
-    this.dateChanged.emit(this.date);
+    this.dateChange.emit(this.date);
   }
 
   move(n:number){
     this.date = new Date(this.date);
     this.date.setDate(this.date.getDate()+n);
     this.onDateChanged();
-    this.dateChanged.emit(this.date);
+    this.dateChange.emit(this.date);
   }
 
   onDateChanged(){

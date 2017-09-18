@@ -152,6 +152,9 @@
           "timestep"
         ],
         "properties": {
+          "skip":{
+            "type":"boolean"
+          },
           "options": {
             "$ref": "#/definitions/options"
           },

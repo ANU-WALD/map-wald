@@ -6,9 +6,9 @@
   </select>
 </div>
 
-<div *ngIf="publication">
+<div *ngIf="publication&&publication.timestep">
   <date-selection [(date)]="layer.options.date"
-                  (dateChanged)="update($event)"
+                  (dateChange)="update($event)"
                   [timestep]="publication.timestep"
                   [minDate]="publication.options.start"
                   [maxDate]="publication.options.end"></date-selection>
