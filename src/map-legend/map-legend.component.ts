@@ -1,5 +1,5 @@
 import { Component, OnInit, AfterViewInit, Input } from '@angular/core';
-import {palettes} from '../colorbrewer';
+import { PaletteService } from '../palette.service';
 
 @Component({
   selector: 'map-legend',
@@ -71,17 +71,14 @@ export class MapLegendComponent implements OnInit {
       return;
     }
 
-    let colours = palettes[this._cbPalette][this._cbCount].slice();
-
-    if(!this._cbReverse){
-      colours.reverse();
-    }
-
-    this.colours = colours;
-    this.labels = this.generateLabels() || colours;
+    this._palettes.getPalette(this._cbPalette,this._cbReverse,this._cbCount)
+      .subscribe(palette=>{
+        this.colours = palette;
+        this.labels = this.generateLabels() || palette;
+    });
   }
 
-  constructor() { }
+  constructor(private _palettes:PaletteService) { }
 
   ngOnInit() { }
 

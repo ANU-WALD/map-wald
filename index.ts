@@ -22,6 +22,7 @@ import { MapLegendComponent } from './src/map-legend/map-legend.component';
 import { MapControlComponent } from './src/map-control/map-control.component';
 import { AgmCoreModule } from '@agm/core';
 //$importList
+import { PaletteService } from './src//palette.service';
 import { TimeUtilsService } from './src//time-utils.service';
 import { DateSelectionComponent } from './src/date-selection/date-selection.component';
 import { LayerPropertiesComponent } from './src/layer-properties/layer-properties.component';
@@ -44,6 +45,7 @@ export * from './src/interpolation.service';
 export * from './src/wms-layer/wms-layer.component';
 export * from './src/map-legend/map-legend.component';
 //$exportList
+export * from './src//palette.service';
 export * from './src//time-utils.service';
 export * from './src/date-selection/date-selection.component';
 export * from './src/layer-properties/layer-properties.component';
@@ -53,6 +55,8 @@ export * from './src/theme-navbar/theme-navbar.component';
 
 const services = [
   //$serviceList
+PaletteService,
+
 TimeUtilsService,
 
 
@@ -70,6 +74,7 @@ TimeUtilsService,
 
 const components = [
   //$componentList
+
 
 DateSelectionComponent,
 
