@@ -1,7 +1,7 @@
 import { Component, Input, ViewChild, AfterViewInit, ElementRef, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import { LayerControlComponent } from "../layer-control/layer-control.component";
 import { MappedLayer } from "../data/mapped-layer";
-import { LayerSelection } from "../theme-navbar/theme-navbar.component";
+import { LayerSelection } from '../data/catalog';
 
 declare var Plotly: any;
 
