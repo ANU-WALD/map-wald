@@ -1,5 +1,5 @@
 
-const NAMED_OPTIONS={
+const NAMED_OPTIONS:{[key:string]:string}={
   host:'namedHosts',
   interval:'namedIntervals'
 }
@@ -52,7 +52,8 @@ function propagate(target:any,source:any,skipPublications?:boolean){
 
 function instantiateNamedOptions(dest:any,source:any){
   for(var key in NAMED_OPTIONS){
-    if(!source[NAMED_OPTIONS[key]]){
+    var configKey:string = NAMED_OPTIONS[key];
+    if(!source[configKey]){
       continue;
     }
 
@@ -61,7 +62,7 @@ function instantiateNamedOptions(dest:any,source:any){
     }
 
     var lookup = dest[key];
-    dest[key] = source[NAMED_OPTIONS[key]][lookup];
+    dest[key] = source[configKey][lookup];
   }
 }
 

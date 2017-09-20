@@ -13,7 +13,7 @@ export interface MappedLayerOptions {
   [key: string]: any;
 }
 
-export const WMS_PARAMETER_NAMES = {
+export const WMS_PARAMETER_NAMES:{[key:string]:Array<string>} = {
   tds: [
     'layers',
     'styles',
