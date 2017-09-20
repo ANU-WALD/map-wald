@@ -85,6 +85,7 @@ export class CatalogOptions{
 }
 
 export class Catalog{
+  name:string;
   themes:Array<Theme> = [];
   options:CatalogOptions;
   publications:Array<Publication>;
@@ -115,6 +116,7 @@ export class Catalog{
 }
 
 export class Theme{
+  name:string;
   layers:Array<Layer> = [];
   options:CatalogOptions;
   publications:Array<Publication>;
@@ -192,4 +194,11 @@ export class Publication{
   instantiateNamedOptions(source:any){
     instantiateNamedOptions(this.options,source);
   }
+}
+
+export type LayerAction = 'replace' | 'add'
+
+export interface LayerSelection{
+  layer:Layer;
+  action: LayerAction;
 }

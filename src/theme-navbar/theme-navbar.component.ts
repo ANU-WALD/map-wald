@@ -1,15 +1,8 @@
 import { Component, Input, Output, ViewChild,
          AfterViewInit, ElementRef, EventEmitter } from '@angular/core';
-import { Catalog, Layer } from "../data/catalog";
+import { Catalog, Layer, LayerSelection, LayerAction } from "../data/catalog";
 
 declare var Plotly: any;
-
-export type LayerAction = 'replace' | 'add'
-
-export interface LayerSelection{
-  layer:Layer;
-  action: LayerAction;
-}
 
 @Component({
   selector: 'theme-navbar',

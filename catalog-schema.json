@@ -8,6 +8,7 @@
     "themes"
   ],
   "properties": {
+    "name":{"type":"string"},
     "namedHosts": {
       "type": "object",
       "patternProperties": {
