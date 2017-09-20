@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {HttpClientModule} from '@angular/common/http';
 import {NgPipesModule} from 'ngx-pipes';
+import {TreeModule} from 'ng2-tree';
 
 import { CommonModule } from '@angular/common';
 import { SampleComponent } from './src/sample.component';
@@ -22,6 +23,7 @@ import { MapLegendComponent } from './src/map-legend/map-legend.component';
 import { MapControlComponent } from './src/map-control/map-control.component';
 import { AgmCoreModule } from '@agm/core';
 //$importList
+import { CatalogComponent } from './src/catalog/catalog.component';
 import { PaletteService } from './src//palette.service';
 import { TimeUtilsService } from './src//time-utils.service';
 import { DateSelectionComponent } from './src/date-selection/date-selection.component';
@@ -45,6 +47,7 @@ export * from './src/interpolation.service';
 export * from './src/wms-layer/wms-layer.component';
 export * from './src/map-legend/map-legend.component';
 //$exportList
+export * from './src/catalog/catalog.component';
 export * from './src//palette.service';
 export * from './src//time-utils.service';
 export * from './src/date-selection/date-selection.component';
@@ -55,15 +58,8 @@ export * from './src/theme-navbar/theme-navbar.component';
 
 const services = [
   //$serviceList
-PaletteService,
-
-TimeUtilsService,
-
-
-
-
-
-
+  PaletteService,
+  TimeUtilsService,
   WMSService,
   MapViewParameterService,
   ProjectionService,
@@ -74,18 +70,12 @@ TimeUtilsService,
 
 const components = [
   //$componentList
-
-
-DateSelectionComponent,
-
-LayerPropertiesComponent,
-
-LayerControlComponent,
-
-LayeredMapComponent,
-
-ThemeNavbarComponent,
-
+  CatalogComponent,
+  DateSelectionComponent,
+  LayerPropertiesComponent,
+  LayerControlComponent,
+  LayeredMapComponent,
+  ThemeNavbarComponent,
   WMSLayerComponent,
   MapLegendComponent,
   MapControlComponent,
@@ -101,6 +91,7 @@ ThemeNavbarComponent,
     AgmCoreModule,
     HttpClientModule,
     NgPipesModule,
+    TreeModule,
     NgbModule
   ],
   declarations: components,

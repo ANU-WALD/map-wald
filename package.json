@@ -41,6 +41,7 @@
     "@angular/router": "^4.0.0",
     "@types/googlemaps": "^3.26.7",
     "@types/proj4": "^2.3.4",
+    "ng2-tree": "^2.0.0-alpha.10",
     "ngx-pipes": "^1.6.5",
     "proj4": "^2.3.17",
     "typescript": "2.3.4"

@@ -1,8 +1,7 @@
-import { Component, Input, ViewChild, AfterViewInit, ElementRef, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, ViewChild, AfterViewInit, ElementRef, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import { LayerControlComponent } from "../layer-control/layer-control.component";
 import { MappedLayer } from "../data/mapped-layer";
 import { LayerSelection } from "../theme-navbar/theme-navbar.component";
-
 
 declare var Plotly: any;
 
@@ -13,6 +12,7 @@ declare var Plotly: any;
 })
 export class LayeredMapComponent implements AfterViewInit, OnChanges {
   @Input() layers: Array<MappedLayer> = [];
+  @Output() layersChange = new EventEmitter<Array<MappedLayer>>();
   
   // google maps zoom level
   zoom: number = 4;
@@ -58,6 +58,7 @@ export class LayeredMapComponent implements AfterViewInit, OnChanges {
     } else {
       this.layers = [mapped].concat(this.layers);
     }
+    this.layersChange.emit(this.layers);
 //    this.layerControl.layers = this.layers;
   }
 }
