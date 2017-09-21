@@ -46,7 +46,7 @@ function propagate(target:any,source:any,skipPublications?:boolean){
 
   if(!skipPublications){
     target.publications = mergeArraysByKeys(['timestep','label'],target.publications||[],source.publications||[]);
-    console.log(target.publications);
+//    console.log(target.publications);
   }
 }
 
@@ -82,6 +82,7 @@ export class CatalogOptions{
   publisher?:string;
   publisherURL?:string;
   units?:string;
+  smallExtent:boolean;
 }
 
 export class Catalog{
@@ -153,6 +154,7 @@ export class Layer{
   publications:Array<Publication> = [];
   options:CatalogOptions;
   name:string;
+  [key:string]:any;
 
   constructor(config?:any){
     if(!config){

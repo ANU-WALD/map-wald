@@ -28,7 +28,6 @@ export class SimpleTreeNodeComponent implements AfterViewInit, OnChanges{
   icon: string;
 
   treeClick(event: any) {
-    console.log(event)
     event.stopPropagation();
     event.preventDefault();
     if (!this.tree) {

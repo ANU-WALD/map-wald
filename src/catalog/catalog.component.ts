@@ -84,8 +84,6 @@ export class CatalogComponent implements AfterViewInit, OnChanges  {
   }
 
   nodeSelected(e:TreeModel){
-    console.log(e);
-
     if(!e.data){
       return;
     }

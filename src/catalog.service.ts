@@ -12,11 +12,7 @@ export class CatalogService {
   current:Catalog;
   
   load(catalogJSON:any){
-    console.log(catalogJSON);
-
     this.current = new Catalog(catalogJSON);
-
-    console.log(this.current);
   }
 
   loadFrom(path:string):Observable<Catalog>{

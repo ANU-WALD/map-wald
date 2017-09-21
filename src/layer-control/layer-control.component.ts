@@ -1,5 +1,6 @@
 import { Component, Input, ViewChild, AfterViewInit, ElementRef, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import { MappedLayer } from "../data/mapped-layer";
+import { LayeredMapComponent } from '../layered-map/layered-map.component';
 
 
 declare var Plotly: any;
@@ -11,6 +12,7 @@ declare var Plotly: any;
 })
 export class LayerControlComponent implements AfterViewInit, OnChanges {
   @Input() layers: Array<MappedLayer>;
+  @Input() map: LayeredMapComponent;
   @Output() layersChange = new EventEmitter();
   uniformViewMode:boolean|undefined;
   foo:string='bar';
@@ -20,11 +22,9 @@ export class LayerControlComponent implements AfterViewInit, OnChanges {
   }
 
   ngAfterViewInit(){
-
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes);
     if(!changes.layers||!this.layers){
       return;
     }
@@ -84,7 +84,6 @@ export class LayerControlComponent implements AfterViewInit, OnChanges {
   }
 
   layerPropertyChanged(l:MappedLayer){
-    console.log('layer property changed',l);
     this.layers = this.layers.slice();
     this.layersChange.emit(this.layers);
   }

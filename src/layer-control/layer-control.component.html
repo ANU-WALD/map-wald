@@ -23,6 +23,7 @@
 
         <div *ngIf="!l.options.legend">
           <layer-properties [layer]="l"
+                            [map]="map"
                             (propertyChanged)="layerPropertyChanged($event)">
           </layer-properties>
         </div>

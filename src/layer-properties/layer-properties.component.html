@@ -14,6 +14,10 @@
                   [maxDate]="publication.options.end"></date-selection>
 </div>
 
+<div *ngIf="layer.layer.options.smallExtent">
+  <button class="btn btn-primary" (click)="zoomToExtent()">Zoom to Extent</button>
+</div>
+
 <!--
 <div *ngIf="publication">
   <p>Start: {{publication.options.start}}</p>

@@ -185,6 +185,9 @@
           "line",
           "polygon"
         ]
+      },
+      "smallExtent":{
+        "type":"boolean"
       }
     },
     "publications": {
