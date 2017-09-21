@@ -39,9 +39,11 @@ export class MappedLayer {
   options: MappedLayerOptions = {};
   layerType: MappedLayerTypes;
 
+  interpolatedFile:string;
   url: string;
   wmsParameters: any = {};
   flattenedSettings: any = {};
+  spatialExtent:any;
 
   leading0(n: number): string {
     if (n < 10) {
@@ -62,7 +64,7 @@ export class MappedLayer {
 
     var software = host.software || 'tds';
 
-    this.url = baseURL + '/wms/' + (publication.options.filepath || '');
+    this.interpolatedFile = (publication.options.filepath || '')
     var mapParams = Object.assign({},
       this.layer,
       publication.options,
@@ -84,8 +86,9 @@ export class MappedLayer {
       }
     });
     mapParams.layers = mapParams.layers || mapParams.layer || mapParams.variable;
-    this.url = InterpolationService.interpolate(this.url, mapParams);
-
+    this.interpolatedFile = InterpolationService.interpolate(this.interpolatedFile, mapParams);
+    this.url = baseURL + '/wms/' + this.interpolatedFile;
+    
     if (mapParams.vectors) {
       this.wmsParameters = null;
     } else {

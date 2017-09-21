@@ -22,6 +22,8 @@ import { MapLegendComponent } from './src/map-legend/map-legend.component';
 import { MapControlComponent } from './src/map-control/map-control.component';
 import { AgmCoreModule } from '@agm/core';
 //$importList
+import { OpendapService } from './src//opendap.service';
+import { BaseMapSelectionComponent } from './src/base-map-selection/base-map-selection.component';
 import { SimpleTreeNodeComponent } from './src/simple-tree-node/simple-tree-node.component';
 import { SimpleTreeComponent } from './src/simple-tree/simple-tree.component';
 import { CatalogComponent } from './src/catalog/catalog.component';
@@ -48,6 +50,8 @@ export * from './src/interpolation.service';
 export * from './src/wms-layer/wms-layer.component';
 export * from './src/map-legend/map-legend.component';
 //$exportList
+export * from './src//opendap.service';
+export * from './src/base-map-selection/base-map-selection.component';
 export * from './src/simple-tree-node/simple-tree-node.component';
 export * from './src/simple-tree/simple-tree.component';
 export * from './src/catalog/catalog.component';
@@ -61,6 +65,9 @@ export * from './src/theme-navbar/theme-navbar.component';
 
 const services = [
   //$serviceList
+OpendapService,
+
+
 
 
   PaletteService,
@@ -75,6 +82,9 @@ const services = [
 
 const components = [
   //$componentList
+
+BaseMapSelectionComponent,
+
 SimpleTreeNodeComponent,
 
 SimpleTreeComponent,
