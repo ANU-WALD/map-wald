@@ -1,4 +1,11 @@
-<p><strong>{{layer?.layer.name}}</strong></p>
+<p><strong>{{layer?.title}}</strong>
+  <span *ngIf="layer.description()" 
+  [ngbTooltip]="layer.description()"
+  [placement]="tooltipPlacement"
+  container="body">
+<i class="fa fa-info-circle"></i>
+</span>
+</p>
 
 <div *ngIf="layer?.layer.publications.length>1">
   <select [(ngModel)]="layer.options.publication" (ngModelChange)="publicationSelected($event)">
@@ -15,7 +22,7 @@
 </div>
 
 <div *ngIf="layer.layer.options.smallExtent">
-  <button class="btn btn-primary" (click)="zoomToExtent()">Zoom to Extent</button>
+  <button class="btn btn-sm btn-primary" (click)="zoomToExtent()">Zoom to Extent</button>
 </div>
 
 <!--

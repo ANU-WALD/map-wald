@@ -15,8 +15,10 @@ export class LayerPropertiesComponent implements AfterViewInit {
   @Input() layer: MappedLayer;
   @Input() map: LayeredMapComponent;
   @Output() propertyChanged = new EventEmitter();
+  @Input() tooltipPlacement:string='right';
+  
   //publication:Publication;
-  constructor(private dap:OpendapService) {
+  constructor(private dap: OpendapService) {
 
   }
 
@@ -56,12 +58,12 @@ export class LayerPropertiesComponent implements AfterViewInit {
       return;
     }
 
-    this.dap.getExtent(this.dap.makeURL(this.layer.layer.options.host,this.layer.interpolatedFile))
-      .subscribe((ext:any)=>console.log(ext));
+    this.dap.getExtent(this.dap.makeURL(this.layer.layer.options.host, this.layer.interpolatedFile))
+      .subscribe((ext: any) => console.log(ext));
   }
 
   zoomToExtent() {
-    if(!this.map){
+    if (!this.map) {
       console.log('NO MAP!');
       return;
     }

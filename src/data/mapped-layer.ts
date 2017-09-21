@@ -35,9 +35,16 @@ export const INTERPOLATED_PARAMETERS = [
 ];
 
 export class MappedLayer {
+  title:string;
+  description():string{
+    return this.layer.description ||
+      (this.retrievedMetadata && this.retrievedMetadata.long_name);
+  }
+
   layer: Layer;
   options: MappedLayerOptions = {};
   layerType: MappedLayerTypes;
+  retrievedMetadata: {[key:string]:any} = {};
 
   interpolatedFile:string;
   url: string;
@@ -99,6 +106,12 @@ export class MappedLayer {
         }
       });
       this.flattenedSettings = mapParams;
+    }
+
+    if(mapParams.titleFormat){
+      this.title = InterpolationService.interpolate(mapParams.titleFormat,mapParams)
+    } else {
+      this.title = this.layer.name;
     }
   }
 }
