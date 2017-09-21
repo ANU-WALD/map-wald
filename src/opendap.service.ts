@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { parseData, parseDAS,parseDDX, makeQuery, 
-  simplify, DapData, DapDAS, DapDDX,DimensionSlices } from 'dap-query-js/dist/dap-query';
+  simplify, DapData, DapDAS, DapDDX,  DimensionSlices, DapVariableDataArray
+
+ DapVariableDataArray, DapVariableDataArray } from 'dap-query-js/dist/dap-query';
 import { CatalogHost } from '../index';
 import { Observable } from 'rxjs/Observable';
 
@@ -52,9 +54,10 @@ export class OpendapService {
         this.getData(url+'.ascii?longitude',das)
       ])})
       .map((ll:DapData[])=>{
-        var lats = ll[0];
-        var lons = ll[1];
-        return [lats.latitude[0],lats[lats.le]]
+        var lats = <DapVariableDataArray>ll[0].latitude;
+        var lons = <DapVariableDataArray>ll[1].longitude;
+        return [<number>lats[0],<number>lats[lats.length-1],
+                <number>lons[0],<number>lons[lons.length-1]];
       });
   }
 }

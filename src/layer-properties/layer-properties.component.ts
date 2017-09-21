@@ -53,14 +53,14 @@ export class LayerPropertiesComponent implements AfterViewInit {
     this.propertyChanged.emit(this.layer);
   }
 
-  private loadExtent() {
-    if (this.layer.layer.options.host.software !== 'tds') {
-      return;
-    }
+  // private loadExtent() {
+  //   if (this.layer.layer.options.host.software !== 'tds') {
+  //     return;
+  //   }
 
-    this.dap.getExtent(this.dap.makeURL(this.layer.layer.options.host, this.layer.interpolatedFile))
-      .subscribe((ext: any) => console.log(ext));
-  }
+  //   this.dap.getExtent(this.dap.makeURL(this.layer.layer.options.host, this.layer.interpolatedFile))
+  //     .subscribe((ext: any) => console.log(ext));
+  // }
 
   zoomToExtent() {
     if (!this.map) {
