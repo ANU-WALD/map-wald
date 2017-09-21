@@ -20,19 +20,15 @@ export class MetadataService {
       return;
     }
 
-    console.log(ml);
     var url = this.dap.makeURL(ml.flattenedSettings.host,ml.interpolatedFile);
 
-    console.log(url,ml.flattenedSettings.variable);
     if(!this.metadataCache[url]){
       this.metadataCache[url] = 
         this.dap.getDDX(url).publishReplay().refCount();
     }
 
     this.metadataCache[url].subscribe(ddx=>{
-      console.log(ddx);
       var entry = ddx.variables[ml.flattenedSettings.variable];
-      console.log(entry);
       ml.retrievedMetadata = entry;
     })
   }

@@ -48,7 +48,6 @@ export class LayerPropertiesComponent implements AfterViewInit {
   }
 
   update(event: any) {
-    console.log('properties changed', event, this.layer.options);
     this.layer.update();
     this.propertyChanged.emit(this.layer);
   }

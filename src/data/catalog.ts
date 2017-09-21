@@ -82,7 +82,7 @@ export class CatalogOptions{
   publisher?:string;
   publisherURL?:string;
   units?:string;
-  smallExtent:boolean;
+  smallExtent?:boolean;
 }
 
 export class Catalog{
