@@ -36,7 +36,7 @@ export class PaletteService {
       if(reverse){
         return Observable.of(palette.slice().reverse());
       }
-      return Observable.of(palette);
+      return Observable.of(palette.slice());
     }
 
     return this._http.get(this._source+'/'+name+'.pal',{ responseType: 'text' })

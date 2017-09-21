@@ -73,7 +73,7 @@ export class MapLegendComponent implements OnInit {
 
     this._palettes.getPalette(this._cbPalette,this._cbReverse,this._cbCount)
       .subscribe(palette=>{
-        this.colours = palette;
+        this.colours = palette.slice().reverse();
         this.labels = this.generateLabels() || palette;
     });
   }
