@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { parseData, parseDAS,parseDDX, makeQuery, 
-  simplify, DapData, DapDAS, DapDDX,  DimensionSlices, DapVariableDataArray
-
- DapVariableDataArray, DapVariableDataArray } from 'dap-query-js/dist/dap-query';
+  simplify, DapData, DapDAS, DapDDX,  DimensionSlices, DapVariableDataArray } from 'dap-query-js/dist/dap-query';
 import { CatalogHost } from '../index';
 import { Observable } from 'rxjs/Observable';
 
