@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {HttpClientModule} from '@angular/common/http';
 import {NgPipesModule} from 'ngx-pipes';
+import { AgmCoreModule } from '@agm/core';
 
 import { CommonModule } from '@angular/common';
 import { SampleComponent } from './src/sample.component';
@@ -20,11 +21,10 @@ import { ProjectionService } from './src/projection.service';
 import { WMSLayerComponent } from './src/wms-layer/wms-layer.component';
 import { MapLegendComponent } from './src/map-legend/map-legend.component';
 import { MapControlComponent } from './src/map-control/map-control.component';
-import { AgmCoreModule } from '@agm/core';
 //$importList
-import { StaticDataService } from './src//static-data.service';
-import { MetadataService } from './src//metadata.service';
-import { OpendapService } from './src//opendap.service';
+import { StaticDataService } from './src/static-data.service';
+import { MetadataService } from './src/metadata.service';
+import { OpendapService } from './src/opendap.service';
 import { BaseMapSelectionComponent } from './src/base-map-selection/base-map-selection.component';
 import { SimpleTreeNodeComponent } from './src/simple-tree-node/simple-tree-node.component';
 import { SimpleTreeComponent } from './src/simple-tree/simple-tree.component';
@@ -68,7 +68,7 @@ export * from './src/layer-control/layer-control.component';
 export * from './src/layered-map/layered-map.component';
 export * from './src/theme-navbar/theme-navbar.component';
 
-const services = [
+export const services = [
   //$serviceList
   StaticDataService,
   MetadataService,
@@ -83,7 +83,7 @@ const services = [
   CatalogService
 ];
 
-const components = [
+export const components = [
   //$componentList
   BaseMapSelectionComponent,
   SimpleTreeNodeComponent,
