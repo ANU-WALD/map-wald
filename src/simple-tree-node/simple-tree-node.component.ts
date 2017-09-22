@@ -1,7 +1,6 @@
 import { Component, Input, ViewChild, AfterViewInit, ElementRef, 
   EventEmitter, Output, OnChanges, SimpleChanges } from '@angular/core';
-import { TreeModel } from '../simple-tree/simple-tree.component';
-
+import { TreeModel } from '../data/tree';
 
 declare var Plotly: any;
 

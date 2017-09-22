@@ -23,7 +23,8 @@
             "software": {
               "enum": [
                 "tds",
-                "geoserver"
+                "geoserver",
+                "static"
               ]
             }
           }
@@ -81,8 +82,8 @@
                 "name": {
                   "type": "string"
                 },
-                "placeholder":{
-                  "type":"boolean"
+                "placeholder": {
+                  "type": "boolean"
                 },
                 "description": {
                   "type": "string"
@@ -153,50 +154,50 @@
               "type": "string"
             }
           ]
+        },
+        "filepath": {
+          "type": "string"
+        },
+        "palette": {
+          "type": "string"
+        },
+        "colorscalerange": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": {
+            "type": "number"
+          }
+        },
+        "legend": {
+          "type": "string"
+        },
+        "mapOptions": {
+          "type": "object"
+        },
+        "timeFormat": {
+          "type": "string"
+        },
+        "publisher": {
+          "type": "string"
+        },
+        "publisherURL": {
+          "type": "string",
+          "format": "uri"
+        },
+        "units": {
+          "type": "string"
+        },
+        "vectors": {
+          "enum": [
+            "point",
+            "line",
+            "polygon"
+          ]
+        },
+        "smallExtent": {
+          "type": "boolean"
         }
-      },
-      "filepath": {
-        "type": "string"
-      },
-      "palette": {
-        "type": "string"
-      },
-      "colorscalerange": {
-        "type": "array",
-        "minItems": 2,
-        "maxItems": 2,
-        "items": {
-          "type": "number"
-        }
-      },
-      "legend": {
-        "type": "string"
-      },
-      "mapOptions": {
-        "type": "object"
-      },
-      "timeFormat": {
-        "type": "string"
-      },
-      "publisher": {
-        "type": "string"
-      },
-      "publisherURL": {
-        "type": "string",
-        "format": "uri"
-      },
-      "units": {
-        "type": "string"
-      },
-      "vectors": {
-        "enum": [
-          "point",
-          "line",
-          "polygon"
-        ]
-      },
-      "smallExtent": {
-        "type": "boolean"
       }
     },
     "publications": {

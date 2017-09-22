@@ -22,6 +22,7 @@ import { MapLegendComponent } from './src/map-legend/map-legend.component';
 import { MapControlComponent } from './src/map-control/map-control.component';
 import { AgmCoreModule } from '@agm/core';
 //$importList
+import { StaticDataService } from './src//static-data.service';
 import { MetadataService } from './src//metadata.service';
 import { OpendapService } from './src//opendap.service';
 import { BaseMapSelectionComponent } from './src/base-map-selection/base-map-selection.component';
@@ -51,6 +52,7 @@ export * from './src/interpolation.service';
 export * from './src/wms-layer/wms-layer.component';
 export * from './src/map-legend/map-legend.component';
 //$exportList
+export * from './src//static-data.service';
 export * from './src//metadata.service';
 export * from './src//opendap.service';
 export * from './src/base-map-selection/base-map-selection.component';
@@ -67,13 +69,9 @@ export * from './src/theme-navbar/theme-navbar.component';
 
 const services = [
   //$serviceList
-MetadataService,
-
-OpendapService,
-
-
-
-
+  StaticDataService,
+  MetadataService,
+  OpendapService,
   PaletteService,
   TimeUtilsService,
   WMSService,
@@ -86,14 +84,9 @@ OpendapService,
 
 const components = [
   //$componentList
-
-
-BaseMapSelectionComponent,
-
-SimpleTreeNodeComponent,
-
-SimpleTreeComponent,
-
+  BaseMapSelectionComponent,
+  SimpleTreeNodeComponent,
+  SimpleTreeComponent,
   CatalogComponent,
   DateSelectionComponent,
   LayerPropertiesComponent,

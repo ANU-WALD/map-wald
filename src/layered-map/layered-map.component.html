@@ -6,12 +6,20 @@
 [zoomControl]="false"
 scaleControl="true">
 
-<wms-layer *ngFor="let mp of layers.slice()|reverse; let i = index"
-          [url]="mp.url"
-          [params]="mp.wmsParameters"
-          [opacity]="mp.opacity"
-          [position]="i">
-</wms-layer>
+<ng-container *ngFor="let mp of layers.slice()|reverse; let i = index" [ngSwitch]="mp.layerType">
+  <wms-layer *ngSwitchCase="'wms'"
+    [url]="mp.url"
+    [params]="mp.wmsParameters"
+    [opacity]="mp.opacity"
+    [position]="i">
+  </wms-layer>
+  <agm-data-layer *ngSwitchCase="'vector'"
+                [geoJson]="mp.staticData"
+                (layerClick)="clicked($event)"
+                >
+  </agm-data-layer>
+
+</ng-container>
 
 
 <!--

@@ -3,7 +3,7 @@ import {
   OnChanges, Output, EventEmitter, SimpleChanges
 } from '@angular/core';
 import { Catalog, LayerSelection, Layer, LayerAction, Theme } from '../data/catalog';
-import { TreeModel } from '../simple-tree/simple-tree.component';
+import { TreeModel } from '../data/tree';
 
 declare var Plotly: any;
 

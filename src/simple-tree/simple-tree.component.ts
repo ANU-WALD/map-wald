@@ -1,20 +1,7 @@
 import { Component, Input, ViewChild, AfterViewInit, ElementRef, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
+import { TreeModel } from '../data/tree';
 
 declare var Plotly: any;
-
-export interface TreeNodeAction{
-  icon:string;
-  tooltip:string;
-  action:(n:TreeModel)=>void
-}
-
-export interface TreeModel {
-  label: string;
-  data?: any;
-  expanded?: boolean;
-  children?: Array<TreeModel>;
-  actions?:Array<TreeNodeAction>;
-}
 
 @Component({
   selector: 'simple-tree',

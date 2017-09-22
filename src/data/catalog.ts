@@ -83,6 +83,7 @@ export class CatalogOptions{
   publisherURL?:string;
   units?:string;
   smallExtent?:boolean;
+  vectors?:"point"|"line"|"polygon";
 }
 
 export class Catalog{
