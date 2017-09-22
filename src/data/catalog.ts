@@ -119,6 +119,7 @@ export class Catalog{
 export class Theme{
   name:string;
   layers:Array<Layer> = [];
+  path:string;
   options:CatalogOptions;
   publications:Array<Publication>;
   
@@ -152,8 +153,9 @@ export class Theme{
 
 export class Layer{
   publications:Array<Publication> = [];
-  options:CatalogOptions;
+  options:CatalogOptions = new CatalogOptions();
   name:string;
+  path:string;
   [key:string]:any;
 
   constructor(config?:any){
@@ -184,7 +186,7 @@ export class Publication{
   timestep:string;
   label:string;
   skip:boolean;
-  options:CatalogOptions;
+  options:CatalogOptions = new CatalogOptions();
 
   constructor(config?:any){
     if(!config){

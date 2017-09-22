@@ -8,7 +8,9 @@
     "themes"
   ],
   "properties": {
-    "name":{"type":"string"},
+    "name": {
+      "type": "string"
+    },
     "namedHosts": {
       "type": "object",
       "patternProperties": {
@@ -28,10 +30,10 @@
         }
       }
     },
-    "namedIntervals":{
-      "type":"object",
+    "namedIntervals": {
+      "type": "object",
       "patternProperties": {
-        "\\w+":{
+        "\\w+": {
           "$ref": "#/definitions/interval"
         }
       }
@@ -47,8 +49,7 @@
       "items": {
         "type": "object",
         "required": [
-          "name",
-          "icon"
+          "name"
         ],
         "properties": {
           "options": {
@@ -60,6 +61,9 @@
           "icon": {
             "type": "string"
           },
+          "path": {
+            "type": "string"
+          },
           "publications": {
             "$ref": "#/definitions/publications"
           },
@@ -68,8 +72,7 @@
             "items": {
               "type": "object",
               "required": [
-                "name",
-                "description"
+                "name"
               ],
               "properties": {
                 "options": {
@@ -78,7 +81,13 @@
                 "name": {
                   "type": "string"
                 },
+                "placeholder":{
+                  "type":"boolean"
+                },
                 "description": {
+                  "type": "string"
+                },
+                "path": {
                   "type": "string"
                 },
                 "metadataURL": {
@@ -186,8 +195,8 @@
           "polygon"
         ]
       },
-      "smallExtent":{
-        "type":"boolean"
+      "smallExtent": {
+        "type": "boolean"
       }
     },
     "publications": {
