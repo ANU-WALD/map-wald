@@ -81,11 +81,19 @@ export class CatalogComponent implements AfterViewInit, OnChanges {
 
     tree.children = cat.themes.filter(t => !t.path).map(themeToTree);
 
-    function findParent(path: string): TreeModel {
+    function findParent(path: string): [TreeModel,number] {
       var components = path.split('/');
       var parent: TreeModel = tree;
-
+      var index = -1;
+      
       for (var component of components) {
+        var split = component.split('@');
+        component = split[0];
+        index = -1;
+        if(split.length>1){
+          index = +split[1];
+        }
+
         var found = false;
         for (var n of parent.children) {
           if (n.label === component) {
@@ -101,21 +109,29 @@ export class CatalogComponent implements AfterViewInit, OnChanges {
             expanded: false,
             children: []
           };
-          parent.children.push(newNode);
+          addChild(parent,newNode,index);
           parent = newNode;
         }
       }
-      return parent;
+      return [parent,index];
     }
 
+    function addChild(parent:TreeModel,child:TreeModel,i:number){
+      if(i<0){
+        parent.children.push(child);            
+      } else {
+        parent.children.splice(i,0,child);
+      }
+}
+
     deferredThemes.forEach(t => {
-      var parent = findParent(t.path);
-      parent.children.push(themeToTree(t));
+      var [parent,index] = findParent(t.path);
+      addChild(parent,themeToTree(t),index);
     });
 
     deferredLayers.forEach(l => {
-      var parent = findParent(l.path);
-      parent.children.push(layerToTree(l));
+      var [parent,index] = findParent(l.path);
+      addChild(parent,layerToTree(l),index);
     });
     this.tree = tree;
   }
