@@ -4,7 +4,7 @@ import { LayerSelection } from '../data/catalog';
 import { StaticDataService } from '../static-data.service';
 import { DataMouseEvent, GoogleMapsAPIWrapper, LatLng } from '@agm/core';
 import { Feature, Point, GeometryObject } from 'geojson';
-import { Marker } from '@agm/core/services/google-maps-types';
+import { Marker, MapTypeControlOptions, ControlPosition } from '@agm/core/services/google-maps-types';
 
 export interface SimpleMarker {
   loc:LatLng;
@@ -26,7 +26,10 @@ export class LayeredMapComponent implements AfterViewInit, OnChanges {
   @Output() pointSelected = new EventEmitter<LatLng>();
   // google maps zoom level
   zoom: number = 4;
-
+  mapTypeOptions: MapTypeControlOptions={
+    position:ControlPosition.BOTTOM_LEFT
+  };
+  
   // initial center position for the map
   lat: number = -22.673858;
   lng: number = 129.815982;
