@@ -11,7 +11,7 @@ declare var Plotly: any;
 })
 export class TimeseriesChartComponent implements AfterViewInit, OnChanges  {
   @Input() timeSeries: Array<TimeSeries> = [];
-  @Input() marginLeft:number = 20;
+  @Input() marginLeft:number = 40;
   @Input() marginRight:number = 10;
   @Input() marginTop:number = 0;
   @Input() marginBottom:number = 20;
@@ -47,7 +47,7 @@ export class TimeseriesChartComponent implements AfterViewInit, OnChanges  {
       yaxis:{
         fixedrange: true
       },
-      width:300,
+      width:320,
       height:200
     };
 
