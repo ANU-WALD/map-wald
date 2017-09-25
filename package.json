@@ -5,7 +5,6 @@
     "build": "ngc -p tsconfig.json",
     "lint": "tslint --type-check --project tsconfig.json src/**/*.ts",
     "test": "tsc && karma start",
-    "prepublish": "tsc",
     "tsc": "tsc",
     "watch": "watch 'npm run tsc' src --filter=./watchfilter.js",
     "build:watch": "watch 'npm run build' src --filter=./watchfilter.js",
@@ -42,6 +41,7 @@
     "@types/googlemaps": "^3.26.7",
     "@types/proj4": "^2.3.4",
     "ngx-pipes": "^1.6.5",
+    "plotly.js": "git+https://github.com/arlowhite/plotly.js#no-polyfill",
     "proj4": "^2.3.17",
     "dap-query-js": "github:flowmatters/dap-query-js",
     "typescript": "2.3.4"

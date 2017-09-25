@@ -2,8 +2,15 @@ import { Component, Input, ViewChild, AfterViewInit, ElementRef, OnChanges, Simp
 import { MappedLayer } from "../data/mapped-layer";
 import { LayerSelection } from '../data/catalog';
 import { StaticDataService } from '../static-data.service';
-import { DataMouseEvent, GoogleMapsAPIWrapper } from '@agm/core';
+import { DataMouseEvent, GoogleMapsAPIWrapper, LatLng } from '@agm/core';
 import { Feature, Point, GeometryObject } from 'geojson';
+import { Marker } from '@agm/core/services/google-maps-types';
+
+export interface SimpleMarker {
+  loc:LatLng;
+  value:string;
+  open:boolean;
+}
 
 @Component({
   selector: 'layered-map',
@@ -12,9 +19,11 @@ import { Feature, Point, GeometryObject } from 'geojson';
 })
 export class LayeredMapComponent implements AfterViewInit, OnChanges {
   @Input() layers: Array<MappedLayer> = [];
+  @Input() markers:Array<SimpleMarker> = [];
+  
   @Output() layersChange = new EventEmitter<Array<MappedLayer>>();
   @Output() featureSelected = new EventEmitter<Feature<GeometryObject>>();
-
+  @Output() pointSelected = new EventEmitter<LatLng>();
   // google maps zoom level
   zoom: number = 4;
 
@@ -87,5 +96,11 @@ export class LayeredMapComponent implements AfterViewInit, OnChanges {
   clicked(event:DataMouseEvent){
     var feature = this.extractFeature(event.feature);
     this.featureSelected.emit(feature);
+  }
+
+  mapClick(event:any){
+    var coords:LatLng = event.coords;
+    console.log(coords);
+    this.pointSelected.emit(coords);
   }
 }

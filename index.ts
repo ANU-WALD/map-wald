@@ -22,6 +22,8 @@ import { WMSLayerComponent } from './src/wms-layer/wms-layer.component';
 import { MapLegendComponent } from './src/map-legend/map-legend.component';
 import { MapControlComponent } from './src/map-control/map-control.component';
 //$importList
+import { TimeseriesChartComponent } from './src/timeseries-chart/timeseries-chart.component';
+import { TimeseriesService } from './src/timeseries.service';
 import { FeatureTableComponent } from './src/feature-table/feature-table.component';
 import { CollapsibleMapControlComponent } from './src/collapsible-map-control/collapsible-map-control.component';
 import { StaticDataService } from './src/static-data.service';
@@ -55,6 +57,8 @@ export * from './src/interpolation.service';
 export * from './src/wms-layer/wms-layer.component';
 export * from './src/map-legend/map-legend.component';
 //$exportList
+export * from './src/timeseries-chart/timeseries-chart.component';
+export * from './src//timeseries.service';
 export * from './src/feature-table/feature-table.component';
 export * from './src/collapsible-map-control/collapsible-map-control.component';
 export * from './src//static-data.service';
@@ -74,6 +78,9 @@ export * from './src/theme-navbar/theme-navbar.component';
 
 export const services = [
   //$serviceList
+
+TimeseriesService,
+
   StaticDataService,
   MetadataService,
   OpendapService,
@@ -89,6 +96,9 @@ export const services = [
 
 export const components = [
   //$componentList
+TimeseriesChartComponent,
+
+
   FeatureTableComponent,
   CollapsibleMapControlComponent,
   BaseMapSelectionComponent,
