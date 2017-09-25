@@ -1,5 +1,4 @@
-import { Component, Input, ViewChild, AfterViewInit, ElementRef } from '@angular/core';
-//import { GeometryObject, Feature } from 'geojson';
+import { Component, Input, AfterViewInit } from '@angular/core';
 
 @Component({
   selector: 'feature-table',
@@ -7,9 +6,9 @@ import { Component, Input, ViewChild, AfterViewInit, ElementRef } from '@angular
   styleUrls: ['./feature-table.component.scss']
 })
 export class FeatureTableComponent implements AfterViewInit  {
-  @Input() feature: Feature<GeometryObject>;
+  @Input() feature: any;
   _keys = Object.keys;
-  
+
   constructor(){
 
   }
