@@ -22,6 +22,13 @@ import { WMSLayerComponent } from './src/wms-layer/wms-layer.component';
 import { MapLegendComponent } from './src/map-legend/map-legend.component';
 import { MapControlComponent } from './src/map-control/map-control.component';
 //$importList
+import { ShareViewComponent } from './src/share-view/share-view.component';
+import { LocationSearchComponent } from './src/location-search/location-search.component';
+import { ZoomLayerComponent } from './src/zoom-layer/zoom-layer.component';
+import { ZoomFullComponent } from './src/zoom-full/zoom-full.component';
+import { ZoomOutComponent } from './src/zoom-out/zoom-out.component';
+import { ZoomInComponent } from './src/zoom-in/zoom-in.component';
+import { ButtonBarComponent } from './src/button-bar/button-bar.component';
 import { TimeseriesChartComponent } from './src/timeseries-chart/timeseries-chart.component';
 import { TimeseriesService } from './src/timeseries.service';
 import { FeatureTableComponent } from './src/feature-table/feature-table.component';
@@ -57,6 +64,13 @@ export * from './src/interpolation.service';
 export * from './src/wms-layer/wms-layer.component';
 export * from './src/map-legend/map-legend.component';
 //$exportList
+export * from './src/share-view/share-view.component';
+export * from './src/location-search/location-search.component';
+export * from './src/zoom-layer/zoom-layer.component';
+export * from './src/zoom-full/zoom-full.component';
+export * from './src/zoom-out/zoom-out.component';
+export * from './src/zoom-in/zoom-in.component';
+export * from './src/button-bar/button-bar.component';
 export * from './src/timeseries-chart/timeseries-chart.component';
 export * from './src//timeseries.service';
 export * from './src/feature-table/feature-table.component';
@@ -96,6 +110,20 @@ TimeseriesService,
 
 export const components = [
   //$componentList
+ShareViewComponent,
+
+LocationSearchComponent,
+
+ZoomLayerComponent,
+
+ZoomFullComponent,
+
+ZoomOutComponent,
+
+ZoomInComponent,
+
+ButtonBarComponent,
+
 TimeseriesChartComponent,
 
 
