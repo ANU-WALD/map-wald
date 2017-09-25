@@ -22,6 +22,8 @@ import { WMSLayerComponent } from './src/wms-layer/wms-layer.component';
 import { MapLegendComponent } from './src/map-legend/map-legend.component';
 import { MapControlComponent } from './src/map-control/map-control.component';
 //$importList
+import { FeatureTableComponent } from './src/feature-table/feature-table.component';
+import { CollapsibleMapControlComponent } from './src/collapsible-map-control/collapsible-map-control.component';
 import { StaticDataService } from './src/static-data.service';
 import { MetadataService } from './src/metadata.service';
 import { OpendapService } from './src/opendap.service';
@@ -53,6 +55,8 @@ export * from './src/interpolation.service';
 export * from './src/wms-layer/wms-layer.component';
 export * from './src/map-legend/map-legend.component';
 //$exportList
+export * from './src/feature-table/feature-table.component';
+export * from './src/collapsible-map-control/collapsible-map-control.component';
 export * from './src//static-data.service';
 export * from './src//metadata.service';
 export * from './src//opendap.service';
@@ -85,6 +89,8 @@ export const services = [
 
 export const components = [
   //$componentList
+  FeatureTableComponent,
+  CollapsibleMapControlComponent,
   BaseMapSelectionComponent,
   SimpleTreeNodeComponent,
   SimpleTreeComponent,

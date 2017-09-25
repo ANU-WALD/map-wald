@@ -19,8 +19,59 @@ scaleControl="true">
                 >
   </agm-data-layer>
 
+  <!--
+
+  -->
 </ng-container>
 
+<!-- for map controls -->
+<map-control position="TOP_CENTER">
+    <ng-content select=".map-control.top-center"></ng-content>
+</map-control>
+
+<map-control position="TOP_LEFT">
+    <ng-content select=".map-control.top-left"></ng-content>
+</map-control>
+
+<map-control position="TOP_RIGHT">
+    <ng-content select=".map-control.top-right"></ng-content>
+</map-control>
+
+<map-control position="LEFT_TOP">
+    <ng-content select=".map-control.left-top"></ng-content>
+</map-control>
+
+<map-control position="RIGHT_TOP">
+    <ng-content select=".map-control.right-top"></ng-content>
+</map-control>
+
+<map-control position="LEFT_CENTER">
+    <ng-content select=".map-control.left-center"></ng-content>
+</map-control>
+
+<map-control position="RIGHT_CENTER">
+    <ng-content select=".map-control.right-center"></ng-content>
+</map-control>
+
+<map-control position="LEFT_BOTTOM">
+    <ng-content select=".map-control.left-bottom"></ng-content>
+</map-control>
+
+<map-control position="RIGHT_BOTTOM">
+    <ng-content select=".map-control.right-bottom"></ng-content>
+</map-control>
+
+<map-control position="BOTTOM_CENTER">
+    <ng-content select=".map-control.bottom-center"></ng-content>
+</map-control>
+
+<map-control position="BOTTOM_LEFT">
+    <ng-content select=".map-control.bottom-left"></ng-content>
+</map-control>
+
+<map-control position="BOTTOM_RIGHT">
+    <ng-content select=".map-control.bottom-right"></ng-content>
+</map-control>
 
 <!--
 <map-control position="LEFT_CENTER">

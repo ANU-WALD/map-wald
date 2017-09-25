@@ -2,8 +2,11 @@ import { Component, Input, ViewChild, AfterViewInit, ElementRef, OnChanges, Simp
 import { MappedLayer } from "../data/mapped-layer";
 import { LayerSelection } from '../data/catalog';
 import { StaticDataService } from '../static-data.service';
+import { DataMouseEvent, GoogleMapsAPIWrapper } from '@agm/core';
+import { Feature, Point, GeometryObject } from 'geojson';
 
 declare var Plotly: any;
+
 
 @Component({
   selector: 'layered-map',
@@ -13,7 +16,23 @@ declare var Plotly: any;
 export class LayeredMapComponent implements AfterViewInit, OnChanges {
   @Input() layers: Array<MappedLayer> = [];
   @Output() layersChange = new EventEmitter<Array<MappedLayer>>();
+  @Output() featureSelected = new EventEmitter<Feature<GeometryObject>>();
 
+  control_positions = [
+    'TOP_CENTER',
+    'TOP_LEFT',
+    'TOP_RIGHT',
+    'LEFT_TOP',
+    'RIGHT_TOP',
+    'LEFT_CENTER',
+    'RIGHT_CENTER',
+    'LEFT_BOTTOM',
+    'RIGHT_BOTTOM',
+    'BOTTOM_CENTER',
+    'BOTTOM_LEFT',
+    'BOTTOM_RIGHT'
+  ];
+  control_classes: Array<string>;
   // google maps zoom level
   zoom: number = 4;
 
@@ -22,7 +41,9 @@ export class LayeredMapComponent implements AfterViewInit, OnChanges {
   lng: number = 129.815982;
 
   constructor(private staticData:StaticDataService) {
-
+    this.control_classes = this.control_positions.map(pos=>{
+      return `.map-control.${pos.toLowerCase().replace('_','-')}`;
+    });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -65,5 +86,27 @@ export class LayeredMapComponent implements AfterViewInit, OnChanges {
       this.layers = [mapped].concat(this.layers);
     }
     this.layersChange.emit(this.layers);
+  }
+
+  extractFeature(f:any) : Feature<Point>{
+    var geo = f.getGeometry();
+    geo = {
+      type:'Point',
+      coordinates:geo.get(0)
+    }
+
+    var props:{[key:string]:any} = {};
+    f.forEachProperty((val:any,prop:string)=>props[prop]=val);
+
+    return {
+      type:'Feature',
+      geometry:geo,
+      properties:props
+    };
+  }
+
+  clicked(event:DataMouseEvent){
+    var feature = this.extractFeature(event.feature);
+    this.featureSelected.emit(feature);
   }
 }
