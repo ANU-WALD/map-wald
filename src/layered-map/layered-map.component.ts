@@ -5,9 +5,6 @@ import { StaticDataService } from '../static-data.service';
 import { DataMouseEvent, GoogleMapsAPIWrapper } from '@agm/core';
 import { Feature, Point, GeometryObject } from 'geojson';
 
-declare var Plotly: any;
-
-
 @Component({
   selector: 'layered-map',
   templateUrl: './layered-map.component.html',
@@ -18,21 +15,6 @@ export class LayeredMapComponent implements AfterViewInit, OnChanges {
   @Output() layersChange = new EventEmitter<Array<MappedLayer>>();
   @Output() featureSelected = new EventEmitter<Feature<GeometryObject>>();
 
-  control_positions = [
-    'TOP_CENTER',
-    'TOP_LEFT',
-    'TOP_RIGHT',
-    'LEFT_TOP',
-    'RIGHT_TOP',
-    'LEFT_CENTER',
-    'RIGHT_CENTER',
-    'LEFT_BOTTOM',
-    'RIGHT_BOTTOM',
-    'BOTTOM_CENTER',
-    'BOTTOM_LEFT',
-    'BOTTOM_RIGHT'
-  ];
-  control_classes: Array<string>;
   // google maps zoom level
   zoom: number = 4;
 
@@ -41,9 +23,6 @@ export class LayeredMapComponent implements AfterViewInit, OnChanges {
   lng: number = 129.815982;
 
   constructor(private staticData:StaticDataService) {
-    this.control_classes = this.control_positions.map(pos=>{
-      return `.map-control.${pos.toLowerCase().replace('_','-')}`;
-    });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
