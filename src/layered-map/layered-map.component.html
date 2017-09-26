@@ -11,7 +11,8 @@ scaleControl="true"
 
 <agm-marker *ngFor="let marker of markers"
             [longitude]="marker.loc.lng"
-            [latitude]="marker.loc.lat">
+            [latitude]="marker.loc.lat"
+            [iconUrl]="marker.iconUrl">
   <agm-info-window [disableAutoPan]="true" [isOpen]="marker.open">
     <strong>{{marker.value}}</strong>
   </agm-info-window>

@@ -10,6 +10,7 @@ export interface SimpleMarker {
   loc:LatLng;
   value:string;
   open:boolean;
+  iconUrl:string;
 }
 
 @Component({
