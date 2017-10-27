@@ -16,6 +16,12 @@ export class DateSelectionComponent implements AfterViewInit  {
   @Input() timestep: string;
   @Input() minDate: Date;
   @Input() maxDate: Date;
+  @Input() style: ('popup'|'arrows') = 'arrows';
+  need = {
+    day:true,
+    month:true,
+    year:true
+  };
 
   minDateStruct:NgbDateStruct;
   maxDateStruct:NgbDateStruct;
@@ -45,13 +51,30 @@ export class DateSelectionComponent implements AfterViewInit  {
       this.dateStruct = this.timeUtils.convertDate(this.date);
     }
 
+    if(changes.timestep){
+      this.assessDateComponents();
+    }
     this.checkLimits();
   }
 
   dateStructChanged(){
-    console.log(this.dateStruct);
-    this.date = new Date(this.dateStruct.year,this.dateStruct.month-1,this.dateStruct.day);
+    this.date = new Date()
+    this.date.setUTCFullYear(this.dateStruct.year)
+    this.date.setUTCMonth(this.dateStruct.month-1)
+    this.date.setUTCDate(this.dateStruct.day);
     this.dateChange.emit(this.date);
+  }
+
+  assessDateComponents(){
+    this.need.day = this.need.month = this.need.year = true;
+    if(this.timestep==='daily'){
+      return;
+    }
+    this.need.day = false;
+
+    if(this.timestep==='annual') {
+      this.need.month = false;
+    }
   }
 
   move(n:number){

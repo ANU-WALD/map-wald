@@ -22,6 +22,7 @@ import { WMSLayerComponent } from './src/wms-layer/wms-layer.component';
 import { MapLegendComponent } from './src/map-legend/map-legend.component';
 import { MapControlComponent } from './src/map-control/map-control.component';
 //$importList
+import { DateElementComponent } from './src/date-element/date-element.component';
 import { ShareViewComponent } from './src/share-view/share-view.component';
 import { LocationSearchComponent } from './src/location-search/location-search.component';
 import { ZoomLayerComponent } from './src/zoom-layer/zoom-layer.component';
@@ -64,6 +65,7 @@ export * from './src/interpolation.service';
 export * from './src/wms-layer/wms-layer.component';
 export * from './src/map-legend/map-legend.component';
 //$exportList
+export * from './src/date-element/date-element.component';
 export * from './src/share-view/share-view.component';
 export * from './src/location-search/location-search.component';
 export * from './src/zoom-layer/zoom-layer.component';
@@ -93,6 +95,7 @@ export * from './src/theme-navbar/theme-navbar.component';
 export const services = [
   //$serviceList
 
+
 TimeseriesService,
 
   StaticDataService,
@@ -110,6 +113,8 @@ TimeseriesService,
 
 export const components = [
   //$componentList
+DateElementComponent,
+
 ShareViewComponent,
 
 LocationSearchComponent,

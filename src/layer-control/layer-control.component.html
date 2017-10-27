@@ -11,7 +11,7 @@
   <div *ngIf="layers">
     <div *ngFor="let l of layers; let i = index"
          class="layer-control d-flex justify-content-between">
-      <div class="p-2">
+      <div class="p-2" style="width:100%">
         <div *ngIf="l.options.legend">
           <div *ngIf="l.flattenedSettings?.palette">
             <map-legend [title]="l.title"
