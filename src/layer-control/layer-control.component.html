@@ -35,13 +35,28 @@
           <div>
             <!-- TODO Attach handlers and tooltips to each icon -->
             <i class="fa fa-bars discrete-icon"></i><br/>
-            <i class="fa fa-cog discrete-icon" (click)="layerLegend(l,false)"></i><br/>
-            <i class="fa fa-th-list discrete-icon"  (click)="layerLegend(l,true)"></i><br/>
-            <i class="fa fa-angle-double-up discrete-icon" (click)="moveToTop(i)"></i><br/>
-            <i class="fa fa-angle-up discrete-icon"  (click)="moveUp(i)"></i><br/>
-            <i class="fa fa-angle-down discrete-icon"  (click)="moveDown(i)"></i><br/>
-            <i class="fa fa-angle-double-down discrete-icon" (click)="moveToBottom(i)"></i><br/>
-            <i class="fa fa-times discrete-icon" (click)="removeLayer(i)"></i>
+            <i class="fa fa-cog discrete-icon" 
+               ngbTooltip="Show layer controls" placement="right" data-container="body"
+               (click)="layerLegend(l,false)"></i><br/>
+            <i class="fa fa-th-list discrete-icon"
+               ngbTooltip="Show layer data" placement="right" data-container="body"
+               (click)="layerLegend(l,true)"></i><br/>
+            <i class="fa fa-angle-double-up discrete-icon" 
+               ngbTooltip="Move to top" placement="right" data-container="body"
+              (click)="moveToTop(i)"></i><br/>
+            <i class="fa fa-angle-up discrete-icon"
+               ngbTooltip="Move up" placement="right" data-container="body"
+              (click)="moveUp(i)"></i><br/>
+            <i class="fa fa-angle-down discrete-icon"
+               ngbTooltip="Move down" placement="right" data-container="body"
+              (click)="moveDown(i)"></i><br/>
+            <i class="fa fa-angle-double-down discrete-icon"
+               ngbTooltip="Move to bottom" placement="right" data-container="body"
+              (click)="moveToBottom(i)"></i><br/>
+            <i class="fa fa-times discrete-icon" 
+               ngbTooltip="Remove layer" placement="right" data-container="body"
+              data-toggle="tooltip" title="Remove layer"
+              (click)="removeLayer(i)"></i>
           </div>
         </div>
       </div>
