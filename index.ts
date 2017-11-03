@@ -52,6 +52,8 @@ import { ThemeNavbarComponent } from './src/theme-navbar/theme-navbar.component'
 export * from './src/data/catalog';
 export * from './src/data/mapped-layer';
 export * from './src/data/tree';
+export * from './src/data/bounds';
+
 export * from './src/sample.component';
 export * from './src/sample.directive';
 export * from './src/sample.pipe';

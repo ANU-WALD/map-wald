@@ -1,10 +1,12 @@
-import { Component, Input, ViewChild, AfterViewInit, ElementRef, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
-import { MappedLayer } from "../data/mapped-layer";
+import { Component, Input, ViewChild, AfterViewInit, ElementRef, OnChanges, SimpleChanges, 
+         Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
+import { MappedLayer } from '../data/mapped-layer';
 import { LayerSelection } from '../data/catalog';
 import { StaticDataService } from '../static-data.service';
-import { DataMouseEvent, GoogleMapsAPIWrapper, LatLng } from '@agm/core';
+import { DataMouseEvent, LatLng, AgmMap, LatLngBoundsLiteral } from '@agm/core';
 import { Feature, Point, GeometryObject } from 'geojson';
 import { Marker, MapTypeControlOptions, ControlPosition } from '@agm/core/services/google-maps-types';
+import { Bounds } from '../data/bounds';
 
 export interface SimpleMarker {
   loc:LatLng;
@@ -25,6 +27,9 @@ export class LayeredMapComponent implements AfterViewInit, OnChanges {
   @Output() layersChange = new EventEmitter<Array<MappedLayer>>();
   @Output() featureSelected = new EventEmitter<Feature<GeometryObject>>();
   @Output() pointSelected = new EventEmitter<LatLng>();
+
+  @ViewChild(AgmMap) theMap:AgmMap;
+  
   // google maps zoom level
   zoom: number = 4;
   mapTypeOptions: MapTypeControlOptions={
@@ -34,6 +39,7 @@ export class LayeredMapComponent implements AfterViewInit, OnChanges {
   // initial center position for the map
   lat: number = -22.673858;
   lng: number = 129.815982;
+  bounds:Bounds;
 
   constructor(private staticData:StaticDataService) {
   }
@@ -106,5 +112,9 @@ export class LayeredMapComponent implements AfterViewInit, OnChanges {
     var coords:LatLng = event.coords;
     console.log(coords);
     this.pointSelected.emit(coords);
+  }
+
+  zoomToBounds(bounds:Bounds){
+    this.bounds = bounds;
   }
 }
