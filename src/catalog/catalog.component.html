@@ -1,5 +1,13 @@
+<div class="input-group">
+  <span class="input-group-addon"><i class="fa fa-search"
+                                     aria-hidden="true"></i></span>
+  <input type="text" class="form-control" placeholder="Catalog search..."
+  [(ngModel)]="filterText"/>
+
+</div>
 <simple-tree 
-  [tree]="tree"
+  [tree]="this.filterService.filterTree(tree, filterText)"
   [showTop]="false"
+
   (nodeSelected)="nodeSelected($event)">
 </simple-tree>

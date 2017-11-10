@@ -4,13 +4,14 @@ import {
 } from '@angular/core';
 import { Catalog, LayerSelection, Layer, LayerAction, Theme } from '../data/catalog';
 import { TreeModel } from '../data/tree';
+import { TreeFilterService } from '../tree-filter.service';
 
 declare var Plotly: any;
 
 @Component({
   selector: 'catalog',
   templateUrl: './catalog.component.html',
-  styleUrls: ['./catalog.component.scss']
+  styleUrls: ['./catalog.component.scss'],
 })
 export class CatalogComponent implements AfterViewInit, OnChanges {
   @Input() catalog: Catalog;
@@ -18,9 +19,12 @@ export class CatalogComponent implements AfterViewInit, OnChanges {
 
   layers: Array<Layer> = [];
   tree: TreeModel = { label: 'no catalog loaded' };
+  filterText = ''; 
 
-  constructor() {
+  filterService: TreeFilterService;
 
+  constructor(filterService: TreeFilterService) {
+    this.filterService = filterService;
   }
 
   ngAfterViewInit() {
@@ -31,6 +35,7 @@ export class CatalogComponent implements AfterViewInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.catalog && this.catalog) {
+      this.filterText = '';
       this.buildTree();
     }
   }
@@ -40,7 +45,8 @@ export class CatalogComponent implements AfterViewInit, OnChanges {
     var cat = this.catalog;
     var tree: TreeModel = {
       label: cat.name,
-      expanded: true
+      expanded: true,
+      visible: true,
       // settings:{
       //   static:true,
       //   leftMenu:false
@@ -67,6 +73,7 @@ export class CatalogComponent implements AfterViewInit, OnChanges {
       return {
         label: l.name,
         data: l,
+        visible: true,
         actions: layerActions
       };
     }
@@ -75,6 +82,7 @@ export class CatalogComponent implements AfterViewInit, OnChanges {
       return {
         label: t.name,
         expanded: false,
+        visible: true,
         children: t.layers.filter(l => !l.path).map(layerToTree)
       };
     }
@@ -107,6 +115,7 @@ export class CatalogComponent implements AfterViewInit, OnChanges {
           var newNode: TreeModel = {
             label: component,
             expanded: false,
+            visible: true,
             children: []
           };
           addChild(parent,newNode,index);

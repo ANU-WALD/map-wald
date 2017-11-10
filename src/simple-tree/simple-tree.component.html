@@ -1,4 +1,4 @@
-<div *ngIf="tree" class="simple-tree">
+<div *ngIf="tree&&tree.visible" class="simple-tree">
 
   <div *ngIf="inner">
     <li ><simple-tree-node [tree]="tree"

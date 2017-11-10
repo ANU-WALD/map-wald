@@ -8,6 +8,7 @@ export interface TreeNodeAction{
 export interface TreeModel {
   label: string;
   data?: any;
+  visible?: boolean ;
   expanded?: boolean;
   children?: Array<TreeModel>;
   actions?:Array<TreeNodeAction>;
