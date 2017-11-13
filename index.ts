@@ -40,7 +40,6 @@ import { OpendapService } from './src/opendap.service';
 import { BaseMapSelectionComponent } from './src/base-map-selection/base-map-selection.component';
 import { SimpleTreeNodeComponent } from './src/simple-tree-node/simple-tree-node.component';
 import { SimpleTreeComponent } from './src/simple-tree/simple-tree.component';
-import { CatalogSearchComponent } from './src/catalog-search/catalog-search.component';
 import { CatalogComponent } from './src/catalog/catalog.component';
 import { PaletteService } from './src//palette.service';
 import { TimeUtilsService } from './src//time-utils.service';
@@ -143,7 +142,6 @@ TimeseriesChartComponent,
   SimpleTreeNodeComponent,
   SimpleTreeComponent,
   CatalogComponent,
-  CatalogSearchComponent,
   DateSelectionComponent,
   LayerPropertiesComponent,
   LayerControlComponent,
