@@ -2,7 +2,6 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {HttpClientModule} from '@angular/common/http';
-import {NgPipesModule} from 'ngx-pipes';
 import { AgmCoreModule } from '@agm/core';
 
 import { CommonModule } from '@angular/common';
@@ -161,7 +160,6 @@ TimeseriesChartComponent,
     FormsModule,
     AgmCoreModule,
     HttpClientModule,
-    NgPipesModule,
     NgbModule
   ],
   declarations: components,
