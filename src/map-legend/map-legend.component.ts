@@ -7,6 +7,7 @@ import { PaletteService } from '../palette.service';
   styleUrls: ['./map-legend.component.scss']
 })
 export class MapLegendComponent implements OnInit {
+  @Input() imageURL: string
   @Input() colours: Array<string> = ['red', 'white', 'blue'];
   @Input() labels: Array<string> = ['rouge', 'blanc', 'blue'];
   @Input() title: string = 'the title';

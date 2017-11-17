@@ -9,16 +9,21 @@
         </span>
 </strong> 
 
-  <div style="display:table;line-height:15px">
-    <div style="display:table-row;padding:0;"
-         *ngFor="let colour of colours; let i=index">
-      <div class="legend-colour">
-        <i class="legend-entry" [ngStyle]="{background:colour}"></i>
-      </div>
-      <div class="legend-label">
-        <span [innerHTML]="labels[i]"></span>
+  <div *ngIf="!imageURL">
+    <div style="display:table;line-height:15px">
+      <div style="display:table-row;padding:0;"
+          *ngFor="let colour of colours; let i=index">
+        <div class="legend-colour">
+          <i class="legend-entry" [ngStyle]="{background:colour}"></i>
+        </div>
+        <div class="legend-label">
+          <span [innerHTML]="labels[i]"></span>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
+  <div *ngIf="imageURL">
+    <img [src]="imageURL">
+  </div>
+</div>

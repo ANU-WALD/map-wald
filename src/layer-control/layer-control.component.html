@@ -13,8 +13,9 @@
          class="layer-control d-flex justify-content-between">
       <div class="p-2" style="width:100%">
         <div *ngIf="l.options.legend">
-          <div *ngIf="l.flattenedSettings?.palette">
+          <div *ngIf="l.flattenedSettings?.palette || l.legendURL">
             <map-legend [title]="l.title"
+              [imageURL]="l.legendURL"
               [helpText]="l.description()"
               [mapUnits]="l.flattenedSettings?.units"
               [cbPalette]="l.flattenedSettings?.palette"

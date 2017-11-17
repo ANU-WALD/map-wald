@@ -55,6 +55,7 @@ export class MappedLayer {
 
   layer: Layer;
   options: MappedLayerOptions = {};
+  legendURL:string;
   layerType: MappedLayerTypes;
   retrievedMetadata: {[key:string]:any} = {};
 
@@ -100,15 +101,24 @@ export class MappedLayer {
     if (mapParams.timeFormat) {
       mapParams['time'] = InterpolationService.interpolate(mapParams.timeFormat, mapParams);
     }
+    mapParams.layers = mapParams.layers || mapParams.layer || mapParams.variable;
     INTERPOLATED_PARAMETERS.forEach(p=>{
       if(mapParams[p]){
         mapParams[p] = InterpolationService.interpolate(mapParams[p],mapParams);
       }
     });
-    mapParams.layers = mapParams.layers || mapParams.layer || mapParams.variable;
     this.interpolatedFile = InterpolationService.interpolate(this.interpolatedFile, mapParams);
-    this.url = baseURL + '/wms/' + this.interpolatedFile;
-    
+    this.url = baseURL + WMS_URL_FORMAT[software] + this.interpolatedFile;
+
+    if(this.layer.options.legend==='wms'){
+      this.legendURL = this.url + '?service=WMS&request=GetLegendGraphic&format=image/png';
+      this.legendURL += `&layer=${InterpolationService.interpolate(mapParams.layers,mapParams)}`;
+      this.legendURL += '&version=1.1.1';
+      this.options.legend=true;
+    } else {
+      this.legendURL=null;
+    }
+
     if (mapParams.vectors) {
       this.wmsParameters = null;
       this.layerType = 'vector';
