@@ -27,11 +27,23 @@ export const WMS_PARAMETER_NAMES:{[key:string]:Array<string>} = {
   geoserver: [
     'transparent',
     'layers'
+  ],
+  esri: [
+    'layers',
+    'styles',
+    'transparent'
   ]
 };
 
+export const WMS_URL_FORMAT:{[key:string]:string} = {
+  tds:'/wms/',
+  geoserver:'/wms/',
+  esri:'/'
+};
+
 export const INTERPOLATED_PARAMETERS = [
-  'styles'
+  'styles',
+  'layers'
 ];
 
 export class MappedLayer {

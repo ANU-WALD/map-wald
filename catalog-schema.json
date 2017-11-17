@@ -24,6 +24,7 @@
               "enum": [
                 "tds",
                 "geoserver",
+                "esri",
                 "static"
               ]
             }
