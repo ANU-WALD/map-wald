@@ -38,6 +38,7 @@ function mergeArraysByKeys(keys:Array<string>,...sources:Array<Array<Publication
       }
     }
   }
+  result = result.filter(p=>!p.skip);
   return result;
 }
 
