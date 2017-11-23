@@ -11,6 +11,23 @@
     "name": {
       "type": "string"
     },
+    "extent":{
+      "type":"object",
+      "properties":{
+        "north":{
+          "type":"number"
+        },
+        "south":{
+          "type":"number"
+        },
+        "east":{
+          "type":"number"
+        },
+        "west":{
+          "type":"number"
+        }
+      }
+    },
     "namedHosts": {
       "type": "object",
       "patternProperties": {
