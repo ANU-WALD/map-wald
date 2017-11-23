@@ -39,7 +39,7 @@ export class OpendapService {
       .map(parseDDX);
   }
 
-  getExtent(url:string):any{
+  getExtent(url:string):Observable<Array<number>>{
     console.log(url);
     return Observable.forkJoin([
       this.getDAS(url),

@@ -1,4 +1,7 @@
 
+import { Bounds } from './bounds';
+import { Observable } from 'rxjs';
+
 const NAMED_OPTIONS:{[key:string]:string}={
   host:'namedHosts',
   interval:'namedIntervals'
@@ -53,7 +56,7 @@ function propagate(target:any,source:any,skipPublications?:boolean){
 
 function instantiateNamedOptions(dest:any,source:any){
   for(var key in NAMED_OPTIONS){
-    var configKey:string = NAMED_OPTIONS[key];
+    const configKey:string = NAMED_OPTIONS[key];
     if(!source[configKey]){
       continue;
     }
@@ -62,7 +65,7 @@ function instantiateNamedOptions(dest:any,source:any){
       continue;
     }
 
-    var lookup = dest[key];
+    const lookup = dest[key];
     dest[key] = source[configKey][lookup];
   }
 }
@@ -116,6 +119,10 @@ export class Catalog{
     }
     this.themes.forEach(t=>t.instantiateNamedOptions(this));
   }
+
+  allLayers():Array<Layer>{
+    return this.themes.map(t=>t.layers).reduce((prev,curr)=>prev.concat(curr), []);
+  }
 }
 
 export class Theme{
@@ -159,7 +166,8 @@ export class Layer{
   name:string;
   path:string;
   [key:string]:any;
-
+  spatialExtent: Observable<Bounds>;
+  
   constructor(config?:any){
     if(!config){
       return;

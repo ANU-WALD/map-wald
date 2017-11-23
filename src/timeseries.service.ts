@@ -2,12 +2,9 @@ import { Injectable } from '@angular/core';
 import { MappedLayer } from './data/mapped-layer';
 import { LatLng } from '@agm/core';
 import { OpendapService } from './opendap.service';
-import { MetadataService } from './metadata.service';
+import { MetadataService, LAT_NAMES, LNG_NAMES } from './metadata.service';
 import { Observable } from 'rxjs/Observable';
 import { DapDDX, DapDAS, DapData } from 'dap-query-js/dist/dap-query';
-
-const LAT_NAMES=['latitude','lat'];
-const LNG_NAMES=['longitude','lng','lon'];
 
 export interface TimeSeries{
   dates:Array<Date>;
@@ -21,56 +18,26 @@ export class TimeseriesService {
 
   }
 
-  identifyCoordinate(ddx:DapDDX,...possibleNames:Array<string>):string{
-    for(let n of possibleNames){
-      if(ddx.variables[n]){
-        return n;
-      }
-    }
-    return undefined;
-  }
-
   getTimeseries(ml:MappedLayer,pt:LatLng):Observable<TimeSeries>{
     var ddx$ = this.metadata.getDDX(ml);
     var das$ = this.metadata.getDAS(ml);
     var url = this.dap.makeURL(ml.flattenedSettings.host,ml.interpolatedFile);
     var variable = ml.flattenedSettings.variable;
+    return Observable.forkJoin(ddx$,das$,this.metadata.getGrid(ml)).switchMap(
+      ([ddx,das,[lats,lngs]])=>{
+      var latIndex = this.indexInDimension((<any>pt).lat,lats,true);
+      var lngIndex = this.indexInDimension((<any>pt).lng,lngs,false);
 
-    return Observable.forkJoin([ddx$,das$])
-      .switchMap(metadata=>{
-        var ddx:DapDDX = metadata[0];
-        var das:DapDAS = metadata[1];
-
-        var latCoord = this.identifyCoordinate(ddx,...LAT_NAMES);
-        var lngCoord = this.identifyCoordinate(ddx,...LNG_NAMES);
-
-        var lat$ = this.dap.getData(`${url}.ascii?${latCoord}`,das);
-        var lng$ = this.dap.getData(`${url}.ascii?${lngCoord}`,das);
-        
-        return Observable.forkJoin([
-          Observable.of(ddx),Observable.of(das),lat$,lng$
-        ]).switchMap((metadata:Array<any>)=>{
-          var ddx:DapDDX = metadata[0];
-          var das:DapDAS = metadata[1];
-          var lat:DapData = metadata[2]; 
-          var lng:DapData = metadata[3];
-
-          var latCoord = this.identifyCoordinate(ddx,...LAT_NAMES);
-          var lngCoord = this.identifyCoordinate(ddx,...LNG_NAMES);
-  
-          var latIndex = this.indexInDimension((<any>pt).lat,<Array<number>>lat[latCoord],true);
-          var lngIndex = this.indexInDimension((<any>pt).lng,<Array<number>>lng[lngCoord],false);
-
-          var query = this.makeTimeQuery(ddx,variable,latIndex,lngIndex);
-          return this.dap.getData(`${url}.ascii?${variable}${query}`,das)
-        }).map((data:DapData)=>{
-          return {
-            dates:<Array<Date>> data.time,
-            values:<Array<number>> data[variable]
-          };
-        })
-      })
+      var query = this.makeTimeQuery(ddx,variable,latIndex,lngIndex);
+      return this.dap.getData(`${url}.ascii?${variable}${query}`,das)
+    }).map((data:DapData)=>{
+      return {
+        dates:<Array<Date>> data.time,
+        values:<Array<number>> data[variable]
+      };
+    })
   }
+
 
   makeTimeQuery(ddx:DapDDX,variable:string,latIndex:number,lngIndex:number):string{
     var metadata = ddx.variables[variable];

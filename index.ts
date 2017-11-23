@@ -68,6 +68,7 @@ export * from './src/interpolation.service';
 export * from './src/wms-layer/wms-layer.component';
 export * from './src/map-legend/map-legend.component';
 //$exportList
+export * from './src//metadata.service';
 export * from './src/date-element/date-element.component';
 export * from './src/share-view/share-view.component';
 export * from './src/location-search/location-search.component';
@@ -81,7 +82,6 @@ export * from './src//timeseries.service';
 export * from './src/feature-table/feature-table.component';
 export * from './src/collapsible-map-control/collapsible-map-control.component';
 export * from './src//static-data.service';
-export * from './src//metadata.service';
 export * from './src//opendap.service';
 export * from './src/base-map-selection/base-map-selection.component';
 export * from './src/simple-tree-node/simple-tree-node.component';
@@ -97,10 +97,7 @@ export * from './src/theme-navbar/theme-navbar.component';
 
 export const services = [
   //$serviceList
-
-
-TimeseriesService,
-
+  TimeseriesService,
   StaticDataService,
   MetadataService,
   OpendapService,
@@ -117,25 +114,15 @@ TimeseriesService,
 
 export const components = [
   //$componentList
-DateElementComponent,
-
-ShareViewComponent,
-
-LocationSearchComponent,
-
-ZoomLayerComponent,
-
-ZoomFullComponent,
-
-ZoomOutComponent,
-
-ZoomInComponent,
-
-ButtonBarComponent,
-
-TimeseriesChartComponent,
-
-
+  DateElementComponent,
+  ShareViewComponent,
+  LocationSearchComponent,
+  ZoomLayerComponent,
+  ZoomFullComponent,
+  ZoomOutComponent,
+  ZoomInComponent,
+  ButtonBarComponent,
+  TimeseriesChartComponent,
   FeatureTableComponent,
   CollapsibleMapControlComponent,
   BaseMapSelectionComponent,

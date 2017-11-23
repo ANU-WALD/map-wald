@@ -1,6 +1,5 @@
 
 
-import { Bounds } from './bounds';
 import { Layer } from './catalog';
 import { InterpolationService } from '../interpolation.service';
 
@@ -64,7 +63,6 @@ export class MappedLayer {
   url: string;
   wmsParameters: any = {};
   flattenedSettings: any = {};
-  spatialExtent: Bounds;
   staticData:any;
 
   leading0(n: number): string {

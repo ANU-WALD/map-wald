@@ -7,6 +7,7 @@ import { DataMouseEvent, LatLng, AgmMap, LatLngBoundsLiteral } from '@agm/core';
 import { Feature, Point, GeometryObject } from 'geojson';
 import { Marker, MapTypeControlOptions, ControlPosition } from '@agm/core/services/google-maps-types';
 import { Bounds } from '../data/bounds';
+import { MetadataService } from '../metadata.service';
 
 export interface SimpleMarker {
   loc:LatLng;
@@ -41,10 +42,12 @@ export class LayeredMapComponent implements AfterViewInit, OnChanges {
   lng: number = 129.815982;
   bounds:Bounds;
 
-  constructor(private staticData:StaticDataService) {
+  constructor(private staticData:StaticDataService,
+              private metadata:MetadataService) {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    // if zoom in changes...
   }
 
   ngAfterViewInit() {
@@ -61,6 +64,7 @@ export class LayeredMapComponent implements AfterViewInit, OnChanges {
 
     var mapped = new MappedLayer();
     mapped.layer = selection.layer;
+
     mapped.layerType = 'wms';
     mapped.options.legend = true;
     mapped.options.date = new Date(2016, 0, 1); // Set to most recent available date
