@@ -6,6 +6,7 @@ import { OpendapService } from './opendap.service';
 import { Bounds } from './data/bounds';
 
 import 'rxjs/add/operator/publishReplay';
+import { CatalogHost } from '../index';
 
 export const LAT_NAMES=['latitude','lat'];
 export const LNG_NAMES=['longitude','lng','lon'];
@@ -28,26 +29,34 @@ export class MetadataService {
     return undefined;
   }
 
-  getDDX(ml:MappedLayer):Observable<DapDDX>{
-    var url = this.dap.makeURL(ml.flattenedSettings.host,ml.interpolatedFile);
-    
-        if(!this.ddxCache[url]){
-          this.ddxCache[url] = 
-            this.dap.getDDX(url).publishReplay().refCount();
-        }
-    
-        return this.ddxCache[url];
+  getDDX(host:CatalogHost,file:string):Observable<DapDDX>{
+    var url = this.dap.makeURL(host,file);
+
+    if(!this.ddxCache[url]){
+      this.ddxCache[url] = 
+        this.dap.getDDX(url).publishReplay().refCount();
+    }
+
+    return this.ddxCache[url];
+}
+
+  getDDXForLayer(ml:MappedLayer):Observable<DapDDX>{
+    return this.getDDX(ml.flattenedSettings.host,ml.interpolatedFile);
   }
 
-  getDAS(ml:MappedLayer):Observable<DapDAS>{
-    var url = this.dap.makeURL(ml.flattenedSettings.host,ml.interpolatedFile);
-    
-        if(!this.dasCache[url]){
-          this.dasCache[url] = 
-            this.dap.getDAS(url).publishReplay().refCount();
-        }
-    
-        return this.dasCache[url];
+  getDAS(host:CatalogHost,file:string):Observable<DapDAS>{
+    var url = this.dap.makeURL(host,file);
+
+    if(!this.dasCache[url]){
+      this.dasCache[url] = 
+        this.dap.getDAS(url).publishReplay().refCount();
+    }
+
+    return this.dasCache[url];
+  }
+
+  getDASForLayer(ml:MappedLayer):Observable<DapDAS>{
+    return this.getDAS(ml.flattenedSettings.host,ml.interpolatedFile);
   }
 
   populateMetadata(ml:MappedLayer){
@@ -56,17 +65,16 @@ export class MetadataService {
       return;
     }
 
-    this.getDDX(ml).subscribe(ddx=>{
+    this.getDDXForLayer(ml).subscribe(ddx=>{
       var entry = ddx.variables[ml.flattenedSettings.variable];
       ml.retrievedMetadata = entry;
     })
   }
 
-  getGrid(ml:MappedLayer):Observable<Array<Array<number>>>{
-
-    var ddx$ = this.getDDX(ml);
-    var das$ = this.getDAS(ml);
-    var url = this.dap.makeURL(ml.flattenedSettings.host,ml.interpolatedFile);
+  getGrid(host:CatalogHost,file:string):Observable<Array<Array<number>>>{
+    var ddx$ = this.getDDX(host,file);
+    var das$ = this.getDAS(host,file);
+    var url = this.dap.makeURL(host,file);
 
     return Observable.forkJoin([ddx$,das$])
       .switchMap(metadata=>{
@@ -83,10 +91,14 @@ export class MetadataService {
         
         return Observable.forkJoin([lat$,lng$])
       }).publishReplay().refCount();
-    }
+  }
+
+  getGridForLayer(ml:MappedLayer):Observable<Array<Array<number>>>{
+    return this.getGrid(ml.flattenedSettings.host,ml.interpolatedFile);
+  }
 
     getSpatialExtent(ml:MappedLayer):Observable<Bounds>{
-      return this.getGrid(ml).map(([lats,lngs])=>{
+      return this.getGridForLayer(ml).map(([lats,lngs])=>{
         var result:Bounds = {
           east: Math.max(...lngs),
           west: Math.min(...lngs),

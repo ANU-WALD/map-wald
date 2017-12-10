@@ -17,7 +17,6 @@ export class TimeUtilsService {
   }
 
   convertDate(d:(Date|string)):NgbDateStruct{
-    console.log(d);
     if(!d){
       d = new Date();
     }

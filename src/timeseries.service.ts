@@ -5,11 +5,17 @@ import { OpendapService } from './opendap.service';
 import { MetadataService, LAT_NAMES, LNG_NAMES } from './metadata.service';
 import { Observable } from 'rxjs/Observable';
 import { DapDDX, DapDAS, DapData } from 'dap-query-js/dist/dap-query';
+import { CatalogHost } from '../index';
 
 export interface TimeSeries{
   dates:Array<Date>;
   values:Array<number>;
 }
+
+export interface SimpleLatLng{
+  lat:number,
+  lng:number
+};
 
 @Injectable()
 export class TimeseriesService {
@@ -18,12 +24,12 @@ export class TimeseriesService {
 
   }
 
-  getTimeseries(ml:MappedLayer,pt:LatLng):Observable<TimeSeries>{
-    var ddx$ = this.metadata.getDDX(ml);
-    var das$ = this.metadata.getDAS(ml);
-    var url = this.dap.makeURL(ml.flattenedSettings.host,ml.interpolatedFile);
-    var variable = ml.flattenedSettings.variable;
-    return Observable.forkJoin(ddx$,das$,this.metadata.getGrid(ml)).switchMap(
+  getTimeseries(host:CatalogHost,file:string,variable:string,pt:(LatLng|SimpleLatLng)):Observable<TimeSeries>{
+    var ddx$ = this.metadata.getDDX(host,file);
+    var das$ = this.metadata.getDAS(host,file);
+    var url = this.dap.makeURL(host,file);
+    var variable = variable;
+    return Observable.forkJoin(ddx$,das$,this.metadata.getGrid(host,file)).switchMap(
       ([ddx,das,[lats,lngs]])=>{
       var latIndex = this.indexInDimension((<any>pt).lat,lats,true);
       var lngIndex = this.indexInDimension((<any>pt).lng,lngs,false);
@@ -36,6 +42,10 @@ export class TimeseriesService {
         values:<Array<number>> data[variable]
       };
     })
+  }
+
+  getTimeseriesForLayer(ml:MappedLayer,pt:LatLng):Observable<TimeSeries>{
+    return this.getTimeseries(ml.flattenedSettings.host,ml.interpolatedFile,ml.flattenedSettings.variable,pt);
   }
 
 
