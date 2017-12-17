@@ -54,7 +54,7 @@
     "@angular/core": "^4.0.0",
     "@angular/platform-browser": "^4.0.0",
     "@angular/platform-server": "^4.0.0",
-    "@ng-bootstrap/ng-bootstrap": "^1.0.0-alpha.23",
+    "@ng-bootstrap/ng-bootstrap": "^1.0.0-beta.6",
     "@types/es6-shim": "^0.31.32",
     "@types/geojson": "^1.0.3",
     "@types/jasmine": "^2.5.40",

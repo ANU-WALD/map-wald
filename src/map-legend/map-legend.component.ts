@@ -56,10 +56,12 @@ export class MapLegendComponent implements OnInit {
     var delta = (this._cbRange[1]-this._cbRange[0])/(this._cbCount-1);
     var result = [];
     var lower=this._cbRange[0];
+    let  decimalPlaces = Math.max(0,2-(+Math.log10(this._cbRange[1]-this._cbRange[0]).toFixed()));
+    decimalPlaces = Math.min(decimalPlaces,10);
     var upper;
     for(let i=1;i<(this._cbCount);i++){
       upper = this._cbRange[0]+i*delta;
-      result.push(`${lower.toFixed()}-${upper.toFixed()}`);
+      result.push(`${this.formatValue(lower,decimalPlaces)}-${this.formatValue(upper,decimalPlaces)}`);
       lower = upper;
     }
     result.push('&ge;'+this._cbRange[1]);
@@ -78,6 +80,28 @@ export class MapLegendComponent implements OnInit {
         this.labels = this.generateLabels() || palette;
     });
   }
+
+  formatValue = function(val:number,decimalPlaces:number):string{
+    if(!val){
+      if(val===0){
+        return '0';
+      }
+      return '-';
+    }
+    // Add thousand's separator. Source: http://stackoverflow.com/a/2901298
+    var parts = val.toString().split(".");
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+    if(decimalPlaces===0){
+      return parts[0];
+    }
+
+    if((decimalPlaces!==null) &&(decimalPlaces!==undefined) && (parts.length===2)){
+      parts[1] = parts[1].substr(0,decimalPlaces);
+      parts[1] = parts[1].replace(/0+$/, '');
+    }
+    return parts.join('.');
+  };
 
   constructor(private _palettes:PaletteService) { }
 
