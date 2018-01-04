@@ -22,6 +22,7 @@
 
   <div *ngIf="style==='arrows'">
     <date-element *ngIf="need.day"   [src]="dateStruct" [property]="'day'" [label]="'Day'"
+                  [step]="stepDays"
                   (changed)="dateStructChanged()"></date-element>
     <date-element *ngIf="need.month" [src]="dateStruct" [property]="'month'" [label]="'Month'"
                   (changed)="dateStructChanged()"></date-element>

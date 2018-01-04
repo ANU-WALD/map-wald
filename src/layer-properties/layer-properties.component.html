@@ -21,6 +21,8 @@
     <date-selection [(date)]="layer.options.date"
       (dateChange)="update($event)"
       [timestep]="publication.timestep"
+      [stepDays]="publication.timestepMultiplier||1"
+      [referenceDate]="publication.timestepReference"
       [minDate]="publication.options.start"
       [maxDate]="publication.options.end"></date-selection>
   </div>

@@ -177,7 +177,25 @@
           "type": "string"
         },
         "palette": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type":"object",
+              "properties":{
+                "name": {
+                  "type":"string"
+                },
+                "count": {
+                  "type":"number"
+                },
+                "reverse": {
+                  "type":"boolean"
+                }
+              }
+            }
+          ]
         },
         "colorscalerange": {
           "type": "array",
@@ -251,6 +269,12 @@
               "annual",
               "specific"
             ]
+          },
+          "timestepMultiplier":{
+            "type":"number"
+          },
+          "timestepReference":{
+            "type":"string"
           },
           "minZoom": {
             "type": "number"

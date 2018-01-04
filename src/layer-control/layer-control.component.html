@@ -18,8 +18,9 @@
               [imageURL]="l.legendURL"
               [helpText]="l.description()"
               [mapUnits]="l.flattenedSettings?.units"
-              [cbPalette]="l.flattenedSettings?.palette"
-              [cbCount]="l.flattenedSettings?.numcolorbands"
+              [cbPalette]="l.flattenedSettings?.palette?.name||l.flattenedSettings?.palette"
+              [cbCount]="l.flattenedSettings?.numcolorbands||l.flattenedSettings?.palette?.count"
+              [cbReverse]="l.flattenedSettings?.palette?.reverse"
               [cbRange]="l.flattenedSettings?.colorscalerange">
             </map-legend>
           </div>

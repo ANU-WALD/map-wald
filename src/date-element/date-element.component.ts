@@ -12,6 +12,7 @@ export class DateElementComponent implements AfterViewInit  {
   @Input() label:string;
   @Input() property:string;
   @Input() src:any;
+  @Input() step = 1;
   @Output() changed = new EventEmitter<any>();
   
   constructor(){
