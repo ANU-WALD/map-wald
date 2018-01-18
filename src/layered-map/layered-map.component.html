@@ -28,7 +28,9 @@ scaleControl="true"
   </wms-layer>
   <agm-data-layer *ngSwitchCase="'vector'"
                 [geoJson]="mp.staticData"
+                [style]="mp._styleFunc"
                 (layerClick)="clicked($event)"
+
                 >
   </agm-data-layer>
 

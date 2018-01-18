@@ -65,6 +65,8 @@ export class MappedLayer {
   flattenedSettings: any = {};
   staticData:any;
 
+  _styleFunc: (f:any)=>void;
+
   leading0(n: number): string {
     if (n < 10) {
       return '0' + n;
@@ -121,6 +123,10 @@ export class MappedLayer {
     if (mapParams.vectors) {
       this.wmsParameters = null;
       this.layerType = 'vector';
+      let styles = mapParams.styles || {};
+      this._styleFunc = (f:any)=>{
+        return styles;
+      }
     } else {
       this.layerType = 'wms';
       this.wmsParameters = {};
@@ -131,7 +137,7 @@ export class MappedLayer {
       });
     }
     this.flattenedSettings = mapParams;
-    
+
     if(mapParams.titleFormat){
       this.title = InterpolationService.interpolate(mapParams.titleFormat,mapParams)
     } else {
