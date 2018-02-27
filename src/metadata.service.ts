@@ -10,6 +10,7 @@ import { CatalogHost } from '../index';
 
 export const LAT_NAMES=['latitude','lat'];
 export const LNG_NAMES=['longitude','lng','lon'];
+export const TIME_NAMES=['time','t'];
 
 @Injectable()
 export class MetadataService {

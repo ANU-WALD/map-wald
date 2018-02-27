@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import { MappedLayer } from './data/mapped-layer';
 import { LatLng } from '@agm/core';
 import { OpendapService } from './opendap.service';
-import { MetadataService, LAT_NAMES, LNG_NAMES } from './metadata.service';
+import { MetadataService, LAT_NAMES, LNG_NAMES, TIME_NAMES } from './metadata.service';
 import { Observable } from 'rxjs/Observable';
 import { DapDDX, DapDAS, DapData } from 'dap-query-js/dist/dap-query';
-import { CatalogHost } from '../index';
+import { CatalogHost } from './data/catalog';
 
 export interface TimeSeries{
   dates:Array<Date>;
@@ -31,14 +31,14 @@ export class TimeseriesService {
     var variable = variable;
     return Observable.forkJoin(ddx$,das$,this.metadata.getGrid(host,file)).switchMap(
       ([ddx,das,[lats,lngs]])=>{
-      var latIndex = this.indexInDimension((<any>pt).lat,lats,true);
-      var lngIndex = this.indexInDimension((<any>pt).lng,lngs,false);
+      var latIndex = this.indexInDimension((<any>pt).lat,lats);
+      var lngIndex = this.indexInDimension((<any>pt).lng,lngs);
 
       var query = this.makeTimeQuery(ddx,variable,latIndex,lngIndex);
       return this.dap.getData(`${url}.ascii?${variable}${query}`,das)
     }).map((data:DapData)=>{
       return {
-        dates:<Array<Date>> data.time,
+        dates:<Array<Date>> (data.time||data.t),
         values:<Array<number>> data[variable]
       };
     })
@@ -55,12 +55,14 @@ export class TimeseriesService {
 
     metadata.dimensions.forEach((dim:any)=>{
       var dName:string = dim.name.toLowerCase();
-      if(dName==='time'){
+      if(TIME_NAMES.indexOf(dName)>=0){
         query += this.dapRangeQuery(0,+(dim.size)-1);
       } else if(LAT_NAMES.indexOf(dName)>=0){
           query += this.dapRangeQuery(latIndex);
       } else if(LNG_NAMES.indexOf(dName)>=0){
         query += this.dapRangeQuery(lngIndex);
+      } else { 
+        query += this.dapRangeQuery(0);
       }
     });
     return query;
@@ -74,14 +76,15 @@ export class TimeseriesService {
     return '['+from+':'+step+':'+to+']';
   }
 
-  indexInDimension(c:number,dim:Array<number>,rev?:boolean,trim?:number):number{
+  indexInDimension(c:number,dim:Array<number>,trim?:number):number{
     var minIndex = 0;
     var maxIndex = dim.length-1;
 
     if(trim){
       maxIndex-=trim;
     }
-
+    
+    const rev = dim[0] > dim[dim.length-1];
     if(rev){
       minIndex = maxIndex;
       maxIndex = 0;
