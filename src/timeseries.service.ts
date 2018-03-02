@@ -24,7 +24,8 @@ export class TimeseriesService {
 
   }
 
-  getTimeseries(host:CatalogHost,file:string,variable:string,pt:(LatLng|SimpleLatLng)):Observable<TimeSeries>{
+  getTimeseries(host:CatalogHost,file:string,variable:string,pt:(LatLng|SimpleLatLng),additionalIndices:any):Observable<TimeSeries>{
+    additionalIndices = additionalIndices || {};
     var ddx$ = this.metadata.getDDX(host,file);
     var das$ = this.metadata.getDAS(host,file);
     var url = this.dap.makeURL(host,file);
@@ -34,7 +35,7 @@ export class TimeseriesService {
       var latIndex = this.indexInDimension((<any>pt).lat,lats);
       var lngIndex = this.indexInDimension((<any>pt).lng,lngs);
 
-      var query = this.makeTimeQuery(ddx,variable,latIndex,lngIndex);
+      var query = this.makeTimeQuery(ddx,variable,latIndex,lngIndex,additionalIndices);
       return this.dap.getData(`${url}.ascii?${variable}${query}`,das)
     }).map((data:DapData)=>{
       return {
@@ -45,11 +46,11 @@ export class TimeseriesService {
   }
 
   getTimeseriesForLayer(ml:MappedLayer,pt:LatLng):Observable<TimeSeries>{
-    return this.getTimeseries(ml.flattenedSettings.host,ml.interpolatedFile,ml.flattenedSettings.variable,pt);
+    return this.getTimeseries(ml.flattenedSettings.host,ml.interpolatedFile,ml.flattenedSettings.variable,pt,null);
   }
 
 
-  makeTimeQuery(ddx:DapDDX,variable:string,latIndex:number,lngIndex:number):string{
+  makeTimeQuery(ddx:DapDDX,variable:string,latIndex:number,lngIndex:number,additionalIndices:any):string{
     var metadata = ddx.variables[variable];
     var query='';
 
@@ -62,7 +63,7 @@ export class TimeseriesService {
       } else if(LNG_NAMES.indexOf(dName)>=0){
         query += this.dapRangeQuery(lngIndex);
       } else { 
-        query += this.dapRangeQuery(0);
+        query += this.dapRangeQuery(additionalIndices[dName]||0);
       }
     });
     return query;
