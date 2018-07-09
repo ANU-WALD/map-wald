@@ -1,7 +1,7 @@
 import { Component, Input, ViewChild, AfterViewInit, ElementRef, Output, EventEmitter } from '@angular/core';
 import { NgbDateStruct } from "@ng-bootstrap/ng-bootstrap";
 import { TimeUtilsService } from "../time-utils.service";
-import { InterpolationService } from '../../index';
+import { InterpolationService } from '../interpolation.service';
 
 const MILLISECONDS_PER_DAY=24*60*60*1000;
 
