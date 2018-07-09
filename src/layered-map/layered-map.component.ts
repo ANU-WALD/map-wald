@@ -70,10 +70,11 @@ export class LayeredMapComponent implements AfterViewInit, OnChanges {
     mapped.options.date = new Date(2016, 0, 1); // Set to most recent available date
 
     if(selection.layer.options.vectors){
-      this.staticData.get(selection.layer.options.host,selection.layer.options.filepath).subscribe(data=>{
-        mapped.staticData=data;
-        this.activateLayer(mapped,selection);
-      });
+      this.staticData.get(selection.layer.options.host,selection.layer.options.filepath).subscribe(
+        (data:any)=>{
+          mapped.staticData=data;
+          this.activateLayer(mapped,selection);
+        });
     } else {
       this.activateLayer(mapped, selection);
     }

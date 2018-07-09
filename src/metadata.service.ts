@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { MappedLayer } from './data/mapped-layer';
-import { DapDDX, DapDAS } from 'dap-query-js/dist/dap-query';
-import { Observable } from 'rxjs/Observable';
+import { DapDDX, DapDAS, DapData } from 'dap-query-js/dist/dap-query';
 import { OpendapService } from './opendap.service';
 import { Bounds } from './data/bounds';
 
-import 'rxjs/add/operator/publishReplay';
 import { CatalogHost } from '../index';
+import { forkJoin, Observable } from 'rxjs';
+import { switchMap, publishReplay, refCount, map, switchAll } from 'rxjs/operators';
 
 export const LAT_NAMES=['latitude','lat'];
 export const LNG_NAMES=['longitude','lng','lon'];
@@ -35,7 +35,7 @@ export class MetadataService {
 
     if(!this.ddxCache[url]){
       this.ddxCache[url] = 
-        this.dap.getDDX(url).publishReplay().refCount();
+        this.dap.getDDX(url).pipe(publishReplay(),refCount());
     }
 
     return this.ddxCache[url];
@@ -50,7 +50,7 @@ export class MetadataService {
 
     if(!this.dasCache[url]){
       this.dasCache[url] = 
-        this.dap.getDAS(url).publishReplay().refCount();
+        this.dap.getDAS(url).pipe(publishReplay(),refCount());
     }
 
     return this.dasCache[url];
@@ -72,26 +72,29 @@ export class MetadataService {
     })
   }
 
-  getGrid(host:CatalogHost,file:string):Observable<Array<Array<number>>>{
-    var ddx$ = this.getDDX(host,file);
-    var das$ = this.getDAS(host,file);
-    var url = this.dap.makeURL(host,file);
+  getGrid(host:CatalogHost,file:string):Observable<number[][]>{
+    const ddx$ = this.getDDX(host,file);
+    const das$ = this.getDAS(host,file);
+    const url = this.dap.makeURL(host,file);
 
-    return Observable.forkJoin([ddx$,das$])
-      .switchMap(metadata=>{
-        var ddx:DapDDX = metadata[0];
-        var das:DapDAS = metadata[1];
+    const res$ = <Observable<number[][]>>forkJoin([ddx$,das$]).pipe(
+      map((metadata:any[])=>{
+        const ddx:DapDDX = metadata[0];
+        const das:DapDAS = metadata[1];
 
-        var latCoord = this.identifyCoordinate(ddx,...LAT_NAMES);
-        var lngCoord = this.identifyCoordinate(ddx,...LNG_NAMES);
+        const latCoord = this.identifyCoordinate(ddx,...LAT_NAMES);
+        const lngCoord = this.identifyCoordinate(ddx,...LNG_NAMES);
 
-        var lat$ = 
-          this.dap.getData(`${url}.ascii?${latCoord}`,das).map(dd=><Array<number>>dd[latCoord]);
-        var lng$ =
-          this.dap.getData(`${url}.ascii?${lngCoord}`,das).map(dd=><Array<number>>dd[lngCoord]);
-        
-        return Observable.forkJoin([lat$,lng$])
-      }).publishReplay().refCount();
+        const lat$ = 
+          this.dap.getData(`${url}.ascii?${latCoord}`,das).pipe(
+            map((dd:DapData)=><number[]>dd[latCoord]));
+        const lng$ =
+          this.dap.getData(`${url}.ascii?${lngCoord}`,das).pipe(
+            map((dd:DapData)=><number[]>dd[lngCoord]));
+
+        return forkJoin<number[]>([lat$,lng$]);
+      }),switchAll(),publishReplay(),refCount());
+      return res$;
   }
 
   getGridForLayer(ml:MappedLayer):Observable<Array<Array<number>>>{
@@ -99,7 +102,7 @@ export class MetadataService {
   }
 
     getSpatialExtent(ml:MappedLayer):Observable<Bounds>{
-      return this.getGridForLayer(ml).map(([lats,lngs])=>{
+      return this.getGridForLayer(ml).pipe(map(([lats,lngs])=>{
         var result:Bounds = {
           east: Math.max(...lngs),
           west: Math.min(...lngs),
@@ -107,6 +110,6 @@ export class MetadataService {
           south: Math.min(...lats)
         };
         return result;
-      }).publishReplay().refCount();
+      })).pipe(publishReplay(), refCount());
   }
 }

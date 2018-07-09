@@ -25,6 +25,7 @@
     "node_modules",
     "scripts/*",
     "dist",
-    "**/*.spec.ts"
+    "**/*.spec.ts",
+    "plotly.js"
   ]
 }

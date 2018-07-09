@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
 import {palettes} from './colorbrewer';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 export type ColourSpecification = string;
 export type ColourPalette = Array<ColourSpecification>;
 
-import 'rxjs/add/observable/from';
-import 'rxjs/add/observable/of';
 
 const DEFAULT_NUM_COLOURS=3;
 
@@ -34,13 +33,13 @@ export class PaletteService {
 
     if(palette){
       if(reverse){
-        return Observable.of(palette.slice().reverse());
+        return of(palette.slice().reverse());
       }
-      return Observable.of(palette.slice());
+      return of(palette.slice());
     }
 
-    return this._http.get(this._source+'/'+name+'.pal',{ responseType: 'text' })
-      .map((text:string)=>this.parseNCWMSPalette(text))
+    return this._http.get(this._source+'/'+name+'.pal',{ responseType: 'text' }).pipe(
+      map((text:string)=>this.parseNCWMSPalette(text)));
   }
 
   parseNCWMSPalette(txt:string):ColourPalette{

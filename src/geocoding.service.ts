@@ -1,12 +1,6 @@
 import { Injectable } from '@angular/core';
 import {MapsAPILoader} from '@agm/core';
-import {Observable} from 'rxjs/Observable';
-
-import 'rxjs/add/observable/fromPromise';
-import 'rxjs/add/observable/bindCallback';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/concatMap';
-import 'rxjs/add/operator/combineAll';
+import {Observable, from} from 'rxjs';
 
 declare var google:any;
 
@@ -38,6 +32,6 @@ export class GeocodingService {
       });
     });
 
-    return Observable.fromPromise(promise);
+    return from(promise);
   }
 }

@@ -3,7 +3,8 @@ import { TimeSeries } from '../timeseries.service';
 //import * as Plotly from 'plotly.js/dist/plotly-basic';
 
 //declare var Plotly: any;
-const Plotly = require('plotly.js/dist/plotly-basic');
+//const Plotly = require('plotly.js/dist/plotly-basic');
+import * as Plotly from 'plotly.js/dist/plotly-basic';
 
 @Component({
   selector: 'timeseries-chart',

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { Catalog, Layer } from "./data/catalog";
-import { Observable } from 'rxjs';
+import { Observable, from } from 'rxjs';
 import { Bounds } from './data/bounds';
 import { MappedLayer } from './data/mapped-layer';
 import { MetadataService } from './metadata.service';
@@ -30,7 +30,7 @@ export class CatalogService {
         });
       });
 
-    return Observable.fromPromise(result);
+    return from(result);
   }
 
   findExtentOfLayer(l: Layer):Observable<Bounds>{
