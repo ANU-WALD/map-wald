@@ -18,7 +18,7 @@ export class WMSService {
   static TILE_HEIGHT=WMSService.TILE_SIZE;
 
   constructor() {
-    this.webMercator = proj4.Proj('EPSG:3857');
+    this.webMercator = ((<any>proj4).default || proj4).Proj('EPSG:3857');
     //this.webMercator = proj4.Proj(proj4.defs('EPSG:3857'));
   }
 

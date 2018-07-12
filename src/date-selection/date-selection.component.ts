@@ -114,7 +114,7 @@ export class DateSelectionComponent implements AfterViewInit  {
   }
 
   move(n:number){
-    this.date = new Date(this.date);
+    this.date = new Date(this.date&&this.date.getTime());
     this.date.setDate(this.date.getDate()+n);
     this.onDateChanged();
     this.dateChange.emit(this.date);

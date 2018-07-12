@@ -32,12 +32,14 @@ export class TimeseriesService {
     var url = this.dap.makeURL(host,file);
     var variable = variable;
     return forkJoin(ddx$,das$,this.metadata.getGrid(host,file)).pipe(switchMap(
-      ([ddx,das,[lats,lngs]])=>{
+      ([ddx,das,latsAndLngs])=>{
+        const lats:number[] = (<number[][]>latsAndLngs)[0];
+        const lngs:number[] = (<number[][]>latsAndLngs)[1];
       var latIndex = this.indexInDimension((<any>pt).lat,lats);
       var lngIndex = this.indexInDimension((<any>pt).lng,lngs);
 
-      var query = this.makeTimeQuery(ddx,variable,latIndex,lngIndex,additionalIndices);
-      return this.dap.getData(`${url}.ascii?${variable}${query}`,das)
+      var query = this.makeTimeQuery(<DapDDX>ddx,variable,latIndex,lngIndex,additionalIndices);
+      return this.dap.getData(`${url}.ascii?${variable}${query}`,<DapDAS>das)
     }),map((data:DapData)=>{
       return {
         dates:<Array<Date>> (data.time||data.t),

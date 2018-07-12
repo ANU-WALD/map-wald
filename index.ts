@@ -94,6 +94,7 @@ export * from './src/layer-properties/layer-properties.component';
 export * from './src/layer-control/layer-control.component';
 export * from './src/layered-map/layered-map.component';
 export * from './src/theme-navbar/theme-navbar.component';
+export * from './src/map-control/map-control.component';
 
 export const services = [
   //$serviceList
