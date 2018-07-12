@@ -5,9 +5,54 @@ declare var Plotly: any;
 
 @Component({
   selector: 'simple-tree',
-  templateUrl: './simple-tree.component.html',
-  styleUrls: ['./simple-tree.component.scss']
-})
+  template: `<div *ngIf="tree&&tree.visible" class="simple-tree">
+
+  <div *ngIf="inner">
+    <li ><simple-tree-node [tree]="tree"
+                           [options]="options"
+                           (nodeSelected)="childSelected($event)"></simple-tree-node>
+      <ul *ngIf="tree.children&&tree.expanded" class="inner-list">
+        <simple-tree *ngFor="let t of tree.children" [tree]="t" [inner]="true"
+                    (nodeSelected)="childSelected($event)"
+                    [options]="options"></simple-tree>
+      </ul>
+    </li>
+  </div>
+
+  <div *ngIf="!inner&&showTop">
+    <ul class="outer-list">
+      <li><simple-tree-node [tree]="tree" [options]="options"
+        (nodeSelected)="childSelected($event)"></simple-tree-node>
+        <ul *ngIf="tree.children&&tree.expanded" class="inner-list">
+            <simple-tree *ngFor="let t of tree.children" [tree]="t" [inner]="true"
+            (nodeSelected)="childSelected($event)"
+            [options]="options"></simple-tree>
+        </ul>
+      </li>
+    </ul>
+  </div>
+
+  <div *ngIf="!inner&&!showTop">
+      <ul *ngIf="tree.children&&tree.expanded" class="outer-list">
+          <simple-tree *ngFor="let t of tree.children" [tree]="t" [inner]="true"
+          (nodeSelected)="childSelected($event)"
+          [options]="options"></simple-tree>
+      </ul>
+    </div>
+  
+</div>
+`,styles: [`
+.simple-tree ul{
+  list-style-type: none
+}
+
+ul.outer-list{
+  padding-left:5px;
+}
+
+ul.inner-list{
+  padding-left:15px;
+}`]})
 export class SimpleTreeComponent implements AfterViewInit, OnChanges {
   @Input() tree: TreeModel;
   @Input() showTop: boolean = true;

@@ -7,9 +7,12 @@ declare var Plotly: any;
 
 @Component({
   selector: 'zoom-full',
-  templateUrl: './zoom-full.component.html',
-  styleUrls: ['./zoom-full.component.scss']
-})
+  template: `<button class="btn btn-secondary btn-sm"
+        ngbTooltip="Zoom to full extent"
+        placement="right"
+        (click)="zoomToBounds()"
+><i class="fa fa-arrows-alt"></i></button>
+`,styles: []})
 export class ZoomFullComponent implements AfterViewInit  {
   @Input() map:LayeredMapComponent;
   @Input() bounds:Bounds;

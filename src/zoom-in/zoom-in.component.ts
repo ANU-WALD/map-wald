@@ -6,9 +6,11 @@ declare var Plotly: any;
 
 @Component({
   selector: 'zoom-in',
-  templateUrl: './zoom-in.component.html',
-  styleUrls: ['./zoom-in.component.scss']
-})
+  template: `<button class="btn btn-secondary btn-sm" 
+        ngbTooltip="Zoom in"
+        placement="right"
+        (click)="zoomIn()"
+><i class="fa fa-plus"></i></button>`,styles: []})
 export class ZoomInComponent implements AfterViewInit  {
   @Input() map:LayeredMapComponent;
   @Input() maxZoom:number = 32;

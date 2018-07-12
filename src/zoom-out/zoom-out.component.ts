@@ -6,9 +6,11 @@ declare var Plotly: any;
 
 @Component({
   selector: 'zoom-out',
-  templateUrl: './zoom-out.component.html',
-  styleUrls: ['./zoom-out.component.scss']
-})
+  template: `<button class="btn btn-secondary btn-sm"
+        ngbTooltip="Zoom out"
+        placement="right"
+        (click)="zoomOut()"
+><i class="fa fa-minus"></i></button>`,styles: []})
 export class ZoomOutComponent implements AfterViewInit  {
   @Input() map:LayeredMapComponent;
   @Input() minZoom:number = 1;

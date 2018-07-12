@@ -8,9 +8,9 @@ import * as Plotly from 'plotly.js/dist/plotly-basic';
 
 @Component({
   selector: 'timeseries-chart',
-  templateUrl: './timeseries-chart.component.html',
-  styleUrls: ['./timeseries-chart.component.scss']
-})
+  template: `<div class="our-chart">
+</div>
+`,styles: []})
 export class TimeseriesChartComponent implements AfterViewInit, OnChanges  {
   @Input() timeSeries: Array<TimeSeries> = [];
   @Input() marginLeft:number = 40;

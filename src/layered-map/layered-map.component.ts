@@ -18,9 +18,118 @@ export interface SimpleMarker {
 
 @Component({
   selector: 'layered-map',
-  templateUrl: './layered-map.component.html',
-  styleUrls: ['./layered-map.component.scss']
-})
+  template: `<agm-map #theMap
+[(latitude)]="lat"
+[(longitude)]="lng"
+[(zoom)]="zoom"
+[disableDefaultUI]="false"
+[zoomControl]="false"
+[mapTypeControl]="true"
+[mapTypeControlOptions]="mapTypeOptions"
+scaleControl="true"
+[fitBounds]="bounds"
+(mapClick)="mapClick($event)">
+
+<agm-marker *ngFor="let marker of markers"
+            [longitude]="marker.loc.lng"
+            [latitude]="marker.loc.lat"
+            [iconUrl]="marker.iconUrl">
+  <agm-info-window [disableAutoPan]="true" [isOpen]="marker.open">
+    <strong>{{marker.value}}</strong>
+  </agm-info-window>
+</agm-marker>
+
+<ng-container *ngFor="let mp of layers.slice()|reverse; let i = index" [ngSwitch]="mp.layerType">
+  <wms-layer *ngSwitchCase="'wms'"
+    [url]="mp.url"
+    [params]="mp.wmsParameters"
+    [opacity]="mp.opacity"
+    [position]="i">
+  </wms-layer>
+  <agm-data-layer *ngSwitchCase="'vector'"
+                [geoJson]="mp.staticData"
+                [style]="mp._styleFunc"
+                (layerClick)="clicked($event)"
+
+                >
+  </agm-data-layer>
+
+  <!--
+
+  -->
+</ng-container>
+
+<!-- for map controls -->
+<map-control position="TOP_CENTER">
+    <ng-content select=".map-control.top-center"></ng-content>
+</map-control>
+
+<map-control position="TOP_LEFT">
+    <ng-content select=".map-control.top-left"></ng-content>
+</map-control>
+
+<map-control position="TOP_RIGHT">
+    <ng-content select=".map-control.top-right"></ng-content>
+</map-control>
+
+<map-control position="LEFT_TOP">
+    <ng-content select=".map-control.left-top"></ng-content>
+</map-control>
+
+<map-control position="RIGHT_TOP">
+    <ng-content select=".map-control.right-top"></ng-content>
+</map-control>
+
+<map-control position="LEFT_CENTER">
+    <ng-content select=".map-control.left-center"></ng-content>
+</map-control>
+
+<map-control position="RIGHT_CENTER">
+    <ng-content select=".map-control.right-center"></ng-content>
+</map-control>
+
+<map-control position="LEFT_BOTTOM">
+    <ng-content select=".map-control.left-bottom"></ng-content>
+</map-control>
+
+<map-control position="RIGHT_BOTTOM">
+    <ng-content select=".map-control.right-bottom"></ng-content>
+</map-control>
+
+<map-control position="BOTTOM_CENTER">
+    <ng-content select=".map-control.bottom-center"></ng-content>
+</map-control>
+
+<map-control position="BOTTOM_LEFT">
+    <ng-content select=".map-control.bottom-left"></ng-content>
+</map-control>
+
+<map-control position="BOTTOM_RIGHT">
+    <ng-content select=".map-control.bottom-right"></ng-content>
+</map-control>
+
+<!--
+<map-control position="LEFT_CENTER">
+  <div class="card map-control">
+    <div class="card-block control-card-content">
+      <layer-control #layerControl
+        [(layers)]="layers"
+        (layersChange)="layersChanged($event)"></layer-control>
+    </div>
+  </div>
+</map-control>
+-->
+
+</agm-map>
+<!--
+(mapClick)="mapClick($event)"
+(centerChange)="moved($event)"
+(zoomChange)="moved($event)"
+  [mapTypeId]="baseLayer?baseLayer.map_type_id : null"
+
+-->
+
+`,styles: []})
 export class LayeredMapComponent implements AfterViewInit, OnChanges {
   @Input() layers: Array<MappedLayer> = [];
   @Input() markers:Array<SimpleMarker> = [];

@@ -5,9 +5,7 @@ declare var Plotly: any;
 
 @Component({
   selector: 'base-map-selection',
-  templateUrl: './base-map-selection.component.html',
-  styleUrls: ['./base-map-selection.component.scss']
-})
+  template: `<p>base-map-selection Component</p>`,styles: []})
 export class BaseMapSelectionComponent implements AfterViewInit  {
 
   constructor(){

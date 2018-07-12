@@ -5,9 +5,26 @@ declare var Plotly: any;
 
 @Component({
   selector: 'collapsible-map-control',
-  templateUrl: './collapsible-map-control.component.html',
-  styleUrls: ['./collapsible-map-control.component.scss']
-})
+  template: `<div class="card map-control collapsible-control">
+    <a (click)="isCollapsed = !isCollapsed">
+      <div class="card-header">
+        <h6 class="mb-0">
+          {{heading}}
+          <span *ngIf="isCollapsed" class="fa fa-angle-up
+            collapse-arrow" aria-hidden="true"></span>
+          <span *ngIf="!isCollapsed" class="fa fa-angle-down
+            collapse-arrow" aria-hidden="true"></span>
+        </h6>
+      </div>
+    </a>
+
+    <div class="ngbCollapse" [ngbCollapse]="isCollapsed">
+      <ng-content></ng-content>
+    </div>
+  </div>
+`,styles: [`.collapsible-control{
+  margin:3px;
+}`]})
 export class CollapsibleMapControlComponent implements AfterViewInit  {
   @Input() isCollapsed: boolean;
   @Input() heading: string;

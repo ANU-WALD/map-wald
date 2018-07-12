@@ -1,10 +1,15 @@
 import { Component, ElementRef, OnInit, ViewChild, AfterViewInit, Input } from '@angular/core';
-import {GoogleMapsAPIWrapper} from '@agm/core/services';
+import {GoogleMapsAPIWrapper} from '@agm/core';
 
 @Component({
   selector: 'map-control',
-  templateUrl: './map-control.component.html',
-  styleUrls: ['./map-control.component.scss']
+  template: `<div #mapControl class="map-control-content">
+  <ng-content></ng-content>
+</div>
+`,styles: [`.map-control-content{
+  background: transparent;
+}
+`],
 })
 export class MapControlComponent implements OnInit,AfterViewInit {
   @ViewChild('mapControl') mapControl: Component;

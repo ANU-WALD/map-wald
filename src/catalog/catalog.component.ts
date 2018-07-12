@@ -10,9 +10,29 @@ declare var Plotly: any;
 
 @Component({
   selector: 'catalog',
-  templateUrl: './catalog.component.html',
-  styleUrls: ['./catalog.component.scss'],
-})
+  template: `<div class="input-group">
+  <span class="input-group-btn">
+            <button class="btn" type="button" [disabled]="!filterText"
+              (click)="filterText = ''">
+            <i *ngIf="filterText"class="fa fa-times" aria-hidden="true"></i>
+            <i *ngIf="!filterText"class="fa fa-search" aria-hidden="true"></i>
+            </button>
+  </span>
+  <input #filterInput type="text" class="form-control" placeholder="Catalog search..."
+  [(ngModel)]="filterText"/>
+</div>
+
+<simple-tree 
+  [tree]="this.filterService.filterTree(tree, filterText)"
+  [showTop]="false"
+
+  (nodeSelected)="nodeSelected($event)">
+</simple-tree>
+`,styles: [`
+.node-name{
+  font-size:1em;
+}
+`],})
 export class CatalogComponent implements AfterViewInit, OnChanges {
   @Input() catalog: Catalog;
   @Output() layerSelected: EventEmitter<LayerSelection> = new EventEmitter<LayerSelection>();

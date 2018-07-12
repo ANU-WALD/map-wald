@@ -5,7 +5,7 @@ import {WMSService} from '../wms.service';
 
 @Component({
   selector: 'wms-layer',
-  template:''
+  template:'',
 })
 export class WMSLayerComponent implements OnInit, OnDestroy{
   @Input() url: string;

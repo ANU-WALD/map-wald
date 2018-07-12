@@ -6,9 +6,19 @@ declare var Plotly: any;
 
 @Component({
   selector: 'simple-tree-node',
-  templateUrl: './simple-tree-node.component.html',
-  styleUrls: ['./simple-tree-node.component.scss']
-})
+  template: `<a href="#" (click)="treeClick($event)"><i [ngClass]="icon"></i> {{tree.label}}
+  <span *ngIf="tree.actions"
+        class="float-right">
+      &nbsp;
+      <i *ngFor="let a of tree.actions"
+       [ngClass]="a.icon"
+       [ngbTooltip]="a.tooltip"
+       placement="right"
+       container="body"
+       (click)="a.action(tree)">&nbsp;</i>
+  </span>
+</a>
+`,styles: []})
 export class SimpleTreeNodeComponent implements AfterViewInit, OnChanges{
   ngOnChanges(changes: SimpleChanges): void {
     this.evalState();

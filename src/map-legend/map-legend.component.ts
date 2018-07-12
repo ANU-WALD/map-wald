@@ -3,9 +3,59 @@ import { PaletteService } from '../palette.service';
 
 @Component({
   selector: 'map-legend',
-  templateUrl: './map-legend.component.html',
-  styleUrls: ['./map-legend.component.scss']
-})
+  template: `<div class="map-legend panel panel-group">
+
+<strong>{{title}} <span *ngIf="mapUnits" [innerHTML]="'('+mapUnits+')'"></span>
+        <span *ngIf="helpText" 
+              [ngbTooltip]="helpText"
+              [placement]="tooltipPlacement"
+              container="body">
+          <i class="fa fa-info-circle"></i>
+        </span>
+</strong> 
+
+  <div *ngIf="!imageURL">
+    <div style="display:table;line-height:15px">
+      <div style="display:table-row;padding:0;"
+          *ngFor="let colour of colours; let i=index">
+        <div class="legend-colour">
+          <i class="legend-entry" [ngStyle]="{background:colour}"></i>
+        </div>
+        <div class="legend-label">
+          <span [innerHTML]="labels[i]"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="imageURL">
+    <img [src]="imageURL">
+  </div>
+</div>
+`,styles: [`
+.map-legend{
+  display:block;
+  background: white;
+}
+
+.legend-colour{
+  display:table-cell;
+  padding:0px;
+}
+
+.legend-label{
+  display:table-cell;
+  padding:0px 4px 2px 2px;
+  font-size:10px;
+  vertical-align:middle;
+}
+
+.legend-entry {
+  float: left;
+  width: 15px !important;
+  height: 15px !important;
+}
+`]})
 export class MapLegendComponent implements OnInit {
   @Input() imageURL: string
   @Input() colours: Array<string> = ['red', 'white', 'blue'];

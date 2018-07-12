@@ -5,9 +5,21 @@ declare var Plotly: any;
 
 @Component({
   selector: 'date-element',
-  templateUrl: './date-element.component.html',
-  styleUrls: ['./date-element.component.scss']
-})
+  template: `<div class="row no-gutters">
+  <div class="col-4">{{label}}</div>
+  <div class="col-2">
+    <button class="btn btn-secondary btn-sm" (click)="move(-step)">
+      <i class="fa fa-angle-left"></i>
+    </button>
+  </div>
+  <div class="col-4"><button class="btn btn-link btn-sm">{{src[[property]]}}</button></div>
+  <div class="col-2">
+    <button class="btn btn-secondary btn-sm" (click)="move(step)">
+      <i class="fa fa-angle-right"></i>
+    </button>
+  </div>
+</div>
+`,styles: []})
 export class DateElementComponent implements AfterViewInit  {
   @Input() label:string;
   @Input() property:string;

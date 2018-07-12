@@ -5,9 +5,13 @@ declare var Plotly: any;
 
 @Component({
   selector: 'location-search',
-  templateUrl: './location-search.component.html',
-  styleUrls: ['./location-search.component.scss']
-})
+  template: `<button class="btn btn-secondary btn-sm"
+        ngbTooltip="Location search"
+        placement="right"
+        [disabled]="true"
+
+><i class="fa fa-search"></i></button>
+`,styles: []})
 export class LocationSearchComponent implements AfterViewInit  {
 
   constructor(){

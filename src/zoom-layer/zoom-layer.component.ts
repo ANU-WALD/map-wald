@@ -8,9 +8,13 @@ declare var Plotly: any;
 
 @Component({
   selector: 'zoom-layer',
-  templateUrl: './zoom-layer.component.html',
-  styleUrls: ['./zoom-layer.component.scss']
-})
+  template: `<button type="button" [disabled]="!layer" class="btn btn-secondary btn-sm"
+        ngbTooltip="Zoom to selected layer"
+        placement="right"
+        (click)="zoomToLayer()"
+><i class="fa fa-compress"></i>
+</button>
+`,styles: []})
 export class ZoomLayerComponent implements AfterViewInit {
   @Input() map: LayeredMapComponent;
   @Input() layer: MappedLayer;
