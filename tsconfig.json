@@ -1,14 +1,16 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
     "noImplicitAny": true,
     "module": "commonjs",
     "target": "ES5",
-    "moduleResolution": "node",
+    "preserveSymlinks": true,
     "strictNullChecks": false,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "allowUnusedLabels": false,
     "noImplicitReturns": true,
+    "sourceMap": true,
     "declaration": true,
     "skipLibCheck": true,
     "outDir": "./dist",
@@ -16,16 +18,16 @@
       "node_modules/@types"
     ]
   },
-   "angularCompilerOptions": {
-     "genDir": "codegen",
-     "strictMetadataEmit": true,
-     "debug": false
-   },
-   "exclude": [
+  "exclude": [
     "node_modules",
     "scripts/*",
     "dist",
     "**/*.spec.ts",
     "plotly.js"
-  ]
+  ],
+  "angularCompilerOptions": {
+    "strictMetadataEmit": true,
+    "genDir": "codegen",
+    "debug": false
+  }
 }
