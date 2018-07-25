@@ -15,7 +15,6 @@ import {CatalogService} from './src/catalog.service';
 import { MapViewParameterService } from './src/map-view.service';
 import { WMSService } from './src/wms.service';
 import {GeocodingService} from './src/geocoding.service';
-import {InterpolationService} from './src/interpolation.service';
 import { ProjectionService } from './src/projection.service';
 
 import { WMSLayerComponent } from './src/wms-layer/wms-layer.component';
@@ -108,7 +107,6 @@ export const services = [
   MapViewParameterService,
   ProjectionService,
   GeocodingService,
-  InterpolationService,
   CatalogService,
   TreeFilterService
 ];

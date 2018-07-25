@@ -1,6 +1,5 @@
-import { Injectable } from "@angular/core";
 
-@Injectable()
+// @dynamic
 export class InterpolationService{
   static templateMatcher: RegExp = /{{\s?([^{}\s]*)\s?}}/g;
   private static isDefined(val:any){
