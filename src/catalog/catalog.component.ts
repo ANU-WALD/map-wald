@@ -62,7 +62,7 @@ export class CatalogComponent implements AfterViewInit, OnChanges {
   }
 
   buildTree() {
-    let _this = this;
+    let self = this;
     this.layers = [];
     var cat = this.catalog;
     var tree: TreeModel = {
@@ -106,7 +106,7 @@ export class CatalogComponent implements AfterViewInit, OnChanges {
         expanded: false,
         visible: true,
         children: t.layers.filter(l => !l.path)
-          .filter(l=>_this.showPlaceholders||!l.placeholder)
+          .filter(l=>self.showPlaceholders||!l.placeholder)
           .map(layerToTree)
       };
     }
