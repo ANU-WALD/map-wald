@@ -163,6 +163,7 @@ export class Theme{
 export class Layer{
   publications:Array<Publication> = [];
   options:CatalogOptions = new CatalogOptions();
+  placeholder:boolean;
   name:string;
   path:string;
   [key:string]:any;

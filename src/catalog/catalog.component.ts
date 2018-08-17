@@ -35,6 +35,7 @@ declare var Plotly: any;
 `],})
 export class CatalogComponent implements AfterViewInit, OnChanges {
   @Input() catalog: Catalog;
+  @Input() showPlaceholders = true;
   @Output() layerSelected: EventEmitter<LayerSelection> = new EventEmitter<LayerSelection>();
 
   layers: Array<Layer> = [];
@@ -61,6 +62,7 @@ export class CatalogComponent implements AfterViewInit, OnChanges {
   }
 
   buildTree() {
+    let _this = this;
     this.layers = [];
     var cat = this.catalog;
     var tree: TreeModel = {
@@ -103,7 +105,9 @@ export class CatalogComponent implements AfterViewInit, OnChanges {
         label: t.name,
         expanded: false,
         visible: true,
-        children: t.layers.filter(l => !l.path).map(layerToTree)
+        children: t.layers.filter(l => !l.path)
+          .filter(l=>_this.showPlaceholders||!l.placeholder)
+          .map(layerToTree)
       };
     }
 
@@ -151,7 +155,7 @@ export class CatalogComponent implements AfterViewInit, OnChanges {
       } else {
         parent.children.splice(i,0,child);
       }
-}
+    }
 
     deferredThemes.forEach(t => {
       var [parent,index] = findParent(t.path);
