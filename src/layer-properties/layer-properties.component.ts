@@ -55,12 +55,12 @@ declare var Plotly: any;
   <div *ngIf="publication?.pointdata">
     <div *ngFor="let tag of getKeys(publication.pointdata.tags)">
       {{tag}}
-      <select [(ngModel)]="tags[tag]" (ngModelChange)="pointSelectionChanged()">
+      <select [(ngModel)]="tags[tag]" (ngModelChange)="queryPointData()">
         <option *ngFor="let val of publication.pointdata.tags[tag]">{{val}}</option>
       </select> 
     </div>
     Variable:
-    <select [(ngModel)]="selectedVariable" (ngModelChange)="pointSelectionChanged()">
+    <select [(ngModel)]="selectedVariable" (ngModelChange)="queryPointData()">
       <option *ngFor="let v of pointVariables">{{v}}</option>
     </select>
   </div>
