@@ -159,12 +159,28 @@ export class LayerPropertiesComponent implements AfterViewInit, OnDestroy {
   }
 
   queryPointData(){
+    let pointdata = this.publication&&this.publication.pointdata;
+
+    if(!this.publication||!this.publication.pointdata){
+      return;
+    }
+
+    Object.keys(pointdata.tags).forEach(tag=>{
+      if(this.tags[tag]===undefined){
+        this.tags[tag] = pointdata.tags[tag][0];
+      }
+    });
+
     this.pointSelectionChanged();
     this.pointSelectionService.timeseriesVariables(
       this.pointSelection()).subscribe(variables=>{
       this.pointVariables = variables;
       if(variables.indexOf(this.selectedVariable)<0){
-        this.selectedVariable = variables[0];
+        if(variables.indexOf(this.publication.pointdata.defaultVariable)>=0){
+          this.selectedVariable = this.publication.pointdata.defaultVariable;
+        } else {
+          this.selectedVariable = variables[0];
+        }
       }
       this.pointSelectionChanged();
     });

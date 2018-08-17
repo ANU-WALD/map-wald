@@ -223,5 +223,5 @@ export interface PointData{
   url:string;
   coordinates:{[key:string]:number};
   tags:{[key:string]:string[]};
-  variables:Observable<string[]>;
+  defaultVariable:string;
 }
