@@ -33,9 +33,7 @@ export class MetadataService {
   getDDX(host:CatalogHost,file:string):Observable<DapDDX>{
     var url = this.dap.makeURL(host,file);
 
-    return this.ddxForUrl(url).pipe(
-      tap(ddx=>console.log(ddx))
-    );
+    return this.ddxForUrl(url);
   }
 
   ddxForUrl(url:string):Observable<DapDDX>{

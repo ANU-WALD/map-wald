@@ -224,7 +224,6 @@ export class LayeredMapComponent implements AfterViewInit, OnChanges {
 
   mapClick(event:any){
     var coords:LatLng = event.coords;
-    console.log(coords);
     this.pointSelected.emit(coords);
   }
 
