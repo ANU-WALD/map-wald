@@ -1,8 +1,9 @@
-import { Component, Input, ViewChild, AfterViewInit, ElementRef, Output, EventEmitter } from '@angular/core';
-import { MappedLayer } from "../data/mapped-layer";
-import { Publication } from "../data/catalog";
-import { OpendapService } from '../opendap.service';
+import { Component, Input, ViewChild, AfterViewInit, ElementRef, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { MappedLayer } from '../data/mapped-layer';
+import { Publication } from '../data/catalog';
 import { LayeredMapComponent } from '../layered-map/layered-map.component';
+import { GeometryObject, Feature } from 'geojson';
+import { PointSelectionService, PointSelection } from '../point-selection.service';
 
 declare var Plotly: any;
 
@@ -25,6 +26,9 @@ declare var Plotly: any;
       <option *ngFor="let p of layer.layer.publications; let i=index" [ngValue]="i">{{p.label || p.timestep}}</option>
     </select>
   </div>
+  <div *ngIf="layer?.layer.publications.length===1">
+    {{publication?.label}}
+  </div>
 
   <div *ngIf="publication&&publication.timestep">
     <hr/>
@@ -42,6 +46,24 @@ declare var Plotly: any;
     <button class="btn btn-sm btn-primary" (click)="zoomToExtent()">Zoom to Extent</button>
   </div>
 
+<!--
+  <div *ngIf="layer.layer.options.vectors">
+    <p>Lets filter those {{layer.layer.options.vectors}}s, eh?</p>
+  </div>
+-->
+
+  <div *ngIf="publication?.pointdata">
+    <div *ngFor="let tag of getKeys(publication.pointdata.tags)">
+      {{tag}}
+      <select [(ngModel)]="tags[tag]" (ngModelChange)="pointSelectionChanged()">
+        <option *ngFor="let val of publication.pointdata.tags[tag]">{{val}}</option>
+      </select> 
+    </div>
+    Variable:
+    <select [(ngModel)]="selectedVariable" (ngModelChange)="pointSelectionChanged()">
+      <option *ngFor="let v of pointVariables">{{v}}</option>
+    </select>
+  </div>
   <!--
   <div *ngIf="publication">
     <p>Start: {{publication.options.start}}</p>
@@ -51,14 +73,19 @@ declare var Plotly: any;
   <button (click)="update()">Force update...</button>
   -->
 </div>`,styles: []})
-export class LayerPropertiesComponent implements AfterViewInit {
+export class LayerPropertiesComponent implements AfterViewInit, OnDestroy {
+  getKeys = Object.keys;
   @Input() layer: MappedLayer;
   @Input() map: LayeredMapComponent;
   @Output() propertyChanged = new EventEmitter();
   @Input() tooltipPlacement:string='right';
-  
-  //publication:Publication;
-  constructor(private dap: OpendapService) {
+  tags:{[key:string]:string}={}
+  pointVariables:string[] = [];
+  selectedVariable:string;
+  selectedFeature: Feature<GeometryObject>;
+  selectedFeatureSubscription:any;
+
+  constructor(private pointSelectionService: PointSelectionService) {
 
   }
 
@@ -78,6 +105,25 @@ export class LayerPropertiesComponent implements AfterViewInit {
     //   !this.layer.spatialExtent) {
     //   this.loadExtent();
     // }
+    if(this.map){
+      this.selectedFeatureSubscription = 
+        this.map.featureSelected.subscribe((f:Feature<GeometryObject>)=>this.featureSelected(f));
+    }
+  }
+
+  ngOnDestroy(): void {
+    if(this.selectedFeatureSubscription){
+      this.selectedFeatureSubscription.unsubscribe();
+    }
+  }
+
+  featureSelected(f:Feature<GeometryObject>){
+    if(!this.publication||!this.publication.pointdata){
+      return;
+    }
+    this.selectedFeature = f;
+    // No guarantee that this is from the same layer!!!!
+    this.queryPointData();
   }
 
   publicationSelected(idx: number) {
@@ -101,5 +147,30 @@ export class LayerPropertiesComponent implements AfterViewInit {
     this.map.lat = this.layer.layer.lat;
     this.map.lng = this.layer.layer.lon;
     this.map.zoom = this.layer.layer.zoom || 13;
+  }
+
+  pointSelection():PointSelection{
+    return {
+      catalog:this.publication.pointdata,
+      variable:this.selectedVariable,
+      feature:this.selectedFeature,
+      tags:this.tags
+    };
+  }
+
+  queryPointData(){
+    this.pointSelectionChanged();
+    this.pointSelectionService.timeseriesVariables(
+      this.pointSelection()).subscribe(variables=>{
+      this.pointVariables = variables;
+      if(variables.indexOf(this.selectedVariable)<0){
+        this.selectedVariable = variables[0];
+      }
+      this.pointSelectionChanged();
+    });
+  }
+
+  pointSelectionChanged(){
+    this.pointSelectionService.pointSelection(this.pointSelection());
   }
 }

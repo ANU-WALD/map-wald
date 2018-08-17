@@ -292,6 +292,23 @@
           },
           "interval": {
             "$ref": "#/definitions/interval"
+          },
+          "pointdata": {
+            "type":"object",
+            "properties": {
+              "protocol":{
+                "type":"string"
+              },
+              "url":{
+                "type":"string"
+              },
+              "coordinates":{
+                "type":"object"
+              },
+              "tags":{
+                "type":"object"
+              }
+            }
           }
         }
       }

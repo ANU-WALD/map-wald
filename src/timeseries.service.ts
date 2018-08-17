@@ -27,9 +27,9 @@ export class TimeseriesService {
 
   getTimeseries(host:CatalogHost,file:string,variable:string,pt:(LatLng|SimpleLatLng),additionalIndices:any):Observable<TimeSeries>{
     additionalIndices = additionalIndices || {};
-    var ddx$ = this.metadata.getDDX(host,file);
-    var das$ = this.metadata.getDAS(host,file);
     var url = this.dap.makeURL(host,file);
+    var ddx$ = this.metadata.ddxForUrl(url);
+    var das$ = this.metadata.dasForUrl(url);
     var variable = variable;
     return forkJoin(ddx$,das$,this.metadata.getGrid(host,file)).pipe(switchMap(
       ([ddx,das,latsAndLngs])=>{

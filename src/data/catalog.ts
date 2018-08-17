@@ -197,6 +197,7 @@ export class Publication{
   label:string;
   skip:boolean;
   options:CatalogOptions = new CatalogOptions();
+  pointdata?:PointData;
 
   constructor(config?:any){
     if(!config){
@@ -215,4 +216,12 @@ export type LayerAction = 'replace' | 'add'
 export interface LayerSelection{
   layer:Layer;
   action: LayerAction;
+}
+
+export interface PointData{
+  protocol:string;
+  url:string;
+  coordinates:{[key:string]:number};
+  tags:{[key:string]:string[]};
+  variables:Observable<string[]>;
 }

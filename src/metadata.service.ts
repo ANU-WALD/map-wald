@@ -6,7 +6,7 @@ import { Bounds } from './data/bounds';
 
 import { CatalogHost } from '../index';
 import { forkJoin, Observable } from 'rxjs';
-import { switchMap, publishReplay, refCount, map, switchAll } from 'rxjs/operators';
+import { switchMap, publishReplay, refCount, map, switchAll, tap } from 'rxjs/operators';
 
 export const LAT_NAMES=['latitude','lat'];
 export const LNG_NAMES=['longitude','lng','lon'];
@@ -33,6 +33,12 @@ export class MetadataService {
   getDDX(host:CatalogHost,file:string):Observable<DapDDX>{
     var url = this.dap.makeURL(host,file);
 
+    return this.ddxForUrl(url).pipe(
+      tap(ddx=>console.log(ddx))
+    );
+  }
+
+  ddxForUrl(url:string):Observable<DapDDX>{
     if(!this.ddxCache[url]){
       this.ddxCache[url] = 
         this.dap.getDDX(url).pipe(publishReplay(),refCount());
@@ -47,7 +53,10 @@ export class MetadataService {
 
   getDAS(host:CatalogHost,file:string):Observable<DapDAS>{
     var url = this.dap.makeURL(host,file);
+    return this.dasForUrl(url);
+  }
 
+  dasForUrl(url:string):Observable<DapDAS>{
     if(!this.dasCache[url]){
       this.dasCache[url] = 
         this.dap.getDAS(url).pipe(publishReplay(),refCount());
