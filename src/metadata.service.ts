@@ -80,10 +80,13 @@ export class MetadataService {
   }
 
   getGrid(host:CatalogHost,file:string):Observable<number[][]>{
-    const ddx$ = this.getDDX(host,file);
-    const das$ = this.getDAS(host,file);
     const url = this.dap.makeURL(host,file);
+    return this.getGridForURL(url);
+  }
 
+  getGridForURL(url:string):Observable<number[][]>{
+    const ddx$ = this.ddxForUrl(url);
+    const das$ = this.dasForUrl(url);
     const res$ = <Observable<number[][]>>forkJoin([ddx$,das$]).pipe(
       map((metadata:any[])=>{
         const ddx:DapDDX = metadata[0];
