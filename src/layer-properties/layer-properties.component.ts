@@ -21,7 +21,7 @@ declare var Plotly: any;
 
   <div *ngIf="layer?.layer.publications.length>1">
     <span *ngIf="layer.layer.publications[0].timestep">Timestep </span>
-    <span *ngIf="!layer.layer.publications[0].timestep">Variable </span>
+    <span *ngIf="!layer.layer.publications[0].timestep">{{ layer.layer.options.publicationLabel || 'Variable' }} </span>
     <select [(ngModel)]="layer.options.publication" (ngModelChange)="publicationSelected($event)">
       <option *ngFor="let p of layer.layer.publications; let i=index" [ngValue]="i">{{p.label || p.timestep}}</option>
     </select>

@@ -88,6 +88,7 @@ export class CatalogOptions{
   units?:string;
   smallExtent?:boolean;
   vectors?:"point"|"line"|"polygon";
+  publicationLabel?:string;
 }
 
 export class Catalog{

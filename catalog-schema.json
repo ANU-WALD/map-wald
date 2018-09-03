@@ -233,6 +233,9 @@
         },
         "smallExtent": {
           "type": "boolean"
+        },
+        "publicationLabel":{
+          "type": "string"
         }
       }
     },
