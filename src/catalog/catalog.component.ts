@@ -121,7 +121,7 @@ export class CatalogComponent implements AfterViewInit, OnChanges {
       var components = path.split('/');
       var parent: TreeModel = tree;
       var index = -1;
-      
+
       for (var component of components) {
         var split = component.split('@');
         component = split[0];

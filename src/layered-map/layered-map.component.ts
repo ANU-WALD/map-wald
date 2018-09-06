@@ -24,7 +24,7 @@ export interface SimpleMarker {
 [(zoom)]="zoom"
 [disableDefaultUI]="false"
 [zoomControl]="false"
-[mapTypeControl]="true"
+[mapTypeControl]="showMapType"
 [mapTypeControlOptions]="mapTypeOptions"
 scaleControl="true"
 [fitBounds]="bounds"
@@ -133,15 +133,17 @@ scaleControl="true"
 export class LayeredMapComponent implements AfterViewInit, OnChanges {
   @Input() layers: Array<MappedLayer> = [];
   @Input() markers:Array<SimpleMarker> = [];
-  
+
   @Output() layersChange = new EventEmitter<Array<MappedLayer>>();
   @Output() featureSelected = new EventEmitter<Feature<GeometryObject>>();
   @Output() pointSelected = new EventEmitter<LatLng>();
+  @Input() mapTypePosition:number = ControlPosition.BOTTOM_LEFT
 
   @ViewChild(AgmMap) theMap:AgmMap;
   
   // google maps zoom level
   zoom: number = 4;
+  showMapType = true;
   mapTypeOptions: MapTypeControlOptions={
     position:ControlPosition.BOTTOM_LEFT
   };
@@ -157,6 +159,14 @@ export class LayeredMapComponent implements AfterViewInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     // if zoom in changes...
+    if(changes.mapTypePosition){
+      if(this.mapTypePosition===null){
+        this.showMapType = false;
+      }
+      this.mapTypeOptions = {
+        position:this.mapTypePosition
+      };
+    }
   }
 
   ngAfterViewInit() {

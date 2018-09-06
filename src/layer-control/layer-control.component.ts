@@ -10,7 +10,7 @@ declare var Plotly: any;
   selector: 'layer-control',
   template: `<div class="layers-control">
   <div class="layers-control-header"> <!-- header -->
-    <div class="float-right">
+    <div *ngIf="showLegends" class="float-right">
       <!-- TODO Attach handlers and tooltips to each icon -->
       <i class="fa fa-lg fa-cog discrete-icon" (click)="allLegends(false)"></i>
       <i class="fa fa-lg fa-th-list discrete-icon" (click)="allLegends(true)"></i>
@@ -22,7 +22,7 @@ declare var Plotly: any;
     <div *ngFor="let l of layers; let i = index"
          class="layer-control d-flex justify-content-between">
       <div class="p-2" style="width:100%">
-        <div *ngIf="l.options.legend">
+        <div *ngIf="showLegends&&l.options.legend">
           <div *ngIf="l.flattenedSettings?.palette || l.legendURL">
             <map-legend [title]="l.title"
               [imageURL]="l.legendURL"
@@ -36,7 +36,7 @@ declare var Plotly: any;
           </div>
         </div>
 
-        <div *ngIf="!l.options.legend">
+        <div *ngIf="!showLegends||!l.options.legend">
           <layer-properties [layer]="l"
                             [map]="map"
                             (propertyChanged)="layerPropertyChanged($event)">
@@ -46,26 +46,26 @@ declare var Plotly: any;
       <div class="p-2">
           <div>
             <!-- TODO Attach handlers and tooltips to each icon -->
-            <i class="fa fa-bars discrete-icon"></i><br/>
-            <i class="fa fa-cog discrete-icon" 
+            <i *ngIf="allowReorder" class="fa fa-bars discrete-icon"></i><br *ngIf="allowReorder"/>
+            <i *ngIf="showLegends" class="fa fa-cog discrete-icon" 
                ngbTooltip="Show layer controls" placement="right" data-container="body"
-               (click)="layerLegend(l,false)"></i><br/>
-            <i class="fa fa-th-list discrete-icon"
+               (click)="layerLegend(l,false)"></i><br *ngIf="showLegends"/>
+            <i *ngIf="showLegends" class="fa fa-th-list discrete-icon"
                ngbTooltip="Show layer data" placement="right" data-container="body"
-               (click)="layerLegend(l,true)"></i><br/>
-            <i class="fa fa-angle-double-up discrete-icon" 
+               (click)="layerLegend(l,true)"></i><br *ngIf="showLegends"/>
+            <i *ngIf="allowReorder" class="fa fa-angle-double-up discrete-icon" 
                ngbTooltip="Move to top" placement="right" data-container="body"
-              (click)="moveToTop(i)"></i><br/>
-            <i class="fa fa-angle-up discrete-icon"
+              (click)="moveToTop(i)"></i><br *ngIf="allowReorder"/>
+            <i *ngIf="allowReorder" class="fa fa-angle-up discrete-icon"
                ngbTooltip="Move up" placement="right" data-container="body"
-              (click)="moveUp(i)"></i><br/>
-            <i class="fa fa-angle-down discrete-icon"
+              (click)="moveUp(i)"></i><br *ngIf="allowReorder"/>
+            <i *ngIf="allowReorder" class="fa fa-angle-down discrete-icon"
                ngbTooltip="Move down" placement="right" data-container="body"
-              (click)="moveDown(i)"></i><br/>
-            <i class="fa fa-angle-double-down discrete-icon"
+              (click)="moveDown(i)"></i><br *ngIf="allowReorder"/>
+            <i *ngIf="allowReorder" class="fa fa-angle-double-down discrete-icon"
                ngbTooltip="Move to bottom" placement="right" data-container="body"
-              (click)="moveToBottom(i)"></i><br/>
-            <i class="fa fa-times discrete-icon" 
+              (click)="moveToBottom(i)"></i><br *ngIf="allowReorder"/>
+            <i *ngIf="allowRemove" class="fa fa-times discrete-icon" 
                ngbTooltip="Remove layer" placement="right" data-container="body"
               data-toggle="tooltip" title="Remove layer"
               (click)="removeLayer(i)"></i>
@@ -87,6 +87,9 @@ declare var Plotly: any;
 export class LayerControlComponent implements AfterViewInit, OnChanges {
   @Input() layers: Array<MappedLayer>;
   @Input() map: LayeredMapComponent;
+  @Input() allowRemove = true;
+  @Input() showLegends = true;
+  @Input() allowReorder = true;
   @Output() layersChange = new EventEmitter();
   uniformViewMode: boolean | undefined;
   foo: string = 'bar';
