@@ -192,11 +192,14 @@ export class LayeredMapComponent implements AfterViewInit, OnChanges {
   private activateLayer(mapped: MappedLayer, selection: LayerSelection) {
     mapped.update();
     if (selection.action === 'replace') {
-      this.layers = [mapped];
+      if(selection.filter){
+        this.layers = this.layers.filter(l=>!selection.filter(l));
+      } else {
+        this.layers = [];
+      }
     }
-    else {
-      this.layers = [mapped].concat(this.layers);
-    }
+    this.layers = [mapped].concat(this.layers);
+
     this.layersChange.emit(this.layers);
   }
 

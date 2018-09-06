@@ -215,9 +215,12 @@ export class Publication{
 
 export type LayerAction = 'replace' | 'add'
 
+export type LayerFilter = (l:Layer)=>boolean;
+
 export interface LayerSelection{
   layer:Layer;
   action: LayerAction;
+  filter: LayerFilter;
 }
 
 export interface PointData{
