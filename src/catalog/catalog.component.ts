@@ -2,11 +2,18 @@ import {
   Component, Input, ViewChild, AfterViewInit, ElementRef,
   OnChanges, Output, EventEmitter, SimpleChanges
 } from '@angular/core';
-import { Catalog, LayerSelection, Layer, LayerAction, Theme } from '../data/catalog';
+import { Catalog,  Layer, Theme } from '../data/catalog';
+import { LayerSelection } from '../data/actions';
 import { TreeModel } from '../data/tree';
 import { TreeFilterService } from '../tree-filter.service';
 
 declare var Plotly: any;
+
+export interface CatalogNodeAction {
+  action:string;
+  icon:string;
+  tooltip:string;
+}
 
 @Component({
   selector: 'catalog',
@@ -36,6 +43,8 @@ declare var Plotly: any;
 export class CatalogComponent implements AfterViewInit, OnChanges {
   @Input() catalog: Catalog;
   @Input() showPlaceholders = true;
+  @Input() defaultAction = 'add';
+  @Input() layerActions: CatalogNodeAction[] = [];
   @Output() layerSelected: EventEmitter<LayerSelection> = new EventEmitter<LayerSelection>();
 
   layers: Array<Layer> = [];
@@ -75,28 +84,23 @@ export class CatalogComponent implements AfterViewInit, OnChanges {
       // }
     }
 
-    var layerActions = [
-      {
-        icon: 'fa fa-map',
-        tooltip: 'Map this layer. (Replace any existing layers)',
-        action: (node: TreeModel) => this.layerClick(node.data, 'replace')
-      },
-      {
-        icon: 'fa fa-plus',
-        tooltip: 'Add this layer to the map.',
-        action: (node: TreeModel) => this.layerClick(node.data, 'add')
-      }
-    ];
-
     var deferredLayers = cat.themes.map(t => t.layers.filter(l => l.path)).reduce((l, r) => l.concat(r), []);
     var deferredThemes = cat.themes.filter(t => t.path);
+
+    const treeActions = this.layerActions.map(la=>{
+      return {
+        icon:la.icon,
+        tooltip:la.tooltip,
+        action:(node: TreeModel) => this.layerClick(node.data,la.action)
+      };
+    });
 
     function layerToTree(l: Layer) {
       return {
         label: l.name,
         data: l,
         visible: true,
-        actions: layerActions
+        actions: treeActions
       };
     }
 
@@ -169,7 +173,7 @@ export class CatalogComponent implements AfterViewInit, OnChanges {
     this.tree = tree;
   }
 
-  layerClick(l: Layer, action: LayerAction) {
+  layerClick(l: Layer,action:string) {
     var selection: LayerSelection = {
       layer: l,
       action: action
@@ -183,6 +187,6 @@ export class CatalogComponent implements AfterViewInit, OnChanges {
     }
 
     var layer = <Layer>e.data;
-    this.layerClick(layer, 'replace');
+    this.layerClick(layer,this.defaultAction);
   }
 }

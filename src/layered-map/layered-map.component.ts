@@ -1,7 +1,7 @@
 import { Component, Input, ViewChild, AfterViewInit, ElementRef, OnChanges, SimpleChanges, 
          Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
 import { MappedLayer } from '../data/mapped-layer';
-import { LayerSelection } from '../data/catalog';
+import { LayerSelection } from '../data/actions';
 import { StaticDataService } from '../static-data.service';
 import { DataMouseEvent, LatLng, AgmMap, LatLngBoundsLiteral } from '@agm/core';
 import { Feature, Point, GeometryObject } from 'geojson';
@@ -193,7 +193,7 @@ export class LayeredMapComponent implements AfterViewInit, OnChanges {
     mapped.update();
     if (selection.action === 'replace') {
       if(selection.filter){
-        this.layers = this.layers.filter(l=>!selection.filter(l));
+        this.layers = this.layers.filter(ml=>!selection.filter(ml));
       } else {
         this.layers = [];
       }

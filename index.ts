@@ -54,6 +54,7 @@ export * from './src/data/catalog';
 export * from './src/data/mapped-layer';
 export * from './src/data/tree';
 export * from './src/data/bounds';
+export * from './src/data/actions';
 
 export * from './src/sample.component';
 export * from './src/sample.directive';

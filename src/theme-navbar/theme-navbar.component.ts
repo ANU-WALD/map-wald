@@ -1,6 +1,7 @@
-import { Component, Input, Output, ViewChild,
-         AfterViewInit, ElementRef, EventEmitter } from '@angular/core';
-import { Catalog, Layer, LayerSelection, LayerAction } from "../data/catalog";
+import { Component, Input, Output,
+         AfterViewInit, EventEmitter } from '@angular/core';
+import { Catalog, Layer } from "../data/catalog";
+import { LayerSelection, LayerAction } from '../data/actions';
 
 declare var Plotly: any;
 
