@@ -128,11 +128,12 @@ export class Catalog{
 
 export class Theme{
   name:string;
+  skip:boolean;
   layers:Array<Layer> = [];
   path:string;
   options:CatalogOptions;
   publications:Array<Publication>;
-  
+
   constructor(config?:any){
     if(!config){
       return;
@@ -163,6 +164,7 @@ export class Theme{
 
 export class Layer{
   publications:Array<Publication> = [];
+  skip:boolean;
   options:CatalogOptions = new CatalogOptions();
   placeholder:boolean;
   name:string;

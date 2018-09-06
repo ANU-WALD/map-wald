@@ -84,8 +84,8 @@ export class CatalogComponent implements AfterViewInit, OnChanges {
       // }
     }
 
-    var deferredLayers = cat.themes.map(t => t.layers.filter(l => l.path)).reduce((l, r) => l.concat(r), []);
-    var deferredThemes = cat.themes.filter(t => t.path);
+    var deferredLayers = cat.themes.map(t => t.layers.filter(l => l.path&&!l.skip)).reduce((l, r) => l.concat(r), []);
+    var deferredThemes = cat.themes.filter(t => t.path&&!t.skip);
 
     const treeActions = this.layerActions.map(la=>{
       return {
@@ -109,13 +109,13 @@ export class CatalogComponent implements AfterViewInit, OnChanges {
         label: t.name,
         expanded: false,
         visible: true,
-        children: t.layers.filter(l => !l.path)
+        children: t.layers.filter(l => !l.path&&!l.skip)
           .filter(l=>self.showPlaceholders||!l.placeholder)
           .map(layerToTree)
       };
     }
 
-    tree.children = cat.themes.filter(t => !t.path).map(themeToTree);
+    tree.children = cat.themes.filter(t => !t.path&&!t.skip).map(themeToTree);
 
     function findParent(path: string): [TreeModel,number] {
       var components = path.split('/');
