@@ -49,7 +49,11 @@ export class TimeseriesService {
   }
 
   getTimeseriesForLayer(ml:MappedLayer,pt:LatLng):Observable<TimeSeries>{
-    return this.getTimeseries(ml.flattenedSettings.host,ml.interpolatedFile,ml.flattenedSettings.variable,pt,null);
+    return this.getTimeseries(ml.flattenedSettings.host,
+                              ml.interpolatedFile,
+                              ml.flattenedSettings.layer||ml.flattenedSettings.variable,
+                              pt,
+                              null);
   }
 
 
