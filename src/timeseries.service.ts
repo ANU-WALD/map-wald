@@ -11,6 +11,7 @@ import { switchMap, map } from 'rxjs/operators';
 export interface TimeSeries{
   dates:Array<Date>;
   values:Array<number>;
+  style?:string;
 }
 
 export interface SimpleLatLng{

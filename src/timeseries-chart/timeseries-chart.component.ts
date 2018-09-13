@@ -17,7 +17,6 @@ export class TimeseriesChartComponent implements AfterViewInit, OnChanges  {
   @Input() marginRight:number = 10;
   @Input() marginTop:number = 0;
   @Input() marginBottom:number = 20;
-
   constructor(private _element:ElementRef){
 
   }
@@ -54,7 +53,11 @@ export class TimeseriesChartComponent implements AfterViewInit, OnChanges  {
     };
 
     Plotly.plot( node, this.timeSeries.map(ts=>{
-      return {x:ts.dates,y:ts.values};
+      return {
+        type:(ts.style==='bar')?'bar':undefined,
+        x:ts.dates,
+        y:ts.values
+      };
     }), layout );
   }
 }
