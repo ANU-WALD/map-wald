@@ -1,3 +1,4 @@
+import { Observable } from "rxjs";
 
 export interface TreeNodeAction{
   icon:string;
@@ -7,6 +8,7 @@ export interface TreeNodeAction{
 
 export interface TreeModel {
   label: string;
+  tooltip?: Observable<string>;
   data?: any;
   visible?: boolean ;
   expanded?: boolean;

@@ -6,6 +6,10 @@ import { Catalog,  Layer, Theme } from '../data/catalog';
 import { LayerSelection } from '../data/actions';
 import { TreeModel } from '../data/tree';
 import { TreeFilterService } from '../tree-filter.service';
+import { MetadataService } from '../metadata.service';
+import { MappedLayer } from '../data/mapped-layer';
+import { map } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 declare var Plotly: any;
 
@@ -53,7 +57,7 @@ export class CatalogComponent implements AfterViewInit, OnChanges {
 
   filterService: TreeFilterService;
 
-  constructor(filterService: TreeFilterService) {
+  constructor(filterService: TreeFilterService, private metadata:MetadataService) {
     this.filterService = filterService;
   }
 
@@ -95,13 +99,26 @@ export class CatalogComponent implements AfterViewInit, OnChanges {
       };
     });
 
-    function layerToTree(l: Layer) {
-      return {
+    const layerToTree = (l: Layer)=> {
+      let result:TreeModel = {
         label: l.name,
         data: l,
         visible: true,
         actions: treeActions
       };
+
+      const tmp = new MappedLayer();
+      tmp.layer = l;
+      tmp.update();
+
+      if(l.description){
+        result.tooltip = of(l.description);  
+      } else {
+        result.tooltip = this.metadata.getMetadata(tmp).pipe(
+          map(meta=>meta.long_name)
+        );
+      }
+      return result;
     }
 
     function themeToTree(t: Theme): TreeModel {

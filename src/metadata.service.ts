@@ -5,7 +5,7 @@ import { OpendapService } from './opendap.service';
 import { Bounds } from './data/bounds';
 
 import { CatalogHost } from '../index';
-import { forkJoin, Observable } from 'rxjs';
+import { forkJoin, Observable, of } from 'rxjs';
 import { switchMap, publishReplay, refCount, map, switchAll, tap } from 'rxjs/operators';
 
 export const LAT_NAMES=['latitude','lat'];
@@ -67,16 +67,19 @@ export class MetadataService {
     return this.getDAS(ml.flattenedSettings.host,ml.interpolatedFile);
   }
 
-  populateMetadata(ml:MappedLayer){
+  getMetadata(ml:MappedLayer):Observable<any>{
     if(ml.flattenedSettings.host.software !=='tds'){
-      ml.retrievedMetadata={};
-      return;
+      return of({});
     }
 
-    this.getDDXForLayer(ml).subscribe(ddx=>{
-      var entry = ddx.variables[ml.flattenedSettings.variable];
+    return this.getDDXForLayer(ml).pipe(
+      map(ddx=>ddx.variables[ml.flattenedSettings.variable]||{}));
+  }
+
+  populateMetadata(ml:MappedLayer){
+    this.getMetadata(ml).subscribe(entry=>{
       ml.retrievedMetadata = entry;
-    })
+    });
   }
 
   getGrid(host:CatalogHost,file:string):Observable<number[][]>{
