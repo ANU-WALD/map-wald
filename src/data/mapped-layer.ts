@@ -54,7 +54,10 @@ export class MappedLayer {
   }
 
   layer: Layer;
-  options: MappedLayerOptions = {};
+  options: MappedLayerOptions = {
+    date: new Date(2016, 0, 1) // Set to most recent available date
+  };
+
   legendURL:string;
   layerType: MappedLayerTypes;
   retrievedMetadata: {[key:string]:any} = {};

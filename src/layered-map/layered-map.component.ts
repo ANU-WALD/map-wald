@@ -186,7 +186,6 @@ export class LayeredMapComponent implements AfterViewInit, OnChanges {
 
     mapped.layerType = 'wms';
     mapped.options.legend = true;
-    mapped.options.date = new Date(2016, 0, 1); // Set to most recent available date
 
     if(selection.layer.options.vectors){
       this.staticData.get(selection.layer.options.host,selection.layer.options.filepath).subscribe(

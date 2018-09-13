@@ -73,7 +73,7 @@ export class MetadataService {
     }
 
     return this.getDDXForLayer(ml).pipe(
-      map(ddx=>ddx.variables[ml.flattenedSettings.variable]||{}));
+      map(ddx=>ddx.variables[ml.flattenedSettings.layer||ml.flattenedSettings.variable]||{}));
   }
 
   populateMetadata(ml:MappedLayer){
