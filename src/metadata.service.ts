@@ -78,7 +78,9 @@ export class MetadataService {
 
   populateMetadata(ml:MappedLayer){
     this.getMetadata(ml).subscribe(entry=>{
-      ml.retrievedMetadata = entry;
+      setTimeout(()=>{
+        ml.retrievedMetadata = entry;
+      })
     });
   }
 
