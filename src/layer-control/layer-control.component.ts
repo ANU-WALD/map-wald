@@ -85,12 +85,12 @@ declare var Plotly: any;
   border-bottom: 1px solid #aaa;
 }`]})
 export class LayerControlComponent implements AfterViewInit, OnChanges {
-  @Input() layers: Array<MappedLayer>;
+  @Input() layers: MappedLayer[];
   @Input() map: LayeredMapComponent;
   @Input() allowRemove = true;
   @Input() showLegends = true;
   @Input() allowReorder = true;
-  @Output() layersChange = new EventEmitter();
+  @Output() layersChange = new EventEmitter<MappedLayer[]>();
   uniformViewMode: boolean | undefined;
   foo: string = 'bar';
 
