@@ -12,6 +12,7 @@ import * as Plotly from 'plotly.js/dist/plotly-basic';
 </div>
 `,styles: []})
 export class TimeseriesChartComponent implements AfterViewInit, OnChanges  {
+  @Input() title:string;
   @Input() timeSeries: Array<TimeSeries> = [];
   @Input() marginLeft:number = 40;
   @Input() marginRight:number = 10;
@@ -40,7 +41,7 @@ export class TimeseriesChartComponent implements AfterViewInit, OnChanges  {
 
     var layout:any = {
       margin: {
-        t: this.marginTop,
+        t: this.marginTop + (this.title?30:0),
         l:this.marginLeft,
         r:this.marginRight,
         b:this.marginBottom
@@ -49,7 +50,8 @@ export class TimeseriesChartComponent implements AfterViewInit, OnChanges  {
         fixedrange: true
       },
       width:320,
-      height:200
+      height:200,
+      title:this.title || undefined
     };
 
     Plotly.plot( node, this.timeSeries.map(ts=>{
