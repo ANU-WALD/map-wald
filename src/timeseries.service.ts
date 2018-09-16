@@ -4,14 +4,19 @@ import { LatLng } from '@agm/core';
 import { OpendapService } from './opendap.service';
 import { MetadataService, LAT_NAMES, LNG_NAMES, TIME_NAMES } from './metadata.service';
 import { DapDDX, DapDAS, DapData } from 'dap-query-js/dist/dap-query';
-import { CatalogHost } from './data/catalog';
+import { CatalogHost, Layer } from './data/catalog';
 import { forkJoin, Observable } from 'rxjs';
 import { switchMap, map } from 'rxjs/operators';
 
 export interface TimeSeries{
   dates:Array<Date>;
   values:Array<number>;
+  label?:string;
+  tags?:{
+    [key:string]:any
+  };
   style?:string;
+  [key:string]:any;
 }
 
 export interface SimpleLatLng{

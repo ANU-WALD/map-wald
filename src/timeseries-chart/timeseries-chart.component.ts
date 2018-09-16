@@ -56,7 +56,8 @@ export class TimeseriesChartComponent implements AfterViewInit, OnChanges  {
       return {
         type:(ts.style==='bar')?'bar':undefined,
         x:ts.dates,
-        y:ts.values
+        y:ts.values,
+        name:ts.label
       };
     }), layout );
   }
