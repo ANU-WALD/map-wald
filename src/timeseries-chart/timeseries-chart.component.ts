@@ -55,8 +55,13 @@ export class TimeseriesChartComponent implements AfterViewInit, OnChanges  {
     };
 
     Plotly.plot( node, this.timeSeries.map(ts=>{
+      const nonNullCount = ts.values.filter(v=>!isNaN(v)).length;
+      const mode = ((ts.style!=='bar')&&(nonNullCount<365)) ?
+                   'lines+markers' :
+                   undefined;
       return {
         type:(ts.style==='bar')?'bar':undefined,
+        mode:mode,
         x:ts.dates,
         y:ts.values,
         name:ts.label

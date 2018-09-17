@@ -31,7 +31,9 @@ export class TimeseriesService {
 
   }
 
-  getTimeseries(host:CatalogHost,file:string,variable:string,pt:(LatLng|SimpleLatLng),additionalIndices:any):Observable<TimeSeries>{
+  getTimeseries(host:CatalogHost,file:string,variable:string,
+                pt:(LatLng|SimpleLatLng),additionalIndices:any,
+                fillValue?:number):Observable<TimeSeries>{
     additionalIndices = additionalIndices || {};
     var url = this.dap.makeURL(host,file);
     var ddx$ = this.metadata.ddxForUrl(url);
@@ -43,13 +45,15 @@ export class TimeseriesService {
         const lngs:number[] = (<number[][]>latsAndLngs)[1];
       var latIndex = this.indexInDimension((<any>pt).lat,lats);
       var lngIndex = this.indexInDimension((<any>pt).lng,lngs);
-
+      if(fillValue===undefined){
+        fillValue = +(<DapDDX>ddx).variables[variable]._FillValue;
+      }
       var query = this.makeTimeQuery(<DapDDX>ddx,variable,latIndex,lngIndex,additionalIndices);
       return this.dap.getData(`${url}.ascii?${variable}${query}`,<DapDAS>das)
     }),map((data:DapData)=>{
       return {
         dates:<Array<Date>> (data.time||data.t),
-        values:<Array<number>> data[variable]
+        values:(<Array<number>> data[variable]).map(v=>(v===fillValue)?NaN:v)
       };
     }));
   }
@@ -59,7 +63,8 @@ export class TimeseriesService {
                               ml.interpolatedFile,
                               ml.flattenedSettings.layer||ml.flattenedSettings.variable,
                               pt,
-                              null);
+                              null,
+                              ml.flattenedSettings.fillValue);
   }
 
 
