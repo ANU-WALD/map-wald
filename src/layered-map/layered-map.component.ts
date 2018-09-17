@@ -44,7 +44,7 @@ scaleControl="true"
     [url]="mp.url"
     [params]="mp.wmsParameters"
     [opacity]="mp.opacity"
-    [position]="i">
+    [position]="mp.options.position">
   </wms-layer>
   <agm-data-layer *ngSwitchCase="'vector'"
                 [geoJson]="mp.staticData"
@@ -167,6 +167,9 @@ export class LayeredMapComponent implements AfterViewInit, OnChanges {
         position:this.mapTypePosition
       };
     }
+    if(changes.layers){
+      this.setLayerPositions();
+    }
   }
 
   ngAfterViewInit() {
@@ -208,10 +211,19 @@ export class LayeredMapComponent implements AfterViewInit, OnChanges {
       }
     }
     this.layers = [mapped].concat(this.layers);
-
+    this.setLayerPositions();
     this.layersChange.emit(this.layers);
   }
 
+  setLayerPositions(){
+    let ix=0;
+    for(var i=this.layers.length-1;i>=0;i--){
+      if(this.layers[i].layerType==='wms'){
+        this.layers[i].options.position=ix;
+        ix++;
+      }
+    }
+  }
   extractFeature(f:any) : Feature<Point>{
     var geo = f.getGeometry();
     geo = {
