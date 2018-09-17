@@ -13,6 +13,13 @@ export interface MappedLayerOptions {
   [key: string]: any;
 }
 
+const MAKE_DOWNLOAD_URL:{[key:string]:(a:string,s:string)=>string} = {
+  tds:(host:string,fn:string)=>{
+    let components = fn.split('/');
+    components.pop();
+    return `${host}/catalog/${components.join('/')}/catalog.html`;
+  }
+}
 export const WMS_PARAMETER_NAMES:{[key:string]:Array<string>} = {
   tds: [
     'layers',
@@ -63,6 +70,7 @@ export class MappedLayer {
   retrievedMetadata: {[key:string]:any} = {};
 
   interpolatedFile:string;
+  interpolatedDownloadURL:string;
   url: string;
   wmsParameters: any = {};
   flattenedSettings: any = {};
@@ -113,6 +121,11 @@ export class MappedLayer {
     });
     this.interpolatedFile = InterpolationService.interpolate(this.interpolatedFile, mapParams);
     this.url = baseURL + WMS_URL_FORMAT[software] + this.interpolatedFile;
+    if(MAKE_DOWNLOAD_URL[software]){
+      this.interpolatedDownloadURL=MAKE_DOWNLOAD_URL[software](baseURL,this.interpolatedFile);
+    } else {
+      this.interpolatedDownloadURL=null;
+    }
 
     if(this.layer.options.legend==='wms'){
       this.legendURL = this.url + '?service=WMS&request=GetLegendGraphic&format=image/png';

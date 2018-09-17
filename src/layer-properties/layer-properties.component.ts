@@ -15,7 +15,12 @@ declare var Plotly: any;
     [ngbTooltip]="layer.description()"
     [placement]="tooltipPlacement"
     container="body">
-  <i class="fa fa-info-circle"></i>
+  &nbsp;<i class="fa fa-info-circle"></i>
+  </span>
+  &nbsp;<span *ngIf="layer.interpolatedDownloadURL">
+    <small><a target="_blank" [href]="layer.interpolatedDownloadURL">
+      (get the data)
+    </a></small>
   </span>
   </p>
 
