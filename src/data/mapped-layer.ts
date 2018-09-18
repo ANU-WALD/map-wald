@@ -144,7 +144,7 @@ export class MappedLayer {
     if(MAKE_DOWNLOAD_URL[software]){
       this.interpolatedDownloadURL=MAKE_DOWNLOAD_URL[software](baseURL,this.interpolatedFile,this);
     } else {
-      this.interpolatedDownloadURL=null;
+      this.interpolatedDownloadURL=host.downloadLink||null;
     }
 
     if(this.layer.options.legend==='wms'){

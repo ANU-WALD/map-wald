@@ -73,6 +73,7 @@ function instantiateNamedOptions(dest:any,source:any){
 export interface CatalogHost{
   url?:string;
   software?:string;
+  downloadLink?:string;
 }
 
 export class CatalogOptions{
