@@ -19,13 +19,17 @@ const PUBLICATION_PRIORITY_ORDER = [
   'daily'
 ];
 
-const MAKE_DOWNLOAD_URL:{[key:string]:(a:string,s:string)=>string} = {
+const MAKE_DOWNLOAD_URL:{[key:string]:(a:string,s:string,ml:MappedLayer)=>string} = {
   tds:(host:string,fn:string)=>{
     let components = fn.split('/');
     components.pop();
     return `${host}/catalog/${components.join('/')}/catalog.html`;
+  },
+  static:(host:string,fn:string,ml:MappedLayer)=>{
+    return ml.layer.options.downloadPath || `${host}${fn}`;
   }
 }
+
 export const WMS_PARAMETER_NAMES:{[key:string]:Array<string>} = {
   tds: [
     'layers',
@@ -138,7 +142,7 @@ export class MappedLayer {
     this.interpolatedFile = InterpolationService.interpolate(this.interpolatedFile, mapParams);
     this.url = baseURL + WMS_URL_FORMAT[software] + this.interpolatedFile;
     if(MAKE_DOWNLOAD_URL[software]){
-      this.interpolatedDownloadURL=MAKE_DOWNLOAD_URL[software](baseURL,this.interpolatedFile);
+      this.interpolatedDownloadURL=MAKE_DOWNLOAD_URL[software](baseURL,this.interpolatedFile,this);
     } else {
       this.interpolatedDownloadURL=null;
     }

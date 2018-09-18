@@ -77,6 +77,7 @@ export interface CatalogHost{
 
 export class CatalogOptions{
   host?:CatalogHost;
+  downloadPath?:string;
   filepath?:string;
   palette?:string;
   colorscalerange?:Array<number>;
