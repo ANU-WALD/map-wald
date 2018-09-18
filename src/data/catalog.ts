@@ -90,6 +90,7 @@ export class CatalogOptions{
   units?:string;
   smallExtent?:boolean;
   vectors?:"point"|"line"|"polygon";
+  styles?:any;
   publicationLabel?:string;
 }
 

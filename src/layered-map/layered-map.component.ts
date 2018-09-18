@@ -22,6 +22,7 @@ export interface SimpleMarker {
 [(latitude)]="lat"
 [(longitude)]="lng"
 [(zoom)]="zoom"
+(zoomChange)="zoomChanged()"
 [disableDefaultUI]="false"
 [zoomControl]="false"
 [mapTypeControl]="showMapType"
@@ -54,8 +55,23 @@ scaleControl="true"
                 >
   </agm-data-layer>
 
-  <!--
+  <ng-container *ngSwitchCase="'circle'">
+    <agm-circle *ngFor="let f of mp.staticData.features; let j=index"
+                [latitude]="f.geometry.coordinates[1]"
+                [longitude]="f.geometry.coordinates[0]"
+                [radius]="4000000/(zoom*zoom*zoom)"
+                [fillColor]="mp.flattenedSettings?.styles?.fillColor||'black'"
+                [fillOpacity]="mp.flattenedSettings?.styles?.fillOpacity||1"
+                [strokeColor]="mp.flattenedSettings?.styles?.strokeColor||'black'"
+                [strokeOpacity]="mp.flattenedSettings?.styles?.strokeOpacity||1"
+                [strokePosition]="0"
+                [strokeWeight]="(f===selectedFeature)?3:(mp.flattenedSettings?.styles?.strokeWeight||0.5)"
+                (circleClick)="circleClicked(mp,f)"
+                >
+    </agm-circle>
+  </ng-container>
 
+  <!--
   -->
 </ng-container>
 
@@ -140,7 +156,7 @@ export class LayeredMapComponent implements AfterViewInit, OnChanges {
   @Input() mapTypePosition:number = ControlPosition.BOTTOM_LEFT
 
   @ViewChild(AgmMap) theMap:AgmMap;
-  
+  selectedFeature:any = null;
   // google maps zoom level
   zoom: number = 4;
   showMapType = true;
@@ -243,6 +259,12 @@ export class LayeredMapComponent implements AfterViewInit, OnChanges {
 
   clicked(event:DataMouseEvent){
     var feature = this.extractFeature(event.feature);
+    this.selectedFeature = feature;
+    this.featureSelected.emit(feature);
+  }
+
+  circleClicked(ml:MappedLayer,feature:any){
+    this.selectedFeature = feature;
     this.featureSelected.emit(feature);
   }
 
@@ -253,5 +275,9 @@ export class LayeredMapComponent implements AfterViewInit, OnChanges {
 
   zoomToBounds(bounds:Bounds){
     this.bounds = bounds;
+  }
+
+  zoomChanged(){
+    this.layers = this.layers.slice();
   }
 }

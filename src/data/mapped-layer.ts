@@ -3,7 +3,7 @@
 import { Layer } from './catalog';
 import { InterpolationService } from '../interpolation.service';
 
-export type MappedLayerTypes = 'wms' | 'vector';
+export type MappedLayerTypes = 'wms' | 'vector' | 'circle';
 
 export interface MappedLayerOptions {
   legend?: boolean;
@@ -162,6 +162,10 @@ export class MappedLayer {
       let styles = mapParams.styles || {};
       this._styleFunc = (f:any)=>{
         return styles;
+      }
+
+      if(mapParams.vectors==='point' && mapParams.styles){
+        this.layerType = 'circle';
       }
     } else {
       this.layerType = 'wms';
