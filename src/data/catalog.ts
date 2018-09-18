@@ -223,5 +223,6 @@ export interface PointData{
   url:string;
   coordinates:{[key:string]:number};
   tags:{[key:string]:string[]};
+  labels?:string[];
   defaultVariable:string;
 }
