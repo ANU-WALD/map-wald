@@ -13,6 +13,12 @@ export interface MappedLayerOptions {
   [key: string]: any;
 }
 
+const PUBLICATION_PRIORITY_ORDER = [
+  'annual',
+  'monthly',
+  'daily'
+];
+
 const MAKE_DOWNLOAD_URL:{[key:string]:(a:string,s:string)=>string} = {
   tds:(host:string,fn:string)=>{
     let components = fn.split('/');
@@ -55,10 +61,6 @@ export const INTERPOLATED_PARAMETERS = [
 
 export class MappedLayer {
   title:string;
-  description():string{
-    return this.layer.description ||
-      (this.retrievedMetadata && this.retrievedMetadata.long_name);
-  }
 
   layer: Layer;
   options: MappedLayerOptions = {
@@ -78,6 +80,11 @@ export class MappedLayer {
 
   _styleFunc: (f:any)=>void;
 
+  description():string{
+    return this.layer.description ||
+      (this.retrievedMetadata && this.retrievedMetadata.long_name);
+  }
+
   leading0(n: number): string {
     if (n < 10) {
       return '0' + n;
@@ -85,20 +92,29 @@ export class MappedLayer {
     return '' + n;
   }
 
+  defaultPublication():number{
+    const priorityPublication = PUBLICATION_PRIORITY_ORDER.find(
+      pp=>this.layer.publications.findIndex(lp=>(lp.timestep===pp)||(lp.label===pp))>=0);
+    if(priorityPublication){
+      return this.layer.publications.findIndex(p=>(p.label===priorityPublication)||(p.timestep===priorityPublication));
+    }
+    return this.layer.publications.findIndex(p => !p.skip);
+  }
+
   update() {
-    var pub = (this.options.publication === undefined) ?
-      this.layer.publications.findIndex(p => !p.skip) :
+    this.options.publication = (this.options.publication === undefined) ?
+      this.defaultPublication() :
       this.options.publication;
 
-    var publication = this.layer.publications[pub];
+    const publication = this.layer.publications[this.options.publication];
 
-    var host = publication.options.host || {};
-    var baseURL = host.url;
+    const host = publication.options.host || {};
+    const baseURL = host.url;
 
-    var software = host.software || 'tds';
+    const software = host.software || 'tds';
 
     this.interpolatedFile = (publication.options.filepath || '')
-    var mapParams = Object.assign({},
+    const mapParams = Object.assign({},
       this.layer,
       publication.options,
       publication.options.mapOptions || {},
@@ -163,6 +179,6 @@ export class MappedLayer {
 }
 
 function decadeText(d: Date): string {
-  var decade = d.getFullYear().toString().slice(0, 3);
+  let decade = d.getFullYear().toString().slice(0, 3);
   return `${decade}0-${decade}9`;
 }
