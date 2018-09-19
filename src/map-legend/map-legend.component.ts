@@ -102,18 +102,18 @@ export class MapLegendComponent implements OnInit {
 
   get cbRange():Array<number>{return this._cbRange;}
 
-  generateLabels():Array<string>|null{
-    if(!this._cbRange||!this._cbCount){
+  generateLabels(count:number):Array<string>|null{
+    if(!this._cbRange||!count){
       return null;
     }
 
-    var delta = (this._cbRange[1]-this._cbRange[0])/(this._cbCount-1);
+    var delta = (this._cbRange[1]-this._cbRange[0])/(count-1);
     var result = [];
     var lower=this._cbRange[0];
     let  decimalPlaces = Math.max(0,2-(+Math.log10(this._cbRange[1]-this._cbRange[0]).toFixed()));
     decimalPlaces = Math.min(decimalPlaces,10);
     var upper;
-    for(let i=1;i<(this._cbCount);i++){
+    for(let i=1;i<count;i++){
       upper = this._cbRange[0]+i*delta;
       result.push(`${this.formatValue(lower,decimalPlaces)}-${this.formatValue(upper,decimalPlaces)}`);
       lower = upper;
@@ -131,7 +131,7 @@ export class MapLegendComponent implements OnInit {
     this._palettes.getPalette(this._cbPalette,this._cbReverse,this._cbCount)
       .subscribe(palette=>{
         this.colours = palette.slice().reverse();
-        this.labels = this.generateLabels() || palette;
+        this.labels = this.generateLabels(this.colours.length) || palette;
     });
   }
 
