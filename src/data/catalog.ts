@@ -131,6 +131,7 @@ export class Catalog{
 
 export class Theme{
   name:string;
+  dataCreator?:string;
   skip:boolean;
   layers:Array<Layer> = [];
   path:string;
@@ -154,7 +155,8 @@ export class Theme{
     this.layers.forEach(l=>{
       propagate(l,this);
       l.propagateOptions();
-    })
+      l.dataCreator = l.dataCreator || this.dataCreator;
+    });
   }
 
   instantiateNamedOptions(source:any){
@@ -171,6 +173,7 @@ export class Layer{
   options:CatalogOptions = new CatalogOptions();
   placeholder:boolean;
   name:string;
+  dataCreator?:string;
   path:string;
   [key:string]:any;
   spatialExtent: Observable<Bounds>;

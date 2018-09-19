@@ -31,6 +31,8 @@ import { PaletteService } from '../palette.service';
   <div *ngIf="imageURL">
     <img [src]="imageURL">
   </div>
+  <p *ngIf="attributionLink">Source: <a [href]="attributionLink">{{attribution || 'details'}}</a></p>
+  <p *ngIf="attribution&&!attributionLink">Source: {{attribution}}</p>
 </div>
 `,styles: [`
 .map-legend{
@@ -64,7 +66,9 @@ export class MapLegendComponent implements OnInit {
   @Input() mapUnits :string = '';
   @Input() helpText:string='No comment';
   @Input() tooltipPlacement:string='right';
-  
+  @Input() attribution: string;
+  @Input() attributionLink: string;
+
   _cbPalette:string
   _cbCount:number;
   _cbReverse:boolean;
