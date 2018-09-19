@@ -51,9 +51,13 @@ export class TimeseriesService {
       var query = this.makeTimeQuery(<DapDDX>ddx,variable,latIndex,lngIndex,additionalIndices);
       return this.dap.getData(`${url}.ascii?${variable}${query}`,<DapDAS>das)
     }),map((data:DapData)=>{
+      let vals = (<number[]> data[variable]);
+      if(!vals.length){
+        vals = [<number>data[variable]];
+      }
       return {
         dates:<Array<Date>> (data.time||data.t),
-        values:(<Array<number>> data[variable]).map(v=>(v===fillValue)?NaN:v)
+        values:vals.map(v=>(v===fillValue)?NaN:v)
       };
     }));
   }
