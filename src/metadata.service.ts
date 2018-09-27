@@ -6,7 +6,7 @@ import { Bounds } from './data/bounds';
 
 import { CatalogHost } from '../index';
 import { forkJoin, Observable, of } from 'rxjs';
-import { switchMap, publishReplay, refCount, map, switchAll, tap } from 'rxjs/operators';
+import { switchMap, publishReplay, refCount, map, switchAll, tap, shareReplay } from 'rxjs/operators';
 
 export const LAT_NAMES=['latitude','lat'];
 export const LNG_NAMES=['longitude','lng','lon'];
@@ -116,15 +116,44 @@ export class MetadataService {
     return this.getGrid(ml.flattenedSettings.host,ml.interpolatedFile);
   }
 
-    getSpatialExtent(ml:MappedLayer):Observable<Bounds>{
-      return this.getGridForLayer(ml).pipe(map(([lats,lngs])=>{
-        var result:Bounds = {
-          east: Math.max(...lngs),
-          west: Math.min(...lngs),
-          north: Math.max(...lats),
-          south: Math.min(...lats)
-        };
-        return result;
-      })).pipe(publishReplay(), refCount());
+  getSpatialExtent(ml:MappedLayer):Observable<Bounds>{
+    return this.getGridForLayer(ml).pipe(map(([lats,lngs])=>{
+      var result:Bounds = {
+        east: Math.max(...lngs),
+        west: Math.min(...lngs),
+        north: Math.max(...lats),
+        south: Math.min(...lats)
+      };
+      return result;
+    })).pipe(publishReplay(), refCount());
+  }
+
+  getTimeDimension(host:CatalogHost,file:string):Observable<Date[]>{
+    const url = this.dap.makeURL(host,file);
+    return this.getTimeDimensionForURL(url);
+  }
+
+  timeCache:{[key:string]:Observable<Date[]>}={};
+
+  getTimeDimensionForURL(url:string):Observable<Date[]>{
+    if(!this.timeCache[url]){
+      const ddx$ = this.ddxForUrl(url);
+      const das$ = this.dasForUrl(url);
+      const res$ = <Observable<Date[]>>forkJoin([ddx$,das$]).pipe(
+        map((metadata:any[])=>{
+          const ddx:DapDDX = metadata[0];
+          const das:DapDAS = metadata[1];
+  
+          const timeCoord = this.identifyCoordinate(ddx,...TIME_NAMES);
+  
+          const time$ = 
+            this.dap.getData(`${url}.ascii?${timeCoord}`,das).pipe(
+              map((dd:DapData)=><Date[]>dd[timeCoord]));
+  
+          return time$;
+        }),switchAll(),shareReplay());
+      this.timeCache[url] = res$;
+    }
+    return this.timeCache[url];
   }
 }
