@@ -8,7 +8,7 @@ declare var Plotly: any;
   selector: 'simple-tree-node',
   template: `<a href="#" (click)="treeClick($event)"><i [ngClass]="icon"></i>
   <span ngbTooltip="{{tree.tooltip | async}}"
-        placement="bottom"
+        placement="right"
         container="body">{{tree.label}}</span>
   <span *ngIf="tree.actions"
         class="float-right">

@@ -1,5 +1,3 @@
-
-
 import { Layer } from './catalog';
 import { InterpolationService } from '../interpolation.service';
 
