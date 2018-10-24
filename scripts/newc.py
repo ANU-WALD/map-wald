@@ -36,7 +36,7 @@ print(comp_path,comp_name,comp_class_name)
 full_path = os.path.join('src',comp_path)
 if not os.path.exists(full_path):
   os.makedirs(full_path)
-templates = ['html','scss','ts']
+templates = ['ts']
 
 if parent:
   comp_name = comp_name + '-' + parent

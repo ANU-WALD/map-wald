@@ -5,8 +5,8 @@ declare var Plotly: any;
 
 @Component({
   selector: '$selector',
-  templateUrl: './$selector.component.html',
-  styleUrls: ['./$selector.component.scss']
+  template: `<p>$selector Component</p>`,
+  styleUrls: [``]
 })
 export class $klass implements AfterViewInit $implements {
 
