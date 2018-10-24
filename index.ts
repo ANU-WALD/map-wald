@@ -21,6 +21,7 @@ import { WMSLayerComponent } from './src/wms-layer/wms-layer.component';
 import { MapLegendComponent } from './src/map-legend/map-legend.component';
 import { MapControlComponent } from './src/map-control/map-control.component';
 //$importList
+import { OneTimeSplashComponent } from './src/one-time-splash/one-time-splash.component';
 import { PointSelectionService } from './src//point-selection.service';
 import { DateElementComponent } from './src/date-element/date-element.component';
 import { ShareViewComponent } from './src/share-view/share-view.component';
@@ -69,6 +70,7 @@ export * from './src/interpolation.service';
 export * from './src/wms-layer/wms-layer.component';
 export * from './src/map-legend/map-legend.component';
 //$exportList
+export * from './src/one-time-splash/one-time-splash.component';
 export * from './src//point-selection.service';
 export * from './src//metadata.service';
 export * from './src/date-element/date-element.component';
@@ -117,6 +119,7 @@ export const services = [
 
 export const components = [
   //$componentList
+  OneTimeSplashComponent,
   DateElementComponent,
   ShareViewComponent,
   LocationSearchComponent,
