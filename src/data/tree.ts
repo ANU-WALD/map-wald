@@ -8,6 +8,7 @@ export interface TreeNodeAction{
 
 export interface TreeModel {
   label: string;
+  klass?: string;
   tooltip?: Observable<string>;
   data?: any;
   visible?: boolean ;

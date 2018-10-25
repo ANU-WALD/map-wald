@@ -6,7 +6,9 @@ declare var Plotly: any;
 
 @Component({
   selector: 'simple-tree-node',
-  template: `<a href="#" (click)="treeClick($event)"><i [ngClass]="icon"></i>
+  template: `<a href="#" 
+                (click)="treeClick($event)"
+                [ngClass]="tree.klass"><i [ngClass]="icon"></i>
   <span ngbTooltip="{{tree.tooltip | async}}"
         placement="right"
         container="body">{{tree.label}}</span>

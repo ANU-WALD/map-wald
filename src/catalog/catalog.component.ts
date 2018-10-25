@@ -206,4 +206,30 @@ export class CatalogComponent implements AfterViewInit, OnChanges {
     var layer = <Layer>e.data;
     this.layerClick(layer,this.defaultAction);
   }
+
+  activeLayers(layers:Layer[]){
+    this.highlightLayers(layers,this.tree);
+  }
+
+  highlightLayers(layers:Layer[],tree:TreeModel):boolean{
+    tree.klass = null;
+
+    if(tree.data&&(layers.indexOf(tree.data)>=0)){
+      tree.klass = 'active-layer';
+      return true;
+    }
+
+    if(tree.children){
+      let activeChild = false;
+      for(let i=0;i<tree.children.length;i++){
+        activeChild = this.highlightLayers(layers,tree.children[i]) || activeChild;
+      }
+      if(activeChild){
+        tree.klass = 'active-child';
+      }
+      return activeChild;
+    }
+
+    return false;
+  }
 }
