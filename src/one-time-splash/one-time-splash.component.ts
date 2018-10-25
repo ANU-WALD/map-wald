@@ -27,7 +27,7 @@ declare var Plotly: any;
   </div>
   </ng-template>
 `,
-  styleUrls: [``]
+  styles: [``]
 })
 export class OneTimeSplashComponent implements AfterViewInit  {
   @ViewChild('splashTemplate') splashTemplate:any;
