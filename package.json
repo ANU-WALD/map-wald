@@ -63,7 +63,7 @@
     "@types/es6-shim": "^0.31.32",
     "@types/geojson": "^1.0.3",
     "@types/googlemaps": "^3.26.7",
-    "@types/jasmine": "^2.5.40",
+    "@types/jasmine": "2.8.8",
     "@types/proj4": "^2.3.4",
     "@types/selenium-webdriver": "^2.53.39",
     "@types/storejs": "^2.0.3",
