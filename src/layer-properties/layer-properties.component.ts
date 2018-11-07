@@ -57,13 +57,16 @@ declare var Plotly: any;
   </div>
 -->
 
-  <div *ngIf="publication?.pointdata">
-    <div *ngFor="let tag of getKeys(publication.pointdata.tags)">
+  <div *ngIf="availableTags">
+    <div *ngFor="let tag of getKeys(availableTags)">
       {{tag}}
-      <select [(ngModel)]="tags[tag]" (ngModelChange)="queryPointData()">
-        <option *ngFor="let val of publication.pointdata.tags[tag]">{{val}}</option>
+      <select [(ngModel)]="tags[tag]" (ngModelChange)="tagChanged(tag)">
+        <option *ngFor="let val of availableTags[tag]">{{val}}</option>
       </select> 
     </div>
+  </div>
+
+  <div *ngIf="publication?.pointdata">
     Variable:
     <select [(ngModel)]="selectedVariable" (ngModelChange)="queryPointData()">
       <option *ngFor="let v of pointVariables">{{v}}</option>
@@ -84,6 +87,7 @@ export class LayerPropertiesComponent implements AfterViewInit, OnDestroy {
   @Input() map: LayeredMapComponent;
   @Output() propertyChanged = new EventEmitter();
   @Input() tooltipPlacement:string='right';
+  availableTags:{[key:string]:string[]}=null;
   tags:{[key:string]:string}={}
   pointVariables:string[] = [];
   selectedVariable:string;
@@ -114,6 +118,12 @@ export class LayerPropertiesComponent implements AfterViewInit, OnDestroy {
       this.selectedFeatureSubscription = 
         this.map.featureSelected.subscribe((f:Feature<GeometryObject>)=>this.featureSelected(f));
     }
+
+    if(this.layer){
+      setTimeout(()=>{
+        this.findTags();
+      });
+    }
   }
 
   ngOnDestroy(): void {
@@ -132,20 +142,57 @@ export class LayerPropertiesComponent implements AfterViewInit, OnDestroy {
   }
 
   publicationSelected(idx: number) {
-    //    console.log(idx);
     this.layer.options.publication = idx;
     // this.publication=this.layer.layer.publications[idx];
     if(this.publication.pointdata){
       this.pointSelectionChanged();
     }
+
     this.update(idx);
   }
 
-  update(event: any) {
+  updateLayer(){
+    this.layer.options.tags = this.tags;
     this.layer.update();
     this.propertyChanged.emit(this.layer);
   }
 
+  update(event: any) {
+    this.updateLayer();
+
+    setTimeout(()=>{
+      this.findTags();
+    });
+  }
+
+  findTags(){
+    if(this.publication.pointdata){
+      this.availableTags = this.publication.pointdata.tags;
+    } else {
+      this.availableTags = this.layer.flattenedSettings.options.tags;
+    }
+    this.setDefaultTags();
+  }
+
+  tagChanged(t:string){
+    this.queryPointData();
+    this.update(null);
+  }
+
+  setDefaultTags(){
+    if(!this.availableTags){
+      return;
+    }
+
+    Object.keys(this.availableTags).forEach(tag=>{
+      if(this.tags[tag]===undefined){
+        this.tags[tag] = this.availableTags[tag][0];
+      }
+    });
+
+    this.updateLayer();
+  }
+ 
   zoomToExtent() {
     if (!this.map) {
       console.log('NO MAP!');
@@ -172,12 +219,6 @@ export class LayerPropertiesComponent implements AfterViewInit, OnDestroy {
     if(!this.publication||!this.publication.pointdata){
       return;
     }
-
-    Object.keys(pointdata.tags).forEach(tag=>{
-      if(this.tags[tag]===undefined){
-        this.tags[tag] = pointdata.tags[tag][0];
-      }
-    });
 
     this.pointSelectionChanged();
     this.pointSelectionService.timeseriesVariables(

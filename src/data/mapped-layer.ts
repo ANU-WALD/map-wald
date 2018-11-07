@@ -126,7 +126,8 @@ export class MappedLayer {
         month: this.leading0(this.options.date.getMonth() + 1),
         day: this.leading0(this.options.date.getDate()),
       } : {},
-      this.options);
+      this.options,
+      this.options.tags || {});
 
     if (mapParams.timeFormat) {
       mapParams['time'] = InterpolationService.interpolate(mapParams.timeFormat, mapParams);
