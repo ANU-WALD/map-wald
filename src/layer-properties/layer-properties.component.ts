@@ -135,6 +135,9 @@ export class LayerPropertiesComponent implements AfterViewInit, OnDestroy {
     //    console.log(idx);
     this.layer.options.publication = idx;
     // this.publication=this.layer.layer.publications[idx];
+    if(this.publication.pointdata){
+      this.pointSelectionChanged();
+    }
     this.update(idx);
   }
 

@@ -228,4 +228,5 @@ export interface PointData{
   tags:{[key:string]:string[]};
   labels?:string[];
   defaultVariable:string;
+  chart?:string;
 }

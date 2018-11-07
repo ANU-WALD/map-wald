@@ -34,7 +34,16 @@ export class PointSelectionService {
       return false;
     }
 
-    return false; // TODO
+    if(!Object.keys(current.tags).every(t=>current.tags[t]===updated.tags[t])){
+      return false;
+    }
+
+    if(current.catalog.url!==updated.catalog.url){
+      return false;
+    }
+
+    return true;
+    // return false; // TODO
   }
 
   pointSelection(sel: PointSelection) {
