@@ -9,6 +9,7 @@ declare var Plotly: any;
   template: `<a href="#" 
                 (click)="treeClick($event)"
                 [ngClass]="tree.klass"><i [ngClass]="icon"></i>
+  &nbsp;
   <span ngbTooltip="{{tree.tooltip | async}}"
         placement="right"
         container="body">{{tree.label}}</span>

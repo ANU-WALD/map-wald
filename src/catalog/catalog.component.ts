@@ -36,7 +36,9 @@ export interface CatalogNodeAction {
 <simple-tree 
   [tree]="this.filterService.filterTree(tree, filterText)"
   [showTop]="false"
-
+  [leafIcon]="leafIcon"
+  [collapsedIcon]="collapsedIcon"
+  [expandedIcon]="expandedIcon"
   (nodeSelected)="nodeSelected($event)">
 </simple-tree>
 `,styles: [`
@@ -50,6 +52,9 @@ export class CatalogComponent implements AfterViewInit, OnChanges {
   @Input() defaultAction = 'add';
   @Input() layerActions: CatalogNodeAction[] = [];
   @Output() layerSelected: EventEmitter<LayerSelection> = new EventEmitter<LayerSelection>();
+  @Input() collapsedIcon = 'fa fa-caret-right';
+  @Input() expandedIcon = 'fa fa-caret-down';
+  @Input() leafIcon = 'fa fa-minus';
 
   layers: Array<Layer> = [];
   tree: TreeModel = { label: 'no catalog loaded' };
