@@ -18,8 +18,11 @@ declare var Plotly: any;
   &nbsp;<i class="fa fa-info-circle"></i>
   </span>
   &nbsp;<span *ngIf="layer.interpolatedDownloadURL">
-    <small><a target="_blank" [href]="layer.interpolatedDownloadURL">
-      (get the data)
+    <small><a target="_blank" 
+              [href]="layer.interpolatedDownloadURL"
+              [ngbTooltip]="'Download data'"
+              container="body">
+      <i class="fa fa-download"></i>
     </a></small>
   </span>
   </p>
