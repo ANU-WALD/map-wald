@@ -19,7 +19,7 @@ declare var Plotly: any;
     <ng-content></ng-content>
   </div>
   <div class="modal-footer">
-    <label>
+    <label *ngIf="application">
       <input type="checkbox" [(ngModel)]="doNotShow" (ngModelChange)="doNotShowClicked()">
       &nbsp; {{hideMessage}}
     </label>
@@ -41,12 +41,19 @@ export class OneTimeSplashComponent implements AfterViewInit  {
   }
 
   storageKey(){
-    return (this.application || 'map-wald') + '-splash-skip';
+    if(!this.application){
+      return null;
+    }
+
+    return this.application  + '-splash-skip';
   }
 
   ngAfterViewInit(){
     setTimeout(()=>{
-      this.doNotShow = store.get(this.storageKey(),false);
+      const key = this.storageKey();
+      if(key){
+        this.doNotShow = store.get(key,false);
+      }
 
       if(!this.doNotShow){
         this.show();
@@ -59,6 +66,11 @@ export class OneTimeSplashComponent implements AfterViewInit  {
   }
 
   doNotShowClicked(){
-    store.set(this.storageKey(),this.doNotShow);
+    const key = this.storageKey();
+    if(!key){
+      return;
+    }
+
+    store.set(key,this.doNotShow);
   }
 }
