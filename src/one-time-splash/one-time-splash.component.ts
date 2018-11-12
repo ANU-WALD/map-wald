@@ -1,5 +1,5 @@
 import { Component, Input, ViewChild, AfterViewInit, ElementRef } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import * as store from 'store';
 
 
@@ -34,7 +34,9 @@ export class OneTimeSplashComponent implements AfterViewInit  {
   @Input() application:string;
   @Input() label = 'About';
   @Input() hideMessage = 'Understood, I don’t need to see this again';
+  @Input() klass: string;
   doNotShow: boolean;
+  current:NgbModalRef;
 
   constructor(private modalService: NgbModal){
 
@@ -62,7 +64,19 @@ export class OneTimeSplashComponent implements AfterViewInit  {
   }
 
   show(){
-    this.modalService.open(this.splashTemplate,{size:'lg'});
+    this.current = this.modalService.open(this.splashTemplate,{
+      size:'lg',
+      windowClass:this.klass
+    });
+  }
+
+  close(){
+    if(!this.current){
+      return;
+    }
+
+    this.current.close();
+    this.current=null;
   }
 
   doNotShowClicked(){
