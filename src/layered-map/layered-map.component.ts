@@ -1,11 +1,11 @@
-import { Component, Input, ViewChild, AfterViewInit, ElementRef, OnChanges, SimpleChanges, 
-         Output, EventEmitter, ChangeDetectorRef, ViewChildren, QueryList, NgZone } from '@angular/core';
+import { Component, Input, ViewChild, AfterViewInit, OnChanges, SimpleChanges, 
+         Output, EventEmitter, ViewChildren, QueryList, NgZone } from '@angular/core';
 import { MappedLayer } from '../data/mapped-layer';
 import { LayerSelection } from '../data/actions';
 import { StaticDataService } from '../static-data.service';
-import { DataMouseEvent, LatLng, AgmMap, LatLngBoundsLiteral, AgmInfoWindow } from '@agm/core';
+import { DataMouseEvent, LatLng, AgmMap, AgmInfoWindow} from '@agm/core';
 import { Feature, Point, GeometryObject } from 'geojson';
-import { Marker, MapTypeControlOptions, ControlPosition } from '@agm/core/services/google-maps-types';
+import { MapTypeControlOptions, ControlPosition } from '@agm/core/services/google-maps-types';
 import { Bounds } from '../data/bounds';
 import { MetadataService } from '../metadata.service';
 
@@ -195,14 +195,11 @@ export class LayeredMapComponent implements AfterViewInit, OnChanges {
       // deal with existing info windows?
       if(this.infoWindows){
           this.infoWindows.forEach((w,i)=>{
-          console.log(i,w);
           this._zone.runOutsideAngular(()=>w.close());
         });
       }
 
-      console.log('markers changed');
       setTimeout(()=>{
-        console.log(this.markers,this.infoWindows);
         // Check and open relevant info windows...
         this.infoWindows.forEach((w,i)=>{
           let m = this.markers[i];
