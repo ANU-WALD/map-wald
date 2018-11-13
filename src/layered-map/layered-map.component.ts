@@ -1,9 +1,9 @@
 import { Component, Input, ViewChild, AfterViewInit, ElementRef, OnChanges, SimpleChanges, 
-         Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
+         Output, EventEmitter, ChangeDetectorRef, ViewChildren, QueryList, NgZone } from '@angular/core';
 import { MappedLayer } from '../data/mapped-layer';
 import { LayerSelection } from '../data/actions';
 import { StaticDataService } from '../static-data.service';
-import { DataMouseEvent, LatLng, AgmMap, LatLngBoundsLiteral } from '@agm/core';
+import { DataMouseEvent, LatLng, AgmMap, LatLngBoundsLiteral, AgmInfoWindow } from '@agm/core';
 import { Feature, Point, GeometryObject } from 'geojson';
 import { Marker, MapTypeControlOptions, ControlPosition } from '@agm/core/services/google-maps-types';
 import { Bounds } from '../data/bounds';
@@ -35,7 +35,7 @@ scaleControl="true"
             [longitude]="marker.loc.lng"
             [latitude]="marker.loc.lat"
             [iconUrl]="marker.iconUrl">
-  <agm-info-window [disableAutoPan]="true" [isOpen]="marker.open">
+  <agm-info-window #infoWindows [disableAutoPan]="true">
     <strong>{{marker.value}}</strong>
   </agm-info-window>
 </agm-marker>
@@ -156,6 +156,8 @@ export class LayeredMapComponent implements AfterViewInit, OnChanges {
   @Input() mapTypePosition:number = ControlPosition.BOTTOM_LEFT
 
   @ViewChild(AgmMap) theMap:AgmMap;
+  @ViewChildren('infoWindows') infoWindows:QueryList<AgmInfoWindow>;
+
   selectedFeature:any = null;
   // google maps zoom level
   zoom: number = 4;
@@ -169,7 +171,8 @@ export class LayeredMapComponent implements AfterViewInit, OnChanges {
   lng: number = 129.815982;
   bounds:Bounds;
 
-  constructor(private staticData:StaticDataService,
+  constructor(private _zone:NgZone,
+              private staticData:StaticDataService,
               private metadata:MetadataService) {
   }
 
@@ -183,8 +186,33 @@ export class LayeredMapComponent implements AfterViewInit, OnChanges {
         position:this.mapTypePosition
       };
     }
+
     if(changes.layers){
       this.setLayerPositions();
+    }
+
+    if(changes.markers&&this.markers){
+      // deal with existing info windows?
+      if(this.infoWindows){
+          this.infoWindows.forEach((w,i)=>{
+          console.log(i,w);
+          this._zone.runOutsideAngular(()=>w.close());
+        });
+      }
+
+      console.log('markers changed');
+      setTimeout(()=>{
+        console.log(this.markers,this.infoWindows);
+        // Check and open relevant info windows...
+        this.infoWindows.forEach((w,i)=>{
+          let m = this.markers[i];
+          if(m.open){
+            this._zone.runOutsideAngular(()=>w.open());
+          } else {
+            this._zone.runOutsideAngular(()=>w.close());
+          }
+        });
+      });
     }
   }
 
