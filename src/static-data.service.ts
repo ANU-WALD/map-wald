@@ -15,7 +15,15 @@ export class StaticDataService {
   get(host:CatalogHost,path:string):Observable<any>{
     var url = `${host.url}${path}`;
     if(!this.cache[url]){
-      this.cache[url] = this.http.get(url+`?time=${new Date().getTime()}`).pipe(
+      let uniqueUrl = url;
+      if(uniqueUrl.indexOf('?')<0){
+        uniqueUrl += '?';
+      } else {
+        uniqueUrl += '&'
+      }
+      uniqueUrl += `time=${new Date().getTime()}`;
+
+      this.cache[url] = this.http.get(uniqueUrl).pipe(
         publishReplay(),refCount());
     }
 
