@@ -124,26 +124,7 @@ scaleControl="true"
     <ng-content select=".map-control.bottom-right"></ng-content>
 </map-control>
 
-<!--
-<map-control position="LEFT_CENTER">
-  <div class="card map-control">
-    <div class="card-block control-card-content">
-      <layer-control #layerControl
-        [(layers)]="layers"
-        (layersChange)="layersChanged($event)"></layer-control>
-    </div>
-  </div>
-</map-control>
--->
-
 </agm-map>
-<!--
-(mapClick)="mapClick($event)"
-(centerChange)="moved($event)"
-(zoomChange)="moved($event)"
-  [mapTypeId]="baseLayer?baseLayer.map_type_id : null"
-
--->
 
 `,styles: []})
 export class LayeredMapComponent implements AfterViewInit, OnChanges {
