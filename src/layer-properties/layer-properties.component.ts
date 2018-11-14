@@ -14,6 +14,7 @@ declare var Plotly: any;
     <span *ngIf="layer.description()" 
     [ngbTooltip]="layer.description()"
     [placement]="tooltipPlacement"
+    class="layer-info-target"
     container="body">
   &nbsp;<i class="fa fa-info-circle"></i>
   </span>
