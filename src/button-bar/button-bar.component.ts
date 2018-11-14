@@ -10,19 +10,7 @@ declare var Plotly: any;
 </div>
 
 `,styles: [`
-.button-bar{
-  margin:3px;
-  border:1px solid grey;
-  border-radius: 3px;
-  background:white;
-}
-
-.bb-vertical{
-  max-width:30px;
-  button {
-    width:30px;
-  }
-}`]})
+`]})
 export class ButtonBarComponent implements AfterViewInit  {
 
   constructor(){
