@@ -151,7 +151,7 @@ export class LayeredMapComponent implements AfterViewInit, OnChanges {
   @Input() markers:Array<SimpleMarker> = [];
 
   @Output() layersChange = new EventEmitter<Array<MappedLayer>>();
-  @Output() featureSelected = new EventEmitter<Feature<GeometryObject>>();
+  @Output() featureSelected = new EventEmitter<{feature:Feature<GeometryObject>,layer?:MappedLayer}>();
   @Output() pointSelected = new EventEmitter<LatLng>();
   @Input() mapTypePosition:number = ControlPosition.BOTTOM_LEFT
 
@@ -285,12 +285,12 @@ export class LayeredMapComponent implements AfterViewInit, OnChanges {
   clicked(event:DataMouseEvent){
     var feature = this.extractFeature(event.feature);
     this.selectedFeature = feature;
-    this.featureSelected.emit(feature);
+    this.featureSelected.emit({feature:feature});
   }
 
   circleClicked(ml:MappedLayer,feature:any){
     this.selectedFeature = feature;
-    this.featureSelected.emit(feature);
+    this.featureSelected.emit({feature:feature,layer:ml});
   }
 
   mapClick(event:any){
