@@ -16,6 +16,7 @@ export interface TimeSeries{
     [key:string]:any
   };
   style?:string;
+  units?:string;
   [key:string]:any;
 }
 

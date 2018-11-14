@@ -32,11 +32,17 @@ export class TimeseriesChartComponent implements AfterViewInit, OnChanges  {
 
   draw(){
     var node = this._element.nativeElement.querySelector('.our-chart');
-    
+
     Plotly.purge(node);
 
         if(!this.timeSeries || !this.timeSeries.length){
       return;
+    }
+
+    const seriesUnits = this.timeSeries.map(ts=>ts.units);
+    let commonUnits:string;
+    if(seriesUnits.every(u=>u===seriesUnits[0])){
+      commonUnits = seriesUnits[0];
     }
 
     var layout:any = {
@@ -47,7 +53,8 @@ export class TimeseriesChartComponent implements AfterViewInit, OnChanges  {
         b:this.marginBottom
       },
       yaxis:{
-        fixedrange: true
+        fixedrange: true,
+        title:commonUnits
       },
       width:320,
       height:200,
@@ -59,12 +66,13 @@ export class TimeseriesChartComponent implements AfterViewInit, OnChanges  {
       const mode = ((ts.style!=='bar')&&(nonNullCount<365)) ?
                    'lines+markers' :
                    undefined;
+      const suffix = commonUnits?'':` (${ts.units})`;
       return {
         type:(ts.style==='bar')?'bar':undefined,
         mode:mode,
         x:ts.dates,
         y:ts.values,
-        name:ts.label
+        name:ts.label+suffix
       };
     }), layout );
   }
