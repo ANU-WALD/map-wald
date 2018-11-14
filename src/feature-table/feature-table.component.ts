@@ -1,5 +1,5 @@
 import { Component, Input, AfterViewInit, OnChanges, SimpleChanges } from '@angular/core';
-import { LayerPropertyStyle } from 'src/data/catalog';
+import { LayerPropertyStyle } from '../data/catalog';
 
 @Component({
   selector: 'feature-table',
