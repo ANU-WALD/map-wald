@@ -1,4 +1,5 @@
-import { Component, Input, AfterViewInit } from '@angular/core';
+import { Component, Input, AfterViewInit, OnChanges, SimpleChanges } from '@angular/core';
+import { LayerPropertyStyle } from 'src/data/catalog';
 
 @Component({
   selector: 'feature-table',
@@ -16,14 +17,20 @@ import { Component, Input, AfterViewInit } from '@angular/core';
     </tr>
     <tr *ngFor="let prop of _keys(feature.properties)">
       <td><strong>{{prop}}</strong></td>
-      <td>{{feature.properties[prop]}}</td>
+      <td *ngIf="!styles||!styles[prop]">{{feature.properties[prop]}}</td>
+      <td *ngIf="styles&&styles[prop]">
+        <a *ngIf="styles[prop].hyperlink" target="_blank" [href]="feature.properties[prop]">
+          {{feature.properties[prop]}}
+        </a>
+      </td>
     </tr>
   </tbody>
 </table>`,styles: [`.feature-table{
   max-width:300px;
 }`]})
-export class FeatureTableComponent implements AfterViewInit  {
+export class FeatureTableComponent implements AfterViewInit, OnChanges {
   @Input() feature: any;
+  @Input() styles: {[key:string]:LayerPropertyStyle} = {}
   _keys = Object.keys;
 
   constructor(){
@@ -32,5 +39,11 @@ export class FeatureTableComponent implements AfterViewInit  {
 
   ngAfterViewInit(){
 
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if(!this.styles){
+      this.styles = {};
+    }
   }
 }

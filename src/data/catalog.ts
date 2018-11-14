@@ -230,3 +230,8 @@ export interface PointData{
   defaultVariable:string;
   chart?:string;
 }
+
+export interface LayerPropertyStyle{
+  hyperlink?:boolean;
+  placeholder?:string;
+}
