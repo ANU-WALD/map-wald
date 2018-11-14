@@ -120,7 +120,7 @@ export class LayerPropertiesComponent implements AfterViewInit, OnDestroy {
     // }
     if(this.map){
       this.selectedFeatureSubscription = 
-        this.map.featureSelected.subscribe((f:Feature<GeometryObject>)=>this.featureSelected(f));
+        this.map.featureSelected.subscribe((evt:{feature:Feature<GeometryObject>,layer?:MappedLayer})=>this.featureSelected(evt));
     }
 
     if(this.layer){
@@ -136,11 +136,11 @@ export class LayerPropertiesComponent implements AfterViewInit, OnDestroy {
     }
   }
 
-  featureSelected(f:Feature<GeometryObject>){
+  featureSelected(evt:{feature:Feature<GeometryObject>,layer?:MappedLayer}){
     if(!this.publication||!this.publication.pointdata){
       return;
     }
-    this.selectedFeature = f;
+    this.selectedFeature = evt.feature;
     // No guarantee that this is from the same layer!!!!
     this.queryPointData();
   }
