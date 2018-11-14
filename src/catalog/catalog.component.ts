@@ -76,6 +76,7 @@ export class CatalogComponent implements AfterViewInit, OnChanges {
     if (changes.catalog && this.catalog) {
       this.filterText = '';
       this.buildTree();
+      this.highlightLayers([],this.tree);
     }
   }
 
@@ -232,6 +233,7 @@ export class CatalogComponent implements AfterViewInit, OnChanges {
       if(activeChild){
         tree.klass = 'active-child';
       }
+      tree.klass = (tree.klass||'') + ' theme';
       return activeChild;
     }
 
