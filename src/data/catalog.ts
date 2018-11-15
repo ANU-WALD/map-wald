@@ -225,7 +225,7 @@ export interface PointData{
   protocol:string;
   url:string;
   coordinates:{[key:string]:number};
-  tags:{[key:string]:string[]};
+  tags:{[key:string]:Array<string|LayerTagValue>};
   labels?:string[];
   defaultVariable:string;
   chart?:string;
@@ -234,4 +234,13 @@ export interface PointData{
 export interface LayerPropertyStyle{
   hyperlink?:boolean;
   placeholder?:string;
+}
+
+export interface LayerTagValue{
+  value:string;
+  label:string;
+}
+
+export interface LayerTagMap{
+  [key:string]:LayerTagValue[]
 }

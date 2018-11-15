@@ -1,6 +1,6 @@
 import { Component, Input, ViewChild, AfterViewInit, ElementRef, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { MappedLayer } from '../data/mapped-layer';
-import { Publication } from '../data/catalog';
+import { Publication, LayerTagValue, LayerTagMap } from '../data/catalog';
 import { LayeredMapComponent } from '../layered-map/layered-map.component';
 import { GeometryObject, Feature } from 'geojson';
 import { PointSelectionService, PointSelection } from '../point-selection.service';
@@ -65,7 +65,7 @@ declare var Plotly: any;
     <div *ngFor="let tag of getKeys(availableTags)">
       {{tag}}
       <select [(ngModel)]="tags[tag]" (ngModelChange)="tagChanged(tag)">
-        <option *ngFor="let val of availableTags[tag]">{{val}}</option>
+        <option *ngFor="let val of availableTags[tag]" [ngValue]="val.value">{{val.label}}</option>
       </select> 
     </div>
   </div>
@@ -91,7 +91,7 @@ export class LayerPropertiesComponent implements AfterViewInit, OnDestroy {
   @Input() map: LayeredMapComponent;
   @Output() propertyChanged = new EventEmitter();
   @Input() tooltipPlacement:string='right';
-  availableTags:{[key:string]:string[]}=null;
+  availableTags:LayerTagMap=null;
   tags:{[key:string]:string}={}
   pointVariables:string[] = [];
   selectedVariable:string;
@@ -169,11 +169,35 @@ export class LayerPropertiesComponent implements AfterViewInit, OnDestroy {
     });
   }
 
+  processTags(tags:{[key:string]:Array<string|LayerTagValue>}):LayerTagMap{
+    if(!tags){
+      return null;
+    }
+
+    let result:LayerTagMap = {};
+
+    Object.keys(tags).forEach(k=>{
+      let values:Array<string|LayerTagValue> = tags[k];
+      result[k] = values.map(v=>{
+        let vAsTag = <LayerTagValue>v;
+        if(vAsTag.value&&vAsTag.label){
+          return vAsTag;
+        }
+        let vAsString = <string>v;
+        return {
+          value:vAsString,
+          label:vAsString
+        };
+      })
+    })
+    return result;
+  }
+
   findTags(){
     if(this.publication.pointdata){
-      this.availableTags = this.publication.pointdata.tags;
+      this.availableTags = this.processTags(this.publication.pointdata.tags);
     } else {
-      this.availableTags = this.layer.flattenedSettings.options.tags;
+      this.availableTags = this.processTags(this.layer.flattenedSettings.options.tags);
     }
     this.setDefaultTags();
   }
@@ -190,7 +214,7 @@ export class LayerPropertiesComponent implements AfterViewInit, OnDestroy {
 
     Object.keys(this.availableTags).forEach(tag=>{
       if(this.tags[tag]===undefined){
-        this.tags[tag] = this.availableTags[tag][0];
+        this.tags[tag] = this.availableTags[tag][0].value;
       }
     });
 
