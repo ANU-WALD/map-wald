@@ -84,19 +84,20 @@ declare var Plotly: any;
   </div>
   <button (click)="update()">Force update...</button>
   -->
-</div>`,styles: []})
+</div>`, styles: []
+})
 export class LayerPropertiesComponent implements AfterViewInit, OnDestroy {
   getKeys = Object.keys;
   @Input() layer: MappedLayer;
   @Input() map: LayeredMapComponent;
   @Output() propertyChanged = new EventEmitter();
-  @Input() tooltipPlacement:string='right';
-  availableTags:LayerTagMap=null;
-  tags:{[key:string]:string}={}
-  pointVariables:string[] = [];
-  selectedVariable:string;
+  @Input() tooltipPlacement: string = 'right';
+  availableTags: LayerTagMap = null;
+  tags: { [key: string]: string } = {}
+  pointVariables: string[] = [];
+  selectedVariable: string;
   selectedFeature: Feature<GeometryObject>;
-  selectedFeatureSubscription:any;
+  selectedFeatureSubscription: any;
 
   constructor(private pointSelectionService: PointSelectionService) {
 
@@ -118,26 +119,26 @@ export class LayerPropertiesComponent implements AfterViewInit, OnDestroy {
     //   !this.layer.spatialExtent) {
     //   this.loadExtent();
     // }
-    if(this.map){
-      this.selectedFeatureSubscription = 
-        this.map.featureSelected.subscribe((evt:{feature:Feature<GeometryObject>,layer?:MappedLayer})=>this.featureSelected(evt));
+    if (this.map) {
+      this.selectedFeatureSubscription =
+        this.map.featureSelected.subscribe((evt: { feature: Feature<GeometryObject>, layer?: MappedLayer }) => this.featureSelected(evt));
     }
 
-    if(this.layer){
-      setTimeout(()=>{
+    if (this.layer) {
+      setTimeout(() => {
         this.findTags();
       });
     }
   }
 
   ngOnDestroy(): void {
-    if(this.selectedFeatureSubscription){
+    if (this.selectedFeatureSubscription) {
       this.selectedFeatureSubscription.unsubscribe();
     }
   }
 
-  featureSelected(evt:{feature:Feature<GeometryObject>,layer?:MappedLayer}){
-    if(!this.publication||!this.publication.pointdata){
+  featureSelected(evt: { feature: Feature<GeometryObject>, layer?: MappedLayer }) {
+    if (!this.publication || !this.publication.pointdata) {
       return;
     }
     this.selectedFeature = evt.feature;
@@ -148,14 +149,15 @@ export class LayerPropertiesComponent implements AfterViewInit, OnDestroy {
   publicationSelected(idx: number) {
     this.layer.options.publication = idx;
     // this.publication=this.layer.layer.publications[idx];
-    if(this.publication.pointdata){
+    if (this.publication.pointdata) {
       this.pointSelectionChanged();
+      this.updateVariables();
     }
 
     this.update(idx);
   }
 
-  updateLayer(){
+  updateLayer() {
     this.layer.options.tags = this.tags;
     this.layer.update();
     this.propertyChanged.emit(this.layer);
@@ -164,37 +166,37 @@ export class LayerPropertiesComponent implements AfterViewInit, OnDestroy {
   update(event: any) {
     this.updateLayer();
 
-    setTimeout(()=>{
+    setTimeout(() => {
       this.findTags();
     });
   }
 
-  processTags(tags:{[key:string]:Array<string|LayerTagValue>}):LayerTagMap{
-    if(!tags){
+  processTags(tags: { [key: string]: Array<string | LayerTagValue> }): LayerTagMap {
+    if (!tags) {
       return null;
     }
 
-    let result:LayerTagMap = {};
+    let result: LayerTagMap = {};
 
-    Object.keys(tags).forEach(k=>{
-      let values:Array<string|LayerTagValue> = tags[k];
-      result[k] = values.map(v=>{
+    Object.keys(tags).forEach(k => {
+      let values: Array<string | LayerTagValue> = tags[k];
+      result[k] = values.map(v => {
         let vAsTag = <LayerTagValue>v;
-        if(vAsTag.value&&vAsTag.label){
+        if (vAsTag.value && vAsTag.label) {
           return vAsTag;
         }
         let vAsString = <string>v;
         return {
-          value:vAsString,
-          label:vAsString
+          value: vAsString,
+          label: vAsString
         };
       })
     })
     return result;
   }
 
-  findTags(){
-    if(this.publication.pointdata){
+  findTags() {
+    if (this.publication.pointdata) {
       this.availableTags = this.processTags(this.publication.pointdata.tags);
     } else {
       this.availableTags = this.processTags(this.layer.flattenedSettings.options.tags);
@@ -202,25 +204,25 @@ export class LayerPropertiesComponent implements AfterViewInit, OnDestroy {
     this.setDefaultTags();
   }
 
-  tagChanged(t:string){
+  tagChanged(t: string) {
     this.queryPointData();
     this.update(null);
   }
 
-  setDefaultTags(){
-    if(!this.availableTags){
+  setDefaultTags() {
+    if (!this.availableTags) {
       return;
     }
 
-    Object.keys(this.availableTags).forEach(tag=>{
-      if(this.tags[tag]===undefined){
+    Object.keys(this.availableTags).forEach(tag => {
+      if (this.tags[tag] === undefined) {
         this.tags[tag] = this.availableTags[tag][0].value;
       }
     });
 
     this.updateLayer();
   }
- 
+
   zoomToExtent() {
     if (!this.map) {
       console.log('NO MAP!');
@@ -232,38 +234,43 @@ export class LayerPropertiesComponent implements AfterViewInit, OnDestroy {
     this.map.zoom = this.layer.layer.zoom || 13;
   }
 
-  pointSelection():PointSelection{
+  pointSelection(): PointSelection {
     return {
-      catalog:this.publication.pointdata,
-      variable:this.selectedVariable,
-      feature:this.selectedFeature,
-      tags:this.tags
+      catalog: this.publication.pointdata,
+      variable: this.selectedVariable,
+      feature: this.selectedFeature,
+      tags: this.tags
     };
   }
 
-  queryPointData(){
-    let pointdata = this.publication&&this.publication.pointdata;
+  queryPointData() {
+    let pointdata = this.publication && this.publication.pointdata;
 
-    if(!this.publication||!this.publication.pointdata){
+    if (!this.publication || !this.publication.pointdata) {
       return;
     }
 
     this.pointSelectionChanged();
-    this.pointSelectionService.timeseriesVariables(
-      this.pointSelection()).subscribe(variables=>{
-      this.pointVariables = variables;
-      if(variables.indexOf(this.selectedVariable)<0){
-        if(variables.indexOf(this.publication.pointdata.defaultVariable)>=0){
-          this.selectedVariable = this.publication.pointdata.defaultVariable;
-        } else {
-          this.selectedVariable = variables[0];
-        }
-      }
-      this.pointSelectionChanged();
-    });
+    this.updateVariables();
   }
 
-  pointSelectionChanged(){
+  updateVariables(){
+    this.pointSelectionService.timeseriesVariables(
+      this.pointSelection()).subscribe(variables => {
+        console.log(variables)
+        this.pointVariables = variables.map(v => v.value);
+        if (this.pointVariables.indexOf(this.selectedVariable) < 0) {
+          if (this.pointVariables.indexOf(this.publication.pointdata.defaultVariable) >= 0) {
+            this.selectedVariable = this.publication.pointdata.defaultVariable;
+          } else {
+            this.selectedVariable = variables[0].value;
+          }
+        }
+        this.pointSelectionChanged();
+      });
+  }
+
+  pointSelectionChanged() {
     this.pointSelectionService.pointSelection(this.pointSelection());
   }
 }
