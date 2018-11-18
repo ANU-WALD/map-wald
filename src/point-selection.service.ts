@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject, of } from 'rxjs';
-import { PointData, Catalog } from './data/catalog';
+import { PointData, Catalog, LayerTagValue } from './data/catalog';
 import { Feature, GeometryObject } from 'geojson';
 import { InterpolationService } from './interpolation.service';
 import { MetadataService } from './metadata.service';
@@ -39,6 +39,10 @@ export class PointSelectionService {
     }
 
     if(current.catalog.url!==updated.catalog.url){
+      return false;
+    }
+
+    if(current.feature!==updated.feature){
       return false;
     }
 
