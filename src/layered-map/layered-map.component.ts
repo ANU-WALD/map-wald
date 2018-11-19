@@ -27,6 +27,7 @@ export interface SimpleMarker {
 [zoomControl]="false"
 [mapTypeControl]="showMapType"
 [mapTypeControlOptions]="mapTypeOptions"
+[streetViewControl]="streetViewControl"
 scaleControl="true"
 [fitBounds]="bounds"
 (mapClick)="mapClick($event)">
@@ -135,6 +136,7 @@ export class LayeredMapComponent implements AfterViewInit, OnChanges {
   @Output() featureSelected = new EventEmitter<{feature:Feature<GeometryObject>,layer?:MappedLayer}>();
   @Output() pointSelected = new EventEmitter<LatLng>();
   @Input() mapTypePosition:number = ControlPosition.BOTTOM_LEFT
+  @Input() streetViewControl = true;
 
   @ViewChild(AgmMap) theMap:AgmMap;
   @ViewChildren('infoWindows') infoWindows:QueryList<AgmInfoWindow>;
@@ -142,7 +144,7 @@ export class LayeredMapComponent implements AfterViewInit, OnChanges {
   selectedFeature:any = null;
   // google maps zoom level
   zoom: number = 4;
-  showMapType = true;
+  @Input() showMapType = true;
   mapTypeOptions: MapTypeControlOptions={
     position:ControlPosition.BOTTOM_LEFT
   };
