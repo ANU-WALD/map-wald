@@ -9,8 +9,8 @@ declare var Plotly: any;
 @Component({
   selector: 'layer-control',
   template: `<div class="layers-control">
-  <div class="layers-control-header"> <!-- header -->
-    <div *ngIf="showLegends" class="float-right">
+  <div *ngIf="showLegends" class="layers-control-header"> <!-- header -->
+    <div class="float-right">
       <!-- TODO Attach handlers and tooltips to each icon -->
       <i class="fa fa-lg fa-cog discrete-icon" (click)="allLegends(false)"></i>
       <i class="fa fa-lg fa-th-list discrete-icon" (click)="allLegends(true)"></i>
@@ -82,7 +82,7 @@ declare var Plotly: any;
 
 
 .layers-control-header, .layer-control{
-  border-bottom: 1px solid #aaa;
+  border-bottom: 1.5px solid #aaa;
 }`]})
 export class LayerControlComponent implements AfterViewInit, OnChanges {
   @Input() layers: MappedLayer[];

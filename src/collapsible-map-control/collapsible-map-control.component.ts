@@ -10,9 +10,9 @@ declare var Plotly: any;
       <div class="card-header">
         <h6 class="mb-0">
           {{heading}}
-          <span *ngIf="isCollapsed" class="fa fa-angle-up
+          <span *ngIf="isCollapsed" class="float-right fa fa-caret-up
             collapse-arrow" aria-hidden="true"></span>
-          <span *ngIf="!isCollapsed" class="fa fa-angle-down
+          <span *ngIf="!isCollapsed" class="float-right fa fa-caret-down
             collapse-arrow" aria-hidden="true"></span>
         </h6>
       </div>
