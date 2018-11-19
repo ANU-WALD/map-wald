@@ -79,6 +79,7 @@ export class MappedLayer {
   wmsParameters: any = {};
   flattenedSettings: any = {};
   staticData:any;
+  opacity = 1.0;
 
   _styleFunc: (f:any)=>void;
 
