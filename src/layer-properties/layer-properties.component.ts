@@ -255,14 +255,24 @@ export class LayerPropertiesComponent implements AfterViewInit, OnDestroy {
   }
 
   updateVariables(){
+    let sel = this.pointSelection();
     this.pointSelectionService.timeseriesVariables(
-      this.pointSelection()).subscribe(variables => {
+      sel).subscribe(variables => {
         this.pointVariables = variables.map(v => v.value);
-        if (this.pointVariables.indexOf(this.selectedVariable) < 0) {
+        if(this.publication.pointdata.exclude){
+          this.pointVariables = this.pointVariables.filter(v=>{
+            return !this.publication.pointdata.exclude.some(pattern=>{
+              return !!v.match(pattern);
+            });
+          });
+        }
+        if(!this.pointVariables.length){
+          this.selectedVariable = null;
+        } else if (this.pointVariables.indexOf(this.selectedVariable) < 0) {
           if (this.pointVariables.indexOf(this.publication.pointdata.defaultVariable) >= 0) {
             this.selectedVariable = this.publication.pointdata.defaultVariable;
           } else {
-            this.selectedVariable = variables[0].value;
+            this.selectedVariable = this.pointVariables[0];
           }
         }
         this.pointSelectionChanged();

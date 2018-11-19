@@ -229,6 +229,7 @@ export interface PointData{
   labels?:string[];
   defaultVariable:string;
   chart?:string;
+  exclude?:string[];
 }
 
 export interface LayerPropertyStyle{
