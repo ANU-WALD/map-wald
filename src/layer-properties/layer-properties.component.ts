@@ -257,7 +257,6 @@ export class LayerPropertiesComponent implements AfterViewInit, OnDestroy {
   updateVariables(){
     this.pointSelectionService.timeseriesVariables(
       this.pointSelection()).subscribe(variables => {
-        console.log(variables)
         this.pointVariables = variables.map(v => v.value);
         if (this.pointVariables.indexOf(this.selectedVariable) < 0) {
           if (this.pointVariables.indexOf(this.publication.pointdata.defaultVariable) >= 0) {

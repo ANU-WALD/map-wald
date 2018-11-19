@@ -79,7 +79,7 @@ export class PointSelectionService {
     return url.indexOf('{{')<0;
   }
 
-  timeseriesVariables(sel:PointSelection):Observable<string[]>{
+  timeseriesVariables(sel:PointSelection):Observable<LayerTagValue[]>{
     let coords = sel.catalog.coordinates || {};
     let url = this.fullUrl(sel);
     if(!this.validUrl(url)){
@@ -89,13 +89,25 @@ export class PointSelectionService {
     return this.meta.ddxForUrl(url).pipe(
       map(ddx=>{
         let variables = ddx.variables;
-        return Object.keys(variables).filter(v=>{
+        let variableNames = Object.keys(variables).filter(v=>{
           let dims:any[] = ddx.variables[v].dimensions;
           return Object.keys(coords).every(coord=>{
             return dims.find(dim=>dim.name===coord);
           });
         });
-      })
-    );
+
+        return variableNames.map(v=>{
+          if(ddx.variables[v].long_name){
+            return {
+              value:v,
+              label:ddx.variables[v].long_name
+            };
+          }
+          return {
+            value:v,
+            label:v
+          };
+        });
+      }));
   }
 }
