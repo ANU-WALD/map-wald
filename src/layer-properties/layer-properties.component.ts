@@ -73,7 +73,7 @@ declare var Plotly: any;
   <div *ngIf="publication?.pointdata">
     Variable:
     <select [(ngModel)]="selectedVariable" (ngModelChange)="queryPointData()">
-      <option *ngFor="let v of pointVariables">{{v}}</option>
+      <option *ngFor="let v of pointVariables" [ngValue]="v.value">{{v.label}}</option>
     </select>
   </div>
   <!--
@@ -94,7 +94,7 @@ export class LayerPropertiesComponent implements AfterViewInit, OnDestroy {
   @Input() tooltipPlacement: string = 'right';
   availableTags: LayerTagMap = null;
   tags: { [key: string]: string } = {}
-  pointVariables: string[] = [];
+  pointVariables: LayerTagValue[] = [];
   selectedVariable: string;
   selectedFeature: Feature<GeometryObject>;
   selectedFeatureSubscription: any;
@@ -258,21 +258,21 @@ export class LayerPropertiesComponent implements AfterViewInit, OnDestroy {
     let sel = this.pointSelection();
     this.pointSelectionService.timeseriesVariables(
       sel).subscribe(variables => {
-        this.pointVariables = variables.map(v => v.value);
+        this.pointVariables = variables.slice();
         if(this.publication.pointdata.exclude){
           this.pointVariables = this.pointVariables.filter(v=>{
             return !this.publication.pointdata.exclude.some(pattern=>{
-              return !!v.match(pattern);
+              return !!v.value.match(pattern);
             });
           });
         }
         if(!this.pointVariables.length){
           this.selectedVariable = null;
-        } else if (this.pointVariables.indexOf(this.selectedVariable) < 0) {
-          if (this.pointVariables.indexOf(this.publication.pointdata.defaultVariable) >= 0) {
+        } else if (this.pointVariables.findIndex(t=>t.value===this.selectedVariable) < 0) {
+          if (this.pointVariables.findIndex(t=>t.value===this.publication.pointdata.defaultVariable) >= 0) {
             this.selectedVariable = this.publication.pointdata.defaultVariable;
           } else {
-            this.selectedVariable = this.pointVariables[0];
+            this.selectedVariable = this.pointVariables[0].value;
           }
         }
         this.pointSelectionChanged();

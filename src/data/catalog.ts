@@ -228,6 +228,7 @@ export interface PointData{
   tags:{[key:string]:Array<string|LayerTagValue>};
   labels?:string[];
   defaultVariable:string;
+  displayFormat?:string;
   chart?:string;
   exclude?:string[];
 }

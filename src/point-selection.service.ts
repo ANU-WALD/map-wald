@@ -97,6 +97,13 @@ export class PointSelectionService {
         });
 
         return variableNames.map(v=>{
+          if(sel.catalog&&sel.catalog.displayFormat){
+            let fmt = Object.assign({variable:v},ddx.variables[v]);
+            return {
+              value:v,
+              label:InterpolationService.interpolate(sel.catalog.displayFormat,fmt)
+            }
+          }
           if(ddx.variables[v].long_name){
             return {
               value:v,
