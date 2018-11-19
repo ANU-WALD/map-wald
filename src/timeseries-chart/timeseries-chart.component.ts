@@ -18,6 +18,8 @@ export class TimeseriesChartComponent implements AfterViewInit, OnChanges  {
   @Input() marginRight:number = 10;
   @Input() marginTop:number = 0;
   @Input() marginBottom:number = 20;
+  @Input() titlefont:any = undefined;
+
   constructor(private _element:ElementRef){
 
   }
@@ -58,7 +60,8 @@ export class TimeseriesChartComponent implements AfterViewInit, OnChanges  {
       },
       width:320,
       height:200,
-      title:this.title || undefined
+      title:this.title || undefined,
+      titlefont:this.titlefont
     };
 
     Plotly.plot( node, this.timeSeries.map(ts=>{
