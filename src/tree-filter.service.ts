@@ -25,6 +25,7 @@ export class TreeFilterService {
           this.filterTree(child, filterText);
 
           tree.visible = tree.visible || child.visible;
+          tree.expanded = tree.expanded || child.visible || child.expanded;
         });
       }
     }
