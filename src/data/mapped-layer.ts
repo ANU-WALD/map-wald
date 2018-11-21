@@ -142,7 +142,7 @@ export class MappedLayer {
     this.interpolatedFile = InterpolationService.interpolate(this.interpolatedFile, mapParams);
     this.url = baseURL + WMS_URL_FORMAT[software] + this.interpolatedFile;
     if(MAKE_DOWNLOAD_URL[software]){
-      this.interpolatedDownloadURL=MAKE_DOWNLOAD_URL[software](baseURL,this.interpolatedFile,this);
+      this.interpolatedDownloadURL=MAKE_DOWNLOAD_URL[software](host.downloadLink||baseURL,this.interpolatedFile,this);
     } else {
       this.interpolatedDownloadURL=host.downloadLink||null;
     }
