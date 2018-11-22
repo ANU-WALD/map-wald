@@ -85,7 +85,8 @@ export class MappedLayer {
 
   description():string{
     return this.layer.description ||
-      (this.retrievedMetadata && this.retrievedMetadata.long_name);
+      (this.retrievedMetadata && 
+       this.retrievedMetadata[this.layer.descriptionField||'long_name']);
   }
 
   leading0(n: number): string {

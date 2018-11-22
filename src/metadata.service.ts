@@ -72,8 +72,18 @@ export class MetadataService {
       return of({});
     }
 
-    return this.getDDXForLayer(ml).pipe(
-      map(ddx=>ddx.variables[ml.flattenedSettings.layer||ml.flattenedSettings.variable]||{}));
+    return forkJoin([this.getDASForLayer(ml),this.getDDXForLayer(ml)]).pipe(
+      map(meta=>{
+        return {
+          das: <DapDAS>meta[0],
+          ddx: <DapDDX>meta[1]
+        };
+      }),
+      map(meta=>{
+        return Object.assign({},
+                             meta.das.attr||{},
+                             meta.ddx.variables[ml.flattenedSettings.layer||ml.flattenedSettings.variable]||{});
+      }));
   }
 
   populateMetadata(ml:MappedLayer){

@@ -121,7 +121,7 @@ export class CatalogComponent implements AfterViewInit, OnChanges {
         result.tooltip = of(l.description);
       } else {
         result.tooltip = this.metadata.getMetadata(tmp).pipe(
-          map(meta=>meta.long_name)
+          map(meta=>meta[l.descriptionField||'long_name'])
         );
       }
       return result;
