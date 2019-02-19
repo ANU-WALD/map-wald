@@ -69,6 +69,7 @@
     "@types/storejs": "^2.0.3",
     "codelyzer": "~2.1.0",
     "dap-query-js": "github:flowmatters/dap-query-js",
+    "merge": "^1.2.1",
     "ngx-pipes": "1.6.5",
     "plotly.js": "git+https://github.com/arlowhite/plotly.js#no-polyfill",
     "proj4": "^2.3.17",
