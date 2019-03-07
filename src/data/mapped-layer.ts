@@ -62,6 +62,13 @@ export const INTERPOLATED_PARAMETERS = [
 ];
 
 export class MappedLayer {
+  constructor(data?:any){
+    Object.assign(this,data||{});
+    if(this.layerType===undefined){
+      this.layerType = this.wmsParameters?'wms':undefined;
+    }
+  }
+
   title:string;
 
   layer: Layer;
@@ -85,7 +92,7 @@ export class MappedLayer {
 
   description():string{
     return this.layer.description ||
-      (this.retrievedMetadata && 
+      (this.retrievedMetadata &&
        this.retrievedMetadata[this.layer.descriptionField||'long_name']);
   }
 
