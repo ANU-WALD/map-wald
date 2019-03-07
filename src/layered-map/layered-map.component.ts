@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild, AfterViewInit, OnChanges, SimpleChanges, 
+import { Component, Input, ViewChild, AfterViewInit, OnChanges, SimpleChanges,
          Output, EventEmitter, ViewChildren, QueryList, NgZone } from '@angular/core';
 import { MappedLayer } from '../data/mapped-layer';
 import { LayerSelection } from '../data/actions';
@@ -25,6 +25,7 @@ export interface SimpleMarker {
 (zoomChange)="zoomChanged()"
 [disableDefaultUI]="false"
 [zoomControl]="false"
+[mapTypeId]="mapTypeId"
 [mapTypeControl]="showMapType"
 [mapTypeControlOptions]="mapTypeOptions"
 [streetViewControl]="streetViewControl"
@@ -131,6 +132,7 @@ scaleControl="true"
 export class LayeredMapComponent implements AfterViewInit, OnChanges {
   @Input() layers: Array<MappedLayer> = [];
   @Input() markers:Array<SimpleMarker> = [];
+  @Input() mapTypeId:string='roadmap';
 
   @Output() layersChange = new EventEmitter<Array<MappedLayer>>();
   @Output() featureSelected = new EventEmitter<{feature:Feature<GeometryObject>,layer?:MappedLayer}>();
@@ -143,15 +145,15 @@ export class LayeredMapComponent implements AfterViewInit, OnChanges {
 
   selectedFeature:any = null;
   // google maps zoom level
-  zoom: number = 4;
+  @Input() zoom: number = 4;
   @Input() showMapType = true;
   mapTypeOptions: MapTypeControlOptions={
     position:ControlPosition.BOTTOM_LEFT
   };
-  
+
   // initial center position for the map
-  lat: number = -22.673858;
-  lng: number = 129.815982;
+  @Input() lat: number = -22.673858;
+  @Input() lng: number = 129.815982;
   bounds:Bounds;
 
   constructor(private _zone:NgZone,

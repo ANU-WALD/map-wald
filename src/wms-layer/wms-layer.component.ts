@@ -1,6 +1,6 @@
 import { Component, OnInit, AfterViewInit, Input,
          OnChanges, SimpleChanges, OnDestroy } from '@angular/core';
-import {GoogleMapsAPIWrapper} from '@agm/core/services';
+import {GoogleMapsAPIWrapper} from '@agm/core';
 import {WMSService} from '../wms.service';
 
 @Component({
