@@ -30,6 +30,8 @@ import { ZoomLayerComponent } from './src/action-buttons/zoom-layer/zoom-layer.c
 import { ZoomFullComponent } from './src/action-buttons/zoom-full/zoom-full.component';
 import { ZoomOutComponent } from './src/action-buttons/zoom-out/zoom-out.component';
 import { ZoomInComponent } from './src/action-buttons/zoom-in/zoom-in.component';
+import {CycleBaseMapComponent} from './src/action-buttons/cycle-base-map/cycle-base-map.component';
+import {CycleOpacityComponent} from './src/action-buttons/cycle-opacity/cycle-opacity.component';
 import { ButtonBarComponent } from './src/button-bar/button-bar.component';
 import { TimeseriesChartComponent } from './src/timeseries-chart/timeseries-chart.component';
 import { TimeseriesService } from './src/timeseries.service';
@@ -80,6 +82,9 @@ export * from './src/action-buttons/zoom-layer/zoom-layer.component';
 export * from './src/action-buttons/zoom-full/zoom-full.component';
 export * from './src/action-buttons/zoom-out/zoom-out.component';
 export * from './src/action-buttons/zoom-in/zoom-in.component';
+export * from './src/action-buttons/cycle-base-map/cycle-base-map.component';
+export * from './src/action-buttons/cycle-opacity/cycle-opacity.component';
+
 export * from './src/button-bar/button-bar.component';
 export * from './src/timeseries-chart/timeseries-chart.component';
 export * from './src//timeseries.service';
@@ -127,6 +132,8 @@ export const components = [
   ZoomFullComponent,
   ZoomOutComponent,
   ZoomInComponent,
+  CycleBaseMapComponent,
+  CycleOpacityComponent,
   ButtonBarComponent,
   TimeseriesChartComponent,
   FeatureTableComponent,
