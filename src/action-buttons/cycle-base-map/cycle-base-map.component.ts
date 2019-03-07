@@ -52,8 +52,6 @@ export class CycleBaseMapComponent implements AfterViewInit, OnChanges  {
 
     let current = this.baseLayers.findIndex(l=>l.map_type_id===this.baseLayer.map_type_id);
     let next = (current+1)%this.baseLayers.length;
-    console.log('current',current,this.baseLayers[current].map_type_id);
-    console.log('next',next,this.baseLayers[next].map_type_id);
     this.baseLayer = this.baseLayers[next];
 
     this.map.mapTypeId = this.baseLayer ?
