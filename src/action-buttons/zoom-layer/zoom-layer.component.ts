@@ -1,7 +1,7 @@
 import { Component, Input, ViewChild, AfterViewInit, ElementRef } from '@angular/core';
-import { LayeredMapComponent } from '../layered-map/layered-map.component';
-import { MappedLayer } from '../data/mapped-layer';
-import { Bounds } from '../data/bounds';
+import { LayeredMapComponent } from '../../layered-map/layered-map.component';
+import { MappedLayer } from '../../data/mapped-layer';
+import { Bounds } from '../../data/bounds';
 
 
 declare var Plotly: any;

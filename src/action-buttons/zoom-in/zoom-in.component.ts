@@ -1,12 +1,12 @@
 import { Component, Input, ViewChild, AfterViewInit, ElementRef } from '@angular/core';
-import { LayeredMapComponent } from '../layered-map/layered-map.component';
+import { LayeredMapComponent } from '../../layered-map/layered-map.component';
 
 
 declare var Plotly: any;
 
 @Component({
   selector: 'zoom-in',
-  template: `<button class="btn btn-secondary btn-sm" 
+  template: `<button class="btn btn-secondary btn-sm"
         ngbTooltip="Zoom in"
         placement="right"
         (click)="zoomIn()"
