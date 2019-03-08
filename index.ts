@@ -21,6 +21,8 @@ import { WMSLayerComponent } from './src/wms-layer/wms-layer.component';
 import { MapLegendComponent } from './src/map-legend/map-legend.component';
 import { MapControlComponent } from './src/map-control/map-control.component';
 //$importList
+import { AvailableDatesService } from './src//available-dates.service';
+import { DateShifterComponent } from './src/date-shifter/date-shifter.component';
 import { OneTimeSplashComponent } from './src/one-time-splash/one-time-splash.component';
 import { PointSelectionService } from './src//point-selection.service';
 import { DateElementComponent } from './src/date-element/date-element.component';
@@ -72,6 +74,8 @@ export * from './src/interpolation.service';
 export * from './src/wms-layer/wms-layer.component';
 export * from './src/map-legend/map-legend.component';
 //$exportList
+export * from './src//available-dates.service';
+export * from './src/date-shifter/date-shifter.component';
 export * from './src/one-time-splash/one-time-splash.component';
 export * from './src//point-selection.service';
 export * from './src//metadata.service';
@@ -107,6 +111,7 @@ export * from './src/map-control/map-control.component';
 
 export const services = [
   //$serviceList
+  AvailableDatesService,
   PointSelectionService,
   TimeseriesService,
   StaticDataService,
@@ -124,6 +129,7 @@ export const services = [
 
 export const components = [
   //$componentList
+  DateShifterComponent,
   OneTimeSplashComponent,
   DateElementComponent,
   ShareViewComponent,
