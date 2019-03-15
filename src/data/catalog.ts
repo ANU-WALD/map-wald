@@ -177,7 +177,7 @@ export class Layer{
   path:string;
   [key:string]:any;
   spatialExtent: Observable<Bounds>;
-  
+
   constructor(config?:any){
     if(!config){
       return;

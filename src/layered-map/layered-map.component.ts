@@ -30,7 +30,7 @@ export interface SimpleMarker {
 [mapTypeControlOptions]="mapTypeOptions"
 [streetViewControl]="streetViewControl"
 scaleControl="true"
-[fitBounds]="bounds"
+[fitBounds]="_bounds"
 (mapClick)="mapClick($event)">
 
 <agm-marker *ngFor="let marker of markers"
@@ -154,7 +154,8 @@ export class LayeredMapComponent implements AfterViewInit, OnChanges {
   // initial center position for the map
   @Input() lat: number = -22.673858;
   @Input() lng: number = 129.815982;
-  bounds:Bounds;
+  @Input() bounds:Bounds;
+  private _bounds:Bounds;
 
   constructor(private _zone:NgZone,
               private staticData:StaticDataService,
@@ -195,6 +196,10 @@ export class LayeredMapComponent implements AfterViewInit, OnChanges {
           }
         });
       });
+    }
+
+    if(changes.bounds){
+      setTimeout(()=>this._bounds=this.bounds);
     }
   }
 
@@ -284,7 +289,7 @@ export class LayeredMapComponent implements AfterViewInit, OnChanges {
   }
 
   zoomToBounds(bounds:Bounds){
-    this.bounds = bounds;
+    this._bounds = bounds;
   }
 
   zoomChanged(){
