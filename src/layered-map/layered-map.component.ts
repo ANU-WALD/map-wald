@@ -155,7 +155,7 @@ export class LayeredMapComponent implements AfterViewInit, OnChanges {
   @Input() lat: number = -22.673858;
   @Input() lng: number = 129.815982;
   @Input() bounds:Bounds;
-  private _bounds:Bounds;
+  _bounds:Bounds;
 
   constructor(private _zone:NgZone,
               private staticData:StaticDataService,
