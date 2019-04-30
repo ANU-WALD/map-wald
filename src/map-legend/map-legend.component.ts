@@ -22,7 +22,7 @@ import { PaletteService } from '../palette.service';
           <i class="legend-entry" [ngStyle]="{background:colour}"></i>
         </div>
         <div class="legend-label">
-          <span [innerHTML]="labels[i]"></span>
+          <span [innerHTML]="generatedLabels[i]"></span>
         </div>
       </div>
     </div>
@@ -61,7 +61,7 @@ import { PaletteService } from '../palette.service';
 export class MapLegendComponent implements OnInit {
   @Input() imageURL: string
   @Input() colours: Array<string> = ['red', 'white', 'blue'];
-  @Input() labels: Array<string> = ['rouge', 'blanc', 'blue'];
+  @Input() labels: Array<string> = [];//['-','-','-'];
   @Input() title: string = 'the title';
   @Input() mapUnits :string = '';
   @Input() helpText:string='No comment';
@@ -69,6 +69,7 @@ export class MapLegendComponent implements OnInit {
   @Input() attribution: string;
   @Input() attributionLink: string;
 
+  generatedLabels: string[] = [];
   _cbPalette:string
   _cbCount:number;
   _cbReverse:boolean;
@@ -131,7 +132,7 @@ export class MapLegendComponent implements OnInit {
     this._palettes.getPalette(this._cbPalette,this._cbReverse,this._cbCount)
       .subscribe(palette=>{
         this.colours = palette.slice().reverse();
-        this.labels = this.generateLabels(this.colours.length) || palette;
+        this.generatedLabels = this.labels || this.generateLabels(this.colours.length) || palette;
     });
   }
 
