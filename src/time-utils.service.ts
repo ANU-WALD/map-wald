@@ -2,11 +2,12 @@ import { Injectable } from '@angular/core';
 import { NgbDateStruct } from "@ng-bootstrap/ng-bootstrap";
 
 export interface UTCDate {
-  getUTCFullYear():number;
+  getTime(): number;
+  getUTCFullYear(): number;
   getUTCMonth():number;
   getUTCDate():number;
 
-  setUTCFullYear(n:number):void;
+  setUTCFullYear(n: number):void;
   setUTCMonth(n:number):void;
   setUTCDate(n:number):void;
 }
