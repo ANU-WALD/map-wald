@@ -92,6 +92,7 @@ export class CatalogOptions{
   vectors?:"point"|"line"|"polygon";
   styles?:any;
   publicationLabel?:string;
+  variable?:string;
 }
 
 export class Catalog{
