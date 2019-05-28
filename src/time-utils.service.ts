@@ -26,10 +26,10 @@ export class TimeUtilsService {
 
   }
 
-  specialDates: {[key:string]:(()=>Date)} = {
-    yesterday: ()=>{
+  specialDates: {[key:string]:(() => Date)} = {
+    yesterday: () => {
       var d = new Date();
-      d.setDate(d.getDate()-1);
+      d.setDate(d.getDate() - 1);
       return d;
     }
   }
@@ -40,12 +40,12 @@ export class TimeUtilsService {
     }
 
     var date:UTCDate;
-    if(typeof(d)==='string'){
+    if(typeof(d) === 'string'){
       var dateText:string = d;
       if(this.specialDates[dateText]){
         date = this.specialDates[dateText]();
       } else {
-        var [year,month,day,other] = d.split('-').map(c=>+c);
+        var [year,month,day,other] = d.split('-').map(c => +c);
         date = utcDate(year,month,day);
       }
     } else {
@@ -54,7 +54,7 @@ export class TimeUtilsService {
 
     return {
       day: date.getUTCDate(),
-      month: date.getUTCMonth()+1,
+      month: date.getUTCMonth() + 1,
       year: date.getUTCFullYear()
     };
   }
@@ -64,9 +64,9 @@ export class TimeUtilsService {
       return false;
     }
 
-    return (lhs.year===rhs.year) &&
-           (lhs.month===rhs.month) &&
-           (lhs.day===rhs.day);
+    return (lhs.year === rhs.year) &&
+           (lhs.month === rhs.month) &&
+           (lhs.day === rhs.day);
 
   }
 }

@@ -6,13 +6,13 @@ import { PaletteService } from '../palette.service';
   template: `<div class="map-legend panel panel-group">
 
 <strong>{{title}} <span *ngIf="mapUnits" [innerHTML]="'('+mapUnits+')'"></span>
-        <span *ngIf="helpText" 
+        <span *ngIf="helpText"
               [ngbTooltip]="helpText"
               [placement]="tooltipPlacement"
               container="body">
           <i class="fa fa-info-circle"></i>
         </span>
-</strong> 
+</strong>
 
   <div *ngIf="!imageURL">
     <div style="display:table;line-height:15px">

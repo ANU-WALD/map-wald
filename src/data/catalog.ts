@@ -104,7 +104,7 @@ export class Catalog{
     if(!config){
       return;
     }
-    Object.assign(this,config);    
+    Object.assign(this,config);
     this.themes = config.themes.map((t:any)=>new Theme(t));
     this.propagateOptions();
     this.instantiateNamedOptions();
