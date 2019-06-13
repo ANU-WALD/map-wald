@@ -109,6 +109,8 @@ export * from './src/layered-map/layered-map.component';
 export * from './src/theme-navbar/theme-navbar.component';
 export * from './src/map-control/map-control.component';
 
+export * from './src/parsing/csv';
+
 export const services = [
   //$serviceList
   AvailableDatesService,

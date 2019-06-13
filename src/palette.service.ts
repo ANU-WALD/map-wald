@@ -48,4 +48,10 @@ export class PaletteService {
       .filter(ln => ln.length)
       .map(e=> `rgb(${e.split(' ').join(',')})`);
   }
+
+  colourIndex(val:number,min:number,max:number,count:number):number{
+    let point = (val-min)/(max-min);
+    let pos = Math.round(point*(count-1));
+    return pos;
+  }
 }
