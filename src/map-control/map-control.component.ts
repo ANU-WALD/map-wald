@@ -12,7 +12,7 @@ import {GoogleMapsAPIWrapper} from '@agm/core';
 `],
 })
 export class MapControlComponent implements OnInit,AfterViewInit {
-  @ViewChild('mapControl') mapControl: Component;
+  @ViewChild('mapControl',{static:false}) mapControl: Component;
   @Input() position:string = 'TOP_RIGHT';
 
   constructor(private _el:ElementRef, public _wrapper:GoogleMapsAPIWrapper) { }
@@ -30,7 +30,7 @@ export class MapControlComponent implements OnInit,AfterViewInit {
         let controlDiv: HTMLElement = document.createElement('div');
         controlDiv.appendChild(content);
         content = controlDiv;
-      } 
+      }
 
       (<any>m).controls[(<any>window).google.maps.ControlPosition[this.position]].push(content);
     });

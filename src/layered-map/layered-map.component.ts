@@ -140,7 +140,7 @@ export class LayeredMapComponent implements AfterViewInit, OnChanges {
   @Input() mapTypePosition:number = ControlPosition.BOTTOM_LEFT
   @Input() streetViewControl = true;
 
-  @ViewChild(AgmMap) theMap:AgmMap;
+  @ViewChild(AgmMap,{static:false}) theMap:AgmMap;
   @ViewChildren('infoWindows') infoWindows:QueryList<AgmInfoWindow>;
 
   selectedFeature:any = null;

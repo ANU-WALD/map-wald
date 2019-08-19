@@ -30,7 +30,7 @@ declare var Plotly: any;
   styles: [``]
 })
 export class OneTimeSplashComponent implements AfterViewInit  {
-  @ViewChild('splashTemplate') splashTemplate:any;
+  @ViewChild('splashTemplate',{static:false}) splashTemplate:any;
   @Input() application:string;
   @Input() label = 'About';
   @Input() hideMessage = 'Understood, I don’t need to see this again';
