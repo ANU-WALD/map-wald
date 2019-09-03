@@ -15,11 +15,11 @@ export class MapViewParameterService {
       return {};
     }
 
-    var path = this._location.path().split('/');
+    let path = this._location.path().split('/');
     if(path.length>MapViewParameterService.parameterNames.length){
       path.shift();
     }
-    var result:any = {};
+    let result:any = {};
     MapViewParameterService.parameterNames.forEach((p,i)=>result[p]=path[i]||'_');
     return result;
   }
@@ -29,14 +29,14 @@ export class MapViewParameterService {
       return;
     }
 
-    var updated = this.current();
+    let updated = this.current();
     Object.assign(updated,changes);
     this._location.go(this.constructRoute(updated));
   }
 
   retrieveFromRoute(route:any){
-    var result:any = {};
-    for(var name of MapViewParameterService.parameterNames){
+    let result:any = {};
+    for(let name of MapViewParameterService.parameterNames){
         result[name] = route.snapshot.params[name];
     }
     return result;
@@ -47,11 +47,11 @@ export class MapViewParameterService {
   }
 
   routerPaths(/*component:any*/):Array<any>{
-    var result:Array<any> = [];
-    var path = '';
+    let result:Array<any> = [];
+    let path = '';
     result.push(path);
 //    result.push({path:path,component:component});
-    for(var name of MapViewParameterService.parameterNames){
+    for(let name of MapViewParameterService.parameterNames){
       path += `:${name}`;
 //      result.unshift({path:path,component:component});
       result.unshift(path);
