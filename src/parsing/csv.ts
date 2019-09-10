@@ -31,6 +31,10 @@ function parseVal(val:string):any{
     }
   }
 
+  if(val===''){
+    return val;
+  }
+
   // Try numeric
   let numeric:number = +val;
   if(!isNaN(numeric)){
