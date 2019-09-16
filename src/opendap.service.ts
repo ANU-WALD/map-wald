@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { parseData, parseDAS,parseDDX,  
+import { parseData, parseDAS,parseDDX,
   simplify, DapData, DapDAS, DapDDX, DapVariableDataArray } from 'dap-query-js/dist/dap-query';
 import { CatalogHost } from '../index';
 import { map, switchMap } from 'rxjs/operators';
@@ -53,5 +53,13 @@ export class OpendapService {
         return [<number>lats[0],<number>lats[lats.length-1],
                 <number>lons[0],<number>lons[lons.length-1]];
       }));
+  }
+
+  dapRangeQuery(from:number,to?:number,step?:number):string{
+    step = step || 1;
+    if(to===undefined){
+      to = from;
+    }
+    return '['+from+':'+step+':'+to+']';
   }
 }
