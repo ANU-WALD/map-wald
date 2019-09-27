@@ -117,7 +117,7 @@ export class MetadataService {
           this.dap.getData(`${url}.ascii?${lngCoord}`,das).pipe(
             map((dd:DapData)=><number[]>dd[lngCoord]));
 
-        return forkJoin<number[]>([lat$,lng$]);
+        return forkJoin<number[]>(lat$,lng$);
       }),switchAll(),publishReplay(),refCount());
       return res$;
   }

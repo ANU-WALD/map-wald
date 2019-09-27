@@ -45,7 +45,7 @@ export class DateShifterComponent implements AfterViewInit,OnChanges  {
     if(this.timer){
       clearInterval(this.timer);
     }
-    this.timer = setInterval(()=>this.tick(),this.interval);
+    this.timer = window.setInterval(()=>this.tick(),this.interval);
   }
 
   ngAfterViewInit(){
