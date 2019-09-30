@@ -38,7 +38,7 @@ export class MetadataService {
 
   ddxForUrl(url:string):Observable<DapDDX>{
     if(!this.ddxCache[url]){
-      this.ddxCache[url] = 
+      this.ddxCache[url] =
         this.dap.getDDX(url).pipe(publishReplay(),refCount());
     }
 
@@ -56,7 +56,7 @@ export class MetadataService {
 
   dasForUrl(url:string):Observable<DapDAS>{
     if(!this.dasCache[url]){
-      this.dasCache[url] = 
+      this.dasCache[url] =
         this.dap.getDAS(url).pipe(publishReplay(),refCount());
     }
 
@@ -110,7 +110,7 @@ export class MetadataService {
         const latCoord = this.identifyCoordinate(ddx,...LAT_NAMES);
         const lngCoord = this.identifyCoordinate(ddx,...LNG_NAMES);
 
-        const lat$ = 
+        const lat$ =
           this.dap.getData(`${url}.ascii?${latCoord}`,das).pipe(
             map((dd:DapData)=><number[]>dd[latCoord]));
         const lng$ =
@@ -153,13 +153,13 @@ export class MetadataService {
         map((metadata:any[])=>{
           const ddx:DapDDX = metadata[0];
           const das:DapDAS = metadata[1];
-  
+
           const timeCoord = this.identifyCoordinate(ddx,...TIME_NAMES);
-  
-          const time$ = 
+
+          const time$ =
             this.dap.getData(`${url}.ascii?${timeCoord}`,das).pipe(
               map((dd:DapData)=><Date[]>dd[timeCoord]));
-  
+
           return time$;
         }),switchAll(),shareReplay());
       this.timeCache[url] = res$;

@@ -10,7 +10,7 @@ declare var Plotly: any;
 @Component({
   selector: 'date-selection',
   template: `<div class="date-control container-fluid">
-  <div *ngIf="style!=='arrows'" class="row no-gutters"> 
+  <div *ngIf="style!=='arrows'" class="row no-gutters">
     <div class="col-8 form-group-inline">
         <div class="input-group input-group-sm">
           <input class="form-control form-control-sm" placeholder="yyyy-mm-dd"

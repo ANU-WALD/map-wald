@@ -47,13 +47,13 @@ declare var Plotly: any;
           <div>
             <!-- TODO Attach handlers and tooltips to each icon -->
             <i *ngIf="allowReorder" class="fa fa-bars discrete-icon"></i><br *ngIf="allowReorder"/>
-            <i *ngIf="showLegends" class="fa fa-cog discrete-icon" 
+            <i *ngIf="showLegends" class="fa fa-cog discrete-icon"
                ngbTooltip="Show layer controls" placement="right" data-container="body"
                (click)="layerLegend(l,false)"></i><br *ngIf="showLegends"/>
             <i *ngIf="showLegends" class="fa fa-th-list discrete-icon"
                ngbTooltip="Show layer data" placement="right" data-container="body"
                (click)="layerLegend(l,true)"></i><br *ngIf="showLegends"/>
-            <i *ngIf="allowReorder" class="fa fa-angle-double-up discrete-icon" 
+            <i *ngIf="allowReorder" class="fa fa-angle-double-up discrete-icon"
                ngbTooltip="Move to top" placement="right" data-container="body"
               (click)="moveToTop(i)"></i><br *ngIf="allowReorder"/>
             <i *ngIf="allowReorder" class="fa fa-angle-up discrete-icon"
@@ -65,7 +65,7 @@ declare var Plotly: any;
             <i *ngIf="allowReorder" class="fa fa-angle-double-down discrete-icon"
                ngbTooltip="Move to bottom" placement="right" data-container="body"
               (click)="moveToBottom(i)"></i><br *ngIf="allowReorder"/>
-            <i *ngIf="allowRemove" class="fa fa-times discrete-icon" 
+            <i *ngIf="allowRemove" class="fa fa-times discrete-icon"
                ngbTooltip="Remove layer" placement="right" data-container="body"
               data-toggle="tooltip" title="Remove layer"
               (click)="removeLayer(i)"></i>
