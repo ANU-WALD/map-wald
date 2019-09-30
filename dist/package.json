@@ -1,0 +1,78 @@
+{
+  "name": "map-wald",
+  "version": "0.1.0",
+  "main": "bundles/map-wald.umd.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/username/repo"
+  },
+  "author": {
+    "name": "Joel Rahman",
+    "email": "joel@flowmatters.com.au"
+  },
+  "keywords": [
+    "angular"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/username/repo/issues"
+  },
+  "dependencies": {
+    "tslib": "^1.9.0"
+  },
+  "peerDependencies": {
+    "@agm/core": "^1.0.0-beta.7",
+    "dap-query-js": "github:flowmatters/dap-query-js",
+    "ngx-pipes": "1.6.5",
+    "plotly.js": "git+https://github.com/arlowhite/plotly.js#no-polyfill",
+    "proj4": "^2.3.17"
+  },
+  "devDependencies": {
+    "@agm/core": "^1.0.0-beta.7",
+    "@angular/animations": "~8.2.2",
+    "@angular/common": "~8.2.2",
+    "@angular/compiler": "~8.2.2",
+    "@angular/compiler-cli": "~8.2.2",
+    "@angular/core": "~8.2.2",
+    "@angular/forms": "~8.2.2",
+    "@angular/platform-browser": "~8.2.2",
+    "@angular/platform-browser-dynamic": "~8.2.2",
+    "@angular/platform-server": "~8.2.2",
+    "@angular/router": "~8.2.2",
+    "@ng-bootstrap/ng-bootstrap": "^4.0.0",
+    "@types/es6-shim": "^0.31.32",
+    "@types/geojson": "^1.0.3",
+    "@types/googlemaps": "^3.26.7",
+    "@types/jasmine": "2.8.8",
+    "@types/proj4": "^2.3.4",
+    "@types/selenium-webdriver": "^2.53.39",
+    "@types/storejs": "^2.0.3",
+    "codelyzer": "~4.5.0",
+    "core-js": "^2.5.4",
+    "dap-query-js": "github:flowmatters/dap-query-js",
+    "merge": "^1.2.1",
+    "ngx-pipes": "1.6.5",
+    "plotly.js": "git+https://github.com/arlowhite/plotly.js#no-polyfill",
+    "proj4": "^2.3.17",
+    "rxjs": "^6.5.3",
+    "store": "^2.0.12",
+    "tslint": "~5.11.0",
+    "typescript": "~3.5.3",
+    "watch": "latest",
+    "zone.js": "0.9.1",
+    "js-yaml": "^3.13.1",
+    "ng-packagr": "^5.5.1"
+  },
+  "engines": {
+    "node": ">=0.8.0"
+  },
+  "module": "fesm5/map-wald.js",
+  "es2015": "fesm2015/map-wald.js",
+  "esm5": "esm5/map-wald.js",
+  "esm2015": "esm2015/map-wald.js",
+  "fesm5": "fesm5/map-wald.js",
+  "fesm2015": "fesm2015/map-wald.js",
+  "typings": "map-wald.d.ts",
+  "metadata": "map-wald.metadata.json",
+  "sideEffects": false
+}
