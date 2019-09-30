@@ -46,8 +46,8 @@ export class DateSelectionComponent implements AfterViewInit  {
   @Input() date: Date;
   @Output() dateChange = new EventEmitter();
   @Input() timestep: string;
-  @Input() minDate: Date;
-  @Input() maxDate: Date;
+  @Input() minDate: Date|string;
+  @Input() maxDate: Date|string;
   @Input() style: ('popup'|'arrows') = 'arrows';
   @Input() stepDays = 1;
   @Input() referenceDate:string = null;

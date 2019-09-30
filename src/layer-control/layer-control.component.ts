@@ -122,7 +122,7 @@ export class LayerControlComponent implements AfterViewInit, OnChanges {
     this.layers.forEach(l => l.options.legend = showLegend);
   }
 
-  layerLegend(layer: MappedLayer, showLegend: false) {
+  layerLegend(layer: MappedLayer, showLegend: boolean) {
     this.uniformViewMode = undefined;
     layer.options.legend = showLegend;
   }

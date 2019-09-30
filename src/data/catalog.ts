@@ -93,6 +93,8 @@ export class CatalogOptions{
   styles?:any;
   publicationLabel?:string;
   variable?:string;
+  start?:string;
+  end?:string;
 }
 
 export class Catalog{
@@ -205,6 +207,8 @@ export class Layer{
 
 export class Publication{
   timestep:string;
+  timestepMultiplier:number;
+  timestepReference:string;
   label:string;
   skip:boolean;
   options:CatalogOptions = new CatalogOptions();
