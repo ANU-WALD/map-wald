@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { parseData, parseDAS,parseDDX,
   simplify, DapData, DapDAS, DapDDX, DapVariableDataArray } from 'dap-query-js/dist/dap-query';
-import { CatalogHost } from '../index';
+import { CatalogHost } from './data/catalog';
 import { map, switchMap } from 'rxjs/operators';
 import { Observable,forkJoin } from 'rxjs';
 

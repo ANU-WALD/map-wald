@@ -4,7 +4,7 @@ import { DapDDX, DapDAS, DapData } from 'dap-query-js/dist/dap-query';
 import { OpendapService } from './opendap.service';
 import { Bounds } from './data/bounds';
 
-import { CatalogHost } from '../index';
+import { CatalogHost } from './data/catalog';
 import { forkJoin, Observable, of } from 'rxjs';
 import { switchMap, publishReplay, refCount, map, switchAll, tap, shareReplay } from 'rxjs/operators';
 
