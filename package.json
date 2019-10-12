@@ -2,6 +2,7 @@
   "name": "map-wald",
   "version": "0.1.0",
   "main": "dist/bundles/map-wald.umd.js",
+  "typings": "./dist/index.d.ts",
   "ngPackage": {
     "lib": {
       "entryFile":"src/index.ts"

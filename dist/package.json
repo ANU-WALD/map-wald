@@ -2,6 +2,7 @@
   "name": "map-wald",
   "version": "0.1.0",
   "main": "bundles/map-wald.umd.js",
+  "typings": "map-wald.d.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/username/repo"
@@ -72,7 +73,6 @@
   "esm2015": "esm2015/map-wald.js",
   "fesm5": "fesm5/map-wald.js",
   "fesm2015": "fesm2015/map-wald.js",
-  "typings": "map-wald.d.ts",
   "metadata": "map-wald.metadata.json",
   "sideEffects": false
 }
