@@ -1,10 +1,15 @@
 import { MappedLayer } from './data/mapped-layer';
-import { LatLng } from '@agm/core';
 import { OpendapService } from './opendap.service';
 import { MetadataService } from './metadata.service';
 import { DapDDX } from 'dap-query-js/dist/dap-query';
 import { CatalogHost } from './data/catalog';
 import { Observable } from 'rxjs';
+export interface LatLng {
+    lat(): number;
+    lng(): number;
+    toJSON(): any;
+    toString(): string;
+}
 export interface TimeSeries {
     dates: Array<Date>;
     values: Array<number>;

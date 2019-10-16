@@ -1,4 +1,8 @@
-import { NgbDateStruct } from "@ng-bootstrap/ng-bootstrap";
+export interface DateStruct {
+    day: number;
+    month: number;
+    year: number;
+}
 export interface UTCDate {
     getTime(): number;
     getUTCFullYear(): number;
@@ -15,6 +19,6 @@ export declare class TimeUtilsService {
     specialDates: {
         [key: string]: (() => Date);
     };
-    convertDate(d: (UTCDate | string)): NgbDateStruct;
-    datesEqual(lhs: NgbDateStruct, rhs: NgbDateStruct): boolean;
+    convertDate(d: (UTCDate | string)): DateStruct;
+    datesEqual(lhs: DateStruct, rhs: DateStruct): boolean;
 }
