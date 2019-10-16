@@ -1,5 +1,11 @@
 import { Injectable } from '@angular/core';
-import { NgbDateStruct } from "@ng-bootstrap/ng-bootstrap";
+
+export interface DateStruct {
+  // ng-bootstrap
+  day:number;
+  month:number;
+  year:number;
+}
 
 export interface UTCDate {
   getTime(): number;
@@ -35,7 +41,7 @@ export class TimeUtilsService {
     }
   }
 
-  convertDate(d:(UTCDate|string)):NgbDateStruct{
+  convertDate(d:(UTCDate|string)):DateStruct{
     if(!d){
       d = new Date();
     }
@@ -60,7 +66,7 @@ export class TimeUtilsService {
     };
   }
 
-  datesEqual(lhs:NgbDateStruct,rhs:NgbDateStruct):boolean{
+  datesEqual(lhs:DateStruct,rhs:DateStruct):boolean{
     if(!lhs || !rhs){
       return false;
     }

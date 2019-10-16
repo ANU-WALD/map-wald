@@ -1,12 +1,19 @@
 import { Injectable } from '@angular/core';
 import { MappedLayer } from './data/mapped-layer';
-import { LatLng } from '@agm/core';
 import { OpendapService } from './opendap.service';
 import { MetadataService, LAT_NAMES, LNG_NAMES, TIME_NAMES } from './metadata.service';
 import { DapDDX, DapDAS, DapData } from 'dap-query-js/dist/dap-query';
-import { CatalogHost, Layer } from './data/catalog';
+import { CatalogHost } from './data/catalog';
 import { forkJoin, Observable } from 'rxjs';
 import { switchMap, map } from 'rxjs/operators';
+
+export interface LatLng {
+  // google maps
+  lat(): number;
+  lng(): number;
+  toJSON(): any;
+  toString(): string;
+}
 
 export interface TimeSeries{
   dates:Array<Date>;
@@ -85,7 +92,7 @@ export class TimeseriesService {
           query += this.dapRangeQuery(latIndex);
       } else if(LNG_NAMES.indexOf(dName)>=0){
         query += this.dapRangeQuery(lngIndex);
-      } else { 
+      } else {
         query += this.dapRangeQuery(additionalIndices[dName]||0);
       }
     });
