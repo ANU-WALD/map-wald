@@ -1,48 +1,207 @@
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('@angular/core'), require('@angular/common'), require('@angular/forms'), require('@angular/common/http'), require('rxjs'), require('rxjs/operators'), require('dap-query-js/dist/dap-query'), require('proj4')) :
-    typeof define === 'function' && define.amd ? define('map-wald', ['@angular/core', '@angular/common', '@angular/forms', '@angular/common/http', 'rxjs', 'rxjs/operators', 'dap-query-js/dist/dap-query', 'proj4'], factory) :
-    (global = global || self, global['map-wald'] = factory(global.ng.core, global.ng.common, global.ng.forms, global.ng.common.http, global.rxjs, global.rxjs.operators, global.dapQuery, global.proj4));
-}(this, function (core, common, forms, http, rxjs, operators, dapQuery, proj4) { 'use strict';
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@angular/common'), require('@angular/forms'), require('@angular/common/http'), require('rxjs'), require('rxjs/operators'), require('dap-query-js/dist/dap-query'), require('proj4')) :
+    typeof define === 'function' && define.amd ? define('map-wald', ['exports', '@angular/core', '@angular/common', '@angular/forms', '@angular/common/http', 'rxjs', 'rxjs/operators', 'dap-query-js/dist/dap-query', 'proj4'], factory) :
+    (global = global || self, factory(global['map-wald'] = {}, global.ng.core, global.ng.common, global.ng.forms, global.ng.common.http, global.rxjs, global.rxjs.operators, global.dapQuery, global.proj4));
+}(this, function (exports, core, common, forms, http, rxjs, operators, dapQuery, proj4) { 'use strict';
 
-    core = core && core.hasOwnProperty('default') ? core['default'] : core;
-    common = common && common.hasOwnProperty('default') ? common['default'] : common;
-    forms = forms && forms.hasOwnProperty('default') ? forms['default'] : forms;
-    http = http && http.hasOwnProperty('default') ? http['default'] : http;
-    rxjs = rxjs && rxjs.hasOwnProperty('default') ? rxjs['default'] : rxjs;
-    operators = operators && operators.hasOwnProperty('default') ? operators['default'] : operators;
-    dapQuery = dapQuery && dapQuery.hasOwnProperty('default') ? dapQuery['default'] : dapQuery;
-    proj4 = proj4 && proj4.hasOwnProperty('default') ? proj4['default'] : proj4;
+    var proj4__default = 'default' in proj4 ? proj4['default'] : proj4;
 
-    var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
+    /*! *****************************************************************************
+    Copyright (c) Microsoft Corporation. All rights reserved.
+    Licensed under the Apache License, Version 2.0 (the "License"); you may not use
+    this file except in compliance with the License. You may obtain a copy of the
+    License at http://www.apache.org/licenses/LICENSE-2.0
 
-    function commonjsRequire () {
-    	throw new Error('Dynamic requires are not currently supported by rollup-plugin-commonjs');
+    THIS CODE IS PROVIDED ON AN *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+    KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED
+    WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE,
+    MERCHANTABLITY OR NON-INFRINGEMENT.
+
+    See the Apache Version 2.0 License for specific language governing permissions
+    and limitations under the License.
+    ***************************************************************************** */
+    /* global Reflect, Promise */
+
+    var extendStatics = function(d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+
+    function __extends(d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     }
 
-    function unwrapExports (x) {
-    	return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, 'default') ? x['default'] : x;
+    var __assign = function() {
+        __assign = Object.assign || function __assign(t) {
+            for (var s, i = 1, n = arguments.length; i < n; i++) {
+                s = arguments[i];
+                for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+            }
+            return t;
+        };
+        return __assign.apply(this, arguments);
+    };
+
+    function __rest(s, e) {
+        var t = {};
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+            t[p] = s[p];
+        if (s != null && typeof Object.getOwnPropertySymbols === "function")
+            for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+                if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                    t[p[i]] = s[p[i]];
+            }
+        return t;
     }
 
-    function createCommonjsModule(fn, module) {
-    	return module = { exports: {} }, fn(module, module.exports), module.exports;
-    }
-
-    function getCjsExportFromNamespace (n) {
-    	return n && n['default'] || n;
-    }
-
-    var treeFilter_service = createCommonjsModule(function (module, exports) {
-    "use strict";
-    var __decorate = (commonjsGlobal && commonjsGlobal.__decorate) || function (decorators, target, key, desc) {
+    function __decorate(decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
         else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
         return c > 3 && r && Object.defineProperty(target, key, r), r;
+    }
+
+    function __param(paramIndex, decorator) {
+        return function (target, key) { decorator(target, key, paramIndex); }
+    }
+
+    function __metadata(metadataKey, metadataValue) {
+        if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(metadataKey, metadataValue);
+    }
+
+    function __awaiter(thisArg, _arguments, P, generator) {
+        return new (P || (P = Promise))(function (resolve, reject) {
+            function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+            function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+            function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+            step((generator = generator.apply(thisArg, _arguments || [])).next());
+        });
+    }
+
+    function __generator(thisArg, body) {
+        var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+        return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+        function verb(n) { return function (v) { return step([n, v]); }; }
+        function step(op) {
+            if (f) throw new TypeError("Generator is already executing.");
+            while (_) try {
+                if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+                if (y = 0, t) op = [op[0] & 2, t.value];
+                switch (op[0]) {
+                    case 0: case 1: t = op; break;
+                    case 4: _.label++; return { value: op[1], done: false };
+                    case 5: _.label++; y = op[1]; op = [0]; continue;
+                    case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                    default:
+                        if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                        if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                        if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                        if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                        if (t[2]) _.ops.pop();
+                        _.trys.pop(); continue;
+                }
+                op = body.call(thisArg, _);
+            } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+            if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+        }
+    }
+
+    function __exportStar(m, exports) {
+        for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
+    }
+
+    function __values(o) {
+        var m = typeof Symbol === "function" && o[Symbol.iterator], i = 0;
+        if (m) return m.call(o);
+        return {
+            next: function () {
+                if (o && i >= o.length) o = void 0;
+                return { value: o && o[i++], done: !o };
+            }
+        };
+    }
+
+    function __read(o, n) {
+        var m = typeof Symbol === "function" && o[Symbol.iterator];
+        if (!m) return o;
+        var i = m.call(o), r, ar = [], e;
+        try {
+            while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
+        }
+        catch (error) { e = { error: error }; }
+        finally {
+            try {
+                if (r && !r.done && (m = i["return"])) m.call(i);
+            }
+            finally { if (e) throw e.error; }
+        }
+        return ar;
+    }
+
+    function __spread() {
+        for (var ar = [], i = 0; i < arguments.length; i++)
+            ar = ar.concat(__read(arguments[i]));
+        return ar;
+    }
+
+    function __spreadArrays() {
+        for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
+        for (var r = Array(s), k = 0, i = 0; i < il; i++)
+            for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
+                r[k] = a[j];
+        return r;
     };
-    var __metadata = (commonjsGlobal && commonjsGlobal.__metadata) || function (k, v) {
-        if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+
+    function __await(v) {
+        return this instanceof __await ? (this.v = v, this) : new __await(v);
+    }
+
+    function __asyncGenerator(thisArg, _arguments, generator) {
+        if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
+        var g = generator.apply(thisArg, _arguments || []), i, q = [];
+        return i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function () { return this; }, i;
+        function verb(n) { if (g[n]) i[n] = function (v) { return new Promise(function (a, b) { q.push([n, v, a, b]) > 1 || resume(n, v); }); }; }
+        function resume(n, v) { try { step(g[n](v)); } catch (e) { settle(q[0][3], e); } }
+        function step(r) { r.value instanceof __await ? Promise.resolve(r.value.v).then(fulfill, reject) : settle(q[0][2], r); }
+        function fulfill(value) { resume("next", value); }
+        function reject(value) { resume("throw", value); }
+        function settle(f, v) { if (f(v), q.shift(), q.length) resume(q[0][0], q[0][1]); }
+    }
+
+    function __asyncDelegator(o) {
+        var i, p;
+        return i = {}, verb("next"), verb("throw", function (e) { throw e; }), verb("return"), i[Symbol.iterator] = function () { return this; }, i;
+        function verb(n, f) { i[n] = o[n] ? function (v) { return (p = !p) ? { value: __await(o[n](v)), done: n === "return" } : f ? f(v) : v; } : f; }
+    }
+
+    function __asyncValues(o) {
+        if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
+        var m = o[Symbol.asyncIterator], i;
+        return m ? m.call(o) : (o = typeof __values === "function" ? __values(o) : o[Symbol.iterator](), i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function () { return this; }, i);
+        function verb(n) { i[n] = o[n] && function (v) { return new Promise(function (resolve, reject) { v = o[n](v), settle(resolve, reject, v.done, v.value); }); }; }
+        function settle(resolve, reject, d, v) { Promise.resolve(v).then(function(v) { resolve({ value: v, done: d }); }, reject); }
+    }
+
+    function __makeTemplateObject(cooked, raw) {
+        if (Object.defineProperty) { Object.defineProperty(cooked, "raw", { value: raw }); } else { cooked.raw = raw; }
+        return cooked;
     };
-    Object.defineProperty(exports, "__esModule", { value: true });
+
+    function __importStar(mod) {
+        if (mod && mod.__esModule) return mod;
+        var result = {};
+        if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+        result.default = mod;
+        return result;
+    }
+
+    function __importDefault(mod) {
+        return (mod && mod.__esModule) ? mod : { default: mod };
+    }
 
     var TreeFilterService = /** @class */ (function () {
         function TreeFilterService() {
@@ -75,22 +234,12 @@
             }
         };
         TreeFilterService = __decorate([
-            core.Injectable(),
-            __metadata("design:paramtypes", [])
+            core.Injectable()
         ], TreeFilterService);
         return TreeFilterService;
     }());
-    exports.TreeFilterService = TreeFilterService;
 
-    });
-
-    var treeFilter_service$1 = unwrapExports(treeFilter_service);
-    var treeFilter_service_1 = treeFilter_service.TreeFilterService;
-
-    var colorbrewer = createCommonjsModule(function (module, exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.palettes = {
+    var palettes = {
         Accent: {
             3: [
                 "rgb(127,201,127)",
@@ -2406,28 +2555,6 @@
         }
     };
 
-    });
-
-    var colorbrewer$1 = unwrapExports(colorbrewer);
-    var colorbrewer_1 = colorbrewer.palettes;
-
-    var palette_service = createCommonjsModule(function (module, exports) {
-    "use strict";
-    var __decorate = (commonjsGlobal && commonjsGlobal.__decorate) || function (decorators, target, key, desc) {
-        var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-        if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-        else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-        return c > 3 && r && Object.defineProperty(target, key, r), r;
-    };
-    var __metadata = (commonjsGlobal && commonjsGlobal.__metadata) || function (k, v) {
-        if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-    };
-    Object.defineProperty(exports, "__esModule", { value: true });
-
-
-
-
-
     var DEFAULT_NUM_COLOURS = 3;
     var PaletteService = /** @class */ (function () {
         function PaletteService(_http) {
@@ -2448,8 +2575,8 @@
             if (this.namedPalettes[name]) {
                 palette = this.namedPalettes[name];
             }
-            else if (colorbrewer.palettes[name]) {
-                palette = colorbrewer.palettes[name][numColours || DEFAULT_NUM_COLOURS];
+            else if (palettes[name]) {
+                palette = palettes[name][numColours || DEFAULT_NUM_COLOURS];
             }
             if (palette) {
                 if (reverse) {
@@ -2474,55 +2601,17 @@
             { type: http.HttpClient }
         ]; };
         PaletteService = __decorate([
-            core.Injectable(),
-            __metadata("design:paramtypes", [http.HttpClient])
+            core.Injectable()
         ], PaletteService);
         return PaletteService;
     }());
-    exports.PaletteService = PaletteService;
-
-    });
-
-    var palette_service$1 = unwrapExports(palette_service);
-    var palette_service_1 = palette_service.PaletteService;
-
-    var timeUtils_service = createCommonjsModule(function (module, exports) {
-    "use strict";
-    var __decorate = (commonjsGlobal && commonjsGlobal.__decorate) || function (decorators, target, key, desc) {
-        var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-        if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-        else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-        return c > 3 && r && Object.defineProperty(target, key, r), r;
-    };
-    var __metadata = (commonjsGlobal && commonjsGlobal.__metadata) || function (k, v) {
-        if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-    };
-    var __read = (commonjsGlobal && commonjsGlobal.__read) || function (o, n) {
-        var m = typeof Symbol === "function" && o[Symbol.iterator];
-        if (!m) return o;
-        var i = m.call(o), r, ar = [], e;
-        try {
-            while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
-        }
-        catch (error) { e = { error: error }; }
-        finally {
-            try {
-                if (r && !r.done && (m = i["return"])) m.call(i);
-            }
-            finally { if (e) throw e.error; }
-        }
-        return ar;
-    };
-    Object.defineProperty(exports, "__esModule", { value: true });
 
     function utcDate(y, m, d) {
         return new Date(Date.UTC(y, m, d));
     }
-    exports.utcDate = utcDate;
     function utcDateCopy(d) {
         return utcDate(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate());
     }
-    exports.utcDateCopy = utcDateCopy;
     var TimeUtilsService = /** @class */ (function () {
         function TimeUtilsService() {
             this.specialDates = {
@@ -2566,34 +2655,10 @@
                 (lhs.day === rhs.day);
         };
         TimeUtilsService = __decorate([
-            core.Injectable(),
-            __metadata("design:paramtypes", [])
+            core.Injectable()
         ], TimeUtilsService);
         return TimeUtilsService;
     }());
-    exports.TimeUtilsService = TimeUtilsService;
-
-    });
-
-    var timeUtils_service$1 = unwrapExports(timeUtils_service);
-    var timeUtils_service_1 = timeUtils_service.utcDate;
-    var timeUtils_service_2 = timeUtils_service.utcDateCopy;
-    var timeUtils_service_3 = timeUtils_service.TimeUtilsService;
-
-    var staticData_service = createCommonjsModule(function (module, exports) {
-    "use strict";
-    var __decorate = (commonjsGlobal && commonjsGlobal.__decorate) || function (decorators, target, key, desc) {
-        var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-        if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-        else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-        return c > 3 && r && Object.defineProperty(target, key, r), r;
-    };
-    var __metadata = (commonjsGlobal && commonjsGlobal.__metadata) || function (k, v) {
-        if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-    };
-    Object.defineProperty(exports, "__esModule", { value: true });
-
-
 
     var StaticDataService = /** @class */ (function () {
         function StaticDataService(http) {
@@ -2619,50 +2684,10 @@
             { type: http.HttpClient }
         ]; };
         StaticDataService = __decorate([
-            core.Injectable(),
-            __metadata("design:paramtypes", [http.HttpClient])
+            core.Injectable()
         ], StaticDataService);
         return StaticDataService;
     }());
-    exports.StaticDataService = StaticDataService;
-
-    });
-
-    var staticData_service$1 = unwrapExports(staticData_service);
-    var staticData_service_1 = staticData_service.StaticDataService;
-
-    var opendap_service = createCommonjsModule(function (module, exports) {
-    "use strict";
-    var __decorate = (commonjsGlobal && commonjsGlobal.__decorate) || function (decorators, target, key, desc) {
-        var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-        if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-        else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-        return c > 3 && r && Object.defineProperty(target, key, r), r;
-    };
-    var __metadata = (commonjsGlobal && commonjsGlobal.__metadata) || function (k, v) {
-        if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-    };
-    var __read = (commonjsGlobal && commonjsGlobal.__read) || function (o, n) {
-        var m = typeof Symbol === "function" && o[Symbol.iterator];
-        if (!m) return o;
-        var i = m.call(o), r, ar = [], e;
-        try {
-            while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
-        }
-        catch (error) { e = { error: error }; }
-        finally {
-            try {
-                if (r && !r.done && (m = i["return"])) m.call(i);
-            }
-            finally { if (e) throw e.error; }
-        }
-        return ar;
-    };
-    Object.defineProperty(exports, "__esModule", { value: true });
-
-
-
-
 
     var OpendapService = /** @class */ (function () {
         function OpendapService(http) {
@@ -2714,67 +2739,14 @@
             { type: http.HttpClient }
         ]; };
         OpendapService = __decorate([
-            core.Injectable(),
-            __metadata("design:paramtypes", [http.HttpClient])
+            core.Injectable()
         ], OpendapService);
         return OpendapService;
     }());
-    exports.OpendapService = OpendapService;
 
-    });
-
-    var opendap_service$1 = unwrapExports(opendap_service);
-    var opendap_service_1 = opendap_service.OpendapService;
-
-    var metadata_service = createCommonjsModule(function (module, exports) {
-    "use strict";
-    var __decorate = (commonjsGlobal && commonjsGlobal.__decorate) || function (decorators, target, key, desc) {
-        var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-        if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-        else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-        return c > 3 && r && Object.defineProperty(target, key, r), r;
-    };
-    var __metadata = (commonjsGlobal && commonjsGlobal.__metadata) || function (k, v) {
-        if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-    };
-    var __values = (commonjsGlobal && commonjsGlobal.__values) || function (o) {
-        var m = typeof Symbol === "function" && o[Symbol.iterator], i = 0;
-        if (m) return m.call(o);
-        return {
-            next: function () {
-                if (o && i >= o.length) o = void 0;
-                return { value: o && o[i++], done: !o };
-            }
-        };
-    };
-    var __read = (commonjsGlobal && commonjsGlobal.__read) || function (o, n) {
-        var m = typeof Symbol === "function" && o[Symbol.iterator];
-        if (!m) return o;
-        var i = m.call(o), r, ar = [], e;
-        try {
-            while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
-        }
-        catch (error) { e = { error: error }; }
-        finally {
-            try {
-                if (r && !r.done && (m = i["return"])) m.call(i);
-            }
-            finally { if (e) throw e.error; }
-        }
-        return ar;
-    };
-    var __spread = (commonjsGlobal && commonjsGlobal.__spread) || function () {
-        for (var ar = [], i = 0; i < arguments.length; i++) ar = ar.concat(__read(arguments[i]));
-        return ar;
-    };
-    Object.defineProperty(exports, "__esModule", { value: true });
-
-
-
-
-    exports.LAT_NAMES = ['latitude', 'lat'];
-    exports.LNG_NAMES = ['longitude', 'lng', 'lon'];
-    exports.TIME_NAMES = ['time', 't'];
+    var LAT_NAMES = ['latitude', 'lat'];
+    var LNG_NAMES = ['longitude', 'lng', 'lon'];
+    var TIME_NAMES = ['time', 't'];
     var MetadataService = /** @class */ (function () {
         function MetadataService(dap) {
             this.dap = dap;
@@ -2864,8 +2836,8 @@
             var res$ = rxjs.forkJoin([ddx$, das$]).pipe(operators.map(function (metadata) {
                 var ddx = metadata[0];
                 var das = metadata[1];
-                var latCoord = _this.identifyCoordinate.apply(_this, __spread([ddx], exports.LAT_NAMES));
-                var lngCoord = _this.identifyCoordinate.apply(_this, __spread([ddx], exports.LNG_NAMES));
+                var latCoord = _this.identifyCoordinate.apply(_this, __spread([ddx], LAT_NAMES));
+                var lngCoord = _this.identifyCoordinate.apply(_this, __spread([ddx], LNG_NAMES));
                 var lat$ = _this.dap.getData(url + ".ascii?" + latCoord, das).pipe(operators.map(function (dd) { return dd[latCoord]; }));
                 var lng$ = _this.dap.getData(url + ".ascii?" + lngCoord, das).pipe(operators.map(function (dd) { return dd[lngCoord]; }));
                 return rxjs.forkJoin(lat$, lng$);
@@ -2899,7 +2871,7 @@
                 var res$ = rxjs.forkJoin([ddx$, das$]).pipe(operators.map(function (metadata) {
                     var ddx = metadata[0];
                     var das = metadata[1];
-                    var timeCoord = _this.identifyCoordinate.apply(_this, __spread([ddx], exports.TIME_NAMES));
+                    var timeCoord = _this.identifyCoordinate.apply(_this, __spread([ddx], TIME_NAMES));
                     var time$ = _this.dap.getData(url + ".ascii?" + timeCoord, das).pipe(operators.map(function (dd) { return dd[timeCoord]; }));
                     return time$;
                 }), operators.switchAll(), operators.shareReplay());
@@ -2908,56 +2880,13 @@
             return this.timeCache[url];
         };
         MetadataService.ctorParameters = function () { return [
-            { type: opendap_service.OpendapService }
+            { type: OpendapService }
         ]; };
         MetadataService = __decorate([
-            core.Injectable(),
-            __metadata("design:paramtypes", [opendap_service.OpendapService])
+            core.Injectable()
         ], MetadataService);
         return MetadataService;
     }());
-    exports.MetadataService = MetadataService;
-
-    });
-
-    var metadata_service$1 = unwrapExports(metadata_service);
-    var metadata_service_1 = metadata_service.LAT_NAMES;
-    var metadata_service_2 = metadata_service.LNG_NAMES;
-    var metadata_service_3 = metadata_service.TIME_NAMES;
-    var metadata_service_4 = metadata_service.MetadataService;
-
-    var timeseries_service = createCommonjsModule(function (module, exports) {
-    "use strict";
-    var __decorate = (commonjsGlobal && commonjsGlobal.__decorate) || function (decorators, target, key, desc) {
-        var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-        if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-        else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-        return c > 3 && r && Object.defineProperty(target, key, r), r;
-    };
-    var __metadata = (commonjsGlobal && commonjsGlobal.__metadata) || function (k, v) {
-        if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-    };
-    var __read = (commonjsGlobal && commonjsGlobal.__read) || function (o, n) {
-        var m = typeof Symbol === "function" && o[Symbol.iterator];
-        if (!m) return o;
-        var i = m.call(o), r, ar = [], e;
-        try {
-            while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
-        }
-        catch (error) { e = { error: error }; }
-        finally {
-            try {
-                if (r && !r.done && (m = i["return"])) m.call(i);
-            }
-            finally { if (e) throw e.error; }
-        }
-        return ar;
-    };
-    Object.defineProperty(exports, "__esModule", { value: true });
-
-
-
-
 
     ;
     var TimeseriesService = /** @class */ (function () {
@@ -3003,13 +2932,13 @@
             var query = '';
             metadata.dimensions.forEach(function (dim) {
                 var dName = dim.name.toLowerCase();
-                if (metadata_service.TIME_NAMES.indexOf(dName) >= 0) {
+                if (TIME_NAMES.indexOf(dName) >= 0) {
                     query += _this.dapRangeQuery(0, +(dim.size) - 1);
                 }
-                else if (metadata_service.LAT_NAMES.indexOf(dName) >= 0) {
+                else if (LAT_NAMES.indexOf(dName) >= 0) {
                     query += _this.dapRangeQuery(latIndex);
                 }
-                else if (metadata_service.LNG_NAMES.indexOf(dName) >= 0) {
+                else if (LNG_NAMES.indexOf(dName) >= 0) {
                     query += _this.dapRangeQuery(lngIndex);
                 }
                 else {
@@ -3068,25 +2997,15 @@
         };
         ;
         TimeseriesService.ctorParameters = function () { return [
-            { type: metadata_service.MetadataService },
-            { type: opendap_service.OpendapService }
+            { type: MetadataService },
+            { type: OpendapService }
         ]; };
         TimeseriesService = __decorate([
-            core.Injectable(),
-            __metadata("design:paramtypes", [metadata_service.MetadataService, opendap_service.OpendapService])
+            core.Injectable()
         ], TimeseriesService);
         return TimeseriesService;
     }());
-    exports.TimeseriesService = TimeseriesService;
 
-    });
-
-    var timeseries_service$1 = unwrapExports(timeseries_service);
-    var timeseries_service_1 = timeseries_service.TimeseriesService;
-
-    var interpolation_service = createCommonjsModule(function (module, exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
     // @dynamic
     var InterpolationService = /** @class */ (function () {
         function InterpolationService() {
@@ -3124,29 +3043,6 @@
         InterpolationService.templateMatcher = /{{\s?([^{}\s]*)\s?}}/g;
         return InterpolationService;
     }());
-    exports.InterpolationService = InterpolationService;
-
-    });
-
-    var interpolation_service$1 = unwrapExports(interpolation_service);
-    var interpolation_service_1 = interpolation_service.InterpolationService;
-
-    var pointSelection_service = createCommonjsModule(function (module, exports) {
-    "use strict";
-    var __decorate = (commonjsGlobal && commonjsGlobal.__decorate) || function (decorators, target, key, desc) {
-        var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-        if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-        else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-        return c > 3 && r && Object.defineProperty(target, key, r), r;
-    };
-    var __metadata = (commonjsGlobal && commonjsGlobal.__metadata) || function (k, v) {
-        if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-    };
-    Object.defineProperty(exports, "__esModule", { value: true });
-
-
-
-
 
     var PointSelectionService = /** @class */ (function () {
         function PointSelectionService(meta) {
@@ -3192,7 +3088,7 @@
         };
         PointSelectionService.prototype.fullUrl = function (sel) {
             var params = Object.assign({}, sel.feature ? sel.feature.properties : {}, sel.tags);
-            return interpolation_service.InterpolationService.interpolate(sel.catalog.url, params);
+            return InterpolationService.interpolate(sel.catalog.url, params);
         };
         PointSelectionService.prototype.validUrl = function (url) {
             return url.indexOf('{{') < 0;
@@ -3216,7 +3112,7 @@
                         var fmt = Object.assign({ variable: v }, ddx.variables[v]);
                         return {
                             value: v,
-                            label: interpolation_service.InterpolationService.interpolate(sel.catalog.displayFormat, fmt)
+                            label: InterpolationService.interpolate(sel.catalog.displayFormat, fmt)
                         };
                     }
                     if (ddx.variables[v].long_name) {
@@ -3233,57 +3129,13 @@
             }));
         };
         PointSelectionService.ctorParameters = function () { return [
-            { type: metadata_service.MetadataService }
+            { type: MetadataService }
         ]; };
         PointSelectionService = __decorate([
-            core.Injectable(),
-            __metadata("design:paramtypes", [metadata_service.MetadataService])
+            core.Injectable()
         ], PointSelectionService);
         return PointSelectionService;
     }());
-    exports.PointSelectionService = PointSelectionService;
-
-    });
-
-    var pointSelection_service$1 = unwrapExports(pointSelection_service);
-    var pointSelection_service_1 = pointSelection_service.PointSelectionService;
-
-    var availableDates_service = createCommonjsModule(function (module, exports) {
-    "use strict";
-    var __decorate = (commonjsGlobal && commonjsGlobal.__decorate) || function (decorators, target, key, desc) {
-        var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-        if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-        else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-        return c > 3 && r && Object.defineProperty(target, key, r), r;
-    };
-    var __metadata = (commonjsGlobal && commonjsGlobal.__metadata) || function (k, v) {
-        if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-    };
-    var __read = (commonjsGlobal && commonjsGlobal.__read) || function (o, n) {
-        var m = typeof Symbol === "function" && o[Symbol.iterator];
-        if (!m) return o;
-        var i = m.call(o), r, ar = [], e;
-        try {
-            while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
-        }
-        catch (error) { e = { error: error }; }
-        finally {
-            try {
-                if (r && !r.done && (m = i["return"])) m.call(i);
-            }
-            finally { if (e) throw e.error; }
-        }
-        return ar;
-    };
-    var __spread = (commonjsGlobal && commonjsGlobal.__spread) || function () {
-        for (var ar = [], i = 0; i < arguments.length; i++) ar = ar.concat(__read(arguments[i]));
-        return ar;
-    };
-    Object.defineProperty(exports, "__esModule", { value: true });
-
-
-
-
 
     var AvailableDatesService = /** @class */ (function () {
         function AvailableDatesService(metadata) {
@@ -3291,7 +3143,7 @@
         }
         AvailableDatesService.prototype.fnForYear = function (mapped, year) {
             var publication = mapped.layer.publications[mapped.options.publication];
-            return interpolation_service.InterpolationService.interpolate(publication.options.filepath, {
+            return InterpolationService.interpolate(publication.options.filepath, {
                 year: year
             });
         };
@@ -3316,34 +3168,14 @@
             }), operators.map(function (dates) { return dates.filter(function (d, i) { return (i >= Math.abs(layer.timeshift)) && (d.getUTCFullYear() === year); }); }));
         };
         AvailableDatesService.ctorParameters = function () { return [
-            { type: metadata_service.MetadataService }
+            { type: MetadataService }
         ]; };
         AvailableDatesService = __decorate([
-            core.Injectable(),
-            __metadata("design:paramtypes", [metadata_service.MetadataService])
+            core.Injectable()
         ], AvailableDatesService);
         return AvailableDatesService;
     }());
-    exports.AvailableDatesService = AvailableDatesService;
 
-    });
-
-    var availableDates_service$1 = unwrapExports(availableDates_service);
-    var availableDates_service_1 = availableDates_service.AvailableDatesService;
-
-    var catalog = createCommonjsModule(function (module, exports) {
-    "use strict";
-    var __values = (commonjsGlobal && commonjsGlobal.__values) || function (o) {
-        var m = typeof Symbol === "function" && o[Symbol.iterator], i = 0;
-        if (m) return m.call(o);
-        return {
-            next: function () {
-                if (o && i >= o.length) o = void 0;
-                return { value: o && o[i++], done: !o };
-            }
-        };
-    };
-    Object.defineProperty(exports, "__esModule", { value: true });
     var NAMED_OPTIONS = {
         host: 'namedHosts',
         interval: 'namedIntervals'
@@ -3422,7 +3254,6 @@
         }
         return CatalogOptions;
     }());
-    exports.CatalogOptions = CatalogOptions;
     var Catalog = /** @class */ (function () {
         function Catalog(config) {
             this.themes = [];
@@ -3453,7 +3284,6 @@
         };
         return Catalog;
     }());
-    exports.Catalog = Catalog;
     var Theme = /** @class */ (function () {
         function Theme(config) {
             this.layers = [];
@@ -3483,7 +3313,6 @@
         };
         return Theme;
     }());
-    exports.Theme = Theme;
     var Layer = /** @class */ (function () {
         function Layer(config) {
             this.publications = [];
@@ -3511,7 +3340,6 @@
         };
         return Layer;
     }());
-    exports.Layer = Layer;
     var Publication = /** @class */ (function () {
         function Publication(config) {
             this.options = new CatalogOptions();
@@ -3525,20 +3353,6 @@
         };
         return Publication;
     }());
-    exports.Publication = Publication;
-
-    });
-
-    var catalog$1 = unwrapExports(catalog);
-    var catalog_1 = catalog.CatalogOptions;
-    var catalog_2 = catalog.Catalog;
-    var catalog_3 = catalog.Theme;
-    var catalog_4 = catalog.Layer;
-    var catalog_5 = catalog.Publication;
-
-    var mappedLayer = createCommonjsModule(function (module, exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
 
     var PUBLICATION_PRIORITY_ORDER = [
         'annual',
@@ -3552,13 +3366,11 @@
     }, ɵ1 = function (host, fn, ml) {
         return ml.layer.options.downloadPath || "" + host + fn;
     };
-    exports.ɵ0 = ɵ0;
-    exports.ɵ1 = ɵ1;
     var MAKE_DOWNLOAD_URL = {
         tds: ɵ0,
         static: ɵ1
     };
-    exports.WMS_PARAMETER_NAMES = {
+    var WMS_PARAMETER_NAMES = {
         tds: [
             'layers',
             'styles',
@@ -3579,12 +3391,12 @@
             'transparent'
         ]
     };
-    exports.WMS_URL_FORMAT = {
+    var WMS_URL_FORMAT = {
         tds: '/wms/',
         geoserver: '/wms/',
         esri: '/'
     };
-    exports.INTERPOLATED_PARAMETERS = [
+    var INTERPOLATED_PARAMETERS = [
         'styles',
         'layers'
     ];
@@ -3638,16 +3450,16 @@
                 day: this.leading0(this.options.date.getDate()),
             } : {}, this.options, this.options.tags || {});
             if (mapParams.timeFormat) {
-                mapParams['time'] = interpolation_service.InterpolationService.interpolate(mapParams.timeFormat, mapParams);
+                mapParams['time'] = InterpolationService.interpolate(mapParams.timeFormat, mapParams);
             }
             mapParams.layers = mapParams.layers || mapParams.layer || mapParams.variable;
-            exports.INTERPOLATED_PARAMETERS.forEach(function (p) {
+            INTERPOLATED_PARAMETERS.forEach(function (p) {
                 if (mapParams[p]) {
-                    mapParams[p] = interpolation_service.InterpolationService.interpolate(mapParams[p], mapParams);
+                    mapParams[p] = InterpolationService.interpolate(mapParams[p], mapParams);
                 }
             });
-            this.interpolatedFile = interpolation_service.InterpolationService.interpolate(this.interpolatedFile, mapParams);
-            this.url = baseURL + exports.WMS_URL_FORMAT[software] + this.interpolatedFile;
+            this.interpolatedFile = InterpolationService.interpolate(this.interpolatedFile, mapParams);
+            this.url = baseURL + WMS_URL_FORMAT[software] + this.interpolatedFile;
             if (MAKE_DOWNLOAD_URL[software]) {
                 this.interpolatedDownloadURL = MAKE_DOWNLOAD_URL[software](host.downloadLink || baseURL, this.interpolatedFile, this);
             }
@@ -3656,7 +3468,7 @@
             }
             if (this.layer.options.legend === 'wms') {
                 this.legendURL = this.url + '?service=WMS&request=GetLegendGraphic&format=image/png';
-                this.legendURL += "&layer=" + interpolation_service.InterpolationService.interpolate(mapParams.layers, mapParams);
+                this.legendURL += "&layer=" + InterpolationService.interpolate(mapParams.layers, mapParams);
                 this.legendURL += '&version=1.1.1';
                 this.options.legend = true;
             }
@@ -3677,7 +3489,7 @@
             else {
                 this.layerType = 'wms';
                 this.wmsParameters = {};
-                exports.WMS_PARAMETER_NAMES[software].forEach(function (param) {
+                WMS_PARAMETER_NAMES[software].forEach(function (param) {
                     if (mapParams[param]) {
                         _this.wmsParameters[param] = mapParams[param];
                     }
@@ -3685,7 +3497,7 @@
             }
             this.flattenedSettings = mapParams;
             if (mapParams.titleFormat) {
-                this.title = interpolation_service.InterpolationService.interpolate(mapParams.titleFormat, mapParams);
+                this.title = InterpolationService.interpolate(mapParams.titleFormat, mapParams);
             }
             else {
                 this.title = this.layer.name;
@@ -3693,37 +3505,10 @@
         };
         return MappedLayer;
     }());
-    exports.MappedLayer = MappedLayer;
     function decadeText(d) {
         var decade = d.getFullYear().toString().slice(0, 3);
         return decade + "0-" + decade + "9";
     }
-
-    });
-
-    var mappedLayer$1 = unwrapExports(mappedLayer);
-    var mappedLayer_1 = mappedLayer.WMS_PARAMETER_NAMES;
-    var mappedLayer_2 = mappedLayer.WMS_URL_FORMAT;
-    var mappedLayer_3 = mappedLayer.INTERPOLATED_PARAMETERS;
-    var mappedLayer_4 = mappedLayer.MappedLayer;
-
-    var catalog_service = createCommonjsModule(function (module, exports) {
-    "use strict";
-    var __decorate = (commonjsGlobal && commonjsGlobal.__decorate) || function (decorators, target, key, desc) {
-        var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-        if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-        else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-        return c > 3 && r && Object.defineProperty(target, key, r), r;
-    };
-    var __metadata = (commonjsGlobal && commonjsGlobal.__metadata) || function (k, v) {
-        if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-    };
-    Object.defineProperty(exports, "__esModule", { value: true });
-
-
-
-
-
 
     var CatalogService = /** @class */ (function () {
         function CatalogService(_http, metadata) {
@@ -3732,7 +3517,7 @@
         }
         CatalogService.prototype.load = function (catalogJSON) {
             var _this = this;
-            this.current = new catalog.Catalog(catalogJSON);
+            this.current = new Catalog(catalogJSON);
             this.current.allLayers().filter(function (l) { return l.options.smallExtent; }).forEach(function (l) {
                 l.spatialExtent = _this.findExtentOfLayer(l);
             });
@@ -3749,51 +3534,20 @@
             // return from(result);
         };
         CatalogService.prototype.findExtentOfLayer = function (l) {
-            var tmp = new mappedLayer.MappedLayer();
+            var tmp = new MappedLayer();
             tmp.layer = l;
             tmp.update();
             return this.metadata.getSpatialExtent(tmp);
         };
         CatalogService.ctorParameters = function () { return [
             { type: http.HttpClient },
-            { type: metadata_service.MetadataService }
+            { type: MetadataService }
         ]; };
         CatalogService = __decorate([
-            core.Injectable(),
-            __metadata("design:paramtypes", [http.HttpClient, metadata_service.MetadataService])
+            core.Injectable()
         ], CatalogService);
         return CatalogService;
     }());
-    exports.CatalogService = CatalogService;
-
-    });
-
-    var catalog_service$1 = unwrapExports(catalog_service);
-    var catalog_service_1 = catalog_service.CatalogService;
-
-    var mapView_service = createCommonjsModule(function (module, exports) {
-    "use strict";
-    var __decorate = (commonjsGlobal && commonjsGlobal.__decorate) || function (decorators, target, key, desc) {
-        var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-        if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-        else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-        return c > 3 && r && Object.defineProperty(target, key, r), r;
-    };
-    var __metadata = (commonjsGlobal && commonjsGlobal.__metadata) || function (k, v) {
-        if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-    };
-    var __values = (commonjsGlobal && commonjsGlobal.__values) || function (o) {
-        var m = typeof Symbol === "function" && o[Symbol.iterator], i = 0;
-        if (m) return m.call(o);
-        return {
-            next: function () {
-                if (o && i >= o.length) o = void 0;
-                return { value: o && o[i++], done: !o };
-            }
-        };
-    };
-    Object.defineProperty(exports, "__esModule", { value: true });
-
 
     var MapViewParameterService = /** @class */ (function () {
         function MapViewParameterService(_location) {
@@ -3872,43 +3626,15 @@
         ]; };
         MapViewParameterService.parameterNames = [];
         MapViewParameterService = MapViewParameterService_1 = __decorate([
-            core.Injectable(),
-            __metadata("design:paramtypes", [common.Location])
+            core.Injectable()
         ], MapViewParameterService);
         return MapViewParameterService;
     }());
-    exports.MapViewParameterService = MapViewParameterService;
-
-    });
-
-    var mapView_service$1 = unwrapExports(mapView_service);
-    var mapView_service_1 = mapView_service.MapViewParameterService;
-
-    var wms_service = createCommonjsModule(function (module, exports) {
-    "use strict";
-    var __decorate = (commonjsGlobal && commonjsGlobal.__decorate) || function (decorators, target, key, desc) {
-        var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-        if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-        else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-        return c > 3 && r && Object.defineProperty(target, key, r), r;
-    };
-    var __metadata = (commonjsGlobal && commonjsGlobal.__metadata) || function (k, v) {
-        if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-    };
-    Object.defineProperty(exports, "__esModule", { value: true });
-
-    //const proj4 = require('proj4');
-    //const Proj = proj4.Proj;
-    //const defs = proj4.defs;
-    //proj4.InterfaceProjection;
-    //const InterfaceCoordinates = proj4.InterfaceCoordinates;
-    //const TemplateCoordinates = proj4.TemplateCoordinates;
-    //const proj4 = require('proj4').default;
 
     var D2R = Math.PI / 180;
     var WMSService = /** @class */ (function () {
         function WMSService() {
-            this.webMercator = (proj4.default || proj4).Proj('EPSG:3857');
+            this.webMercator = (proj4__default || proj4).Proj('EPSG:3857');
             //this.webMercator = proj4.Proj(proj4.defs('EPSG:3857'));
         }
         WMSService_1 = WMSService;
@@ -3972,32 +3698,10 @@
         WMSService.TILE_WIDTH = WMSService_1.TILE_SIZE;
         WMSService.TILE_HEIGHT = WMSService_1.TILE_SIZE;
         WMSService = WMSService_1 = __decorate([
-            core.Injectable(),
-            __metadata("design:paramtypes", [])
+            core.Injectable()
         ], WMSService);
         return WMSService;
     }());
-    exports.WMSService = WMSService;
-
-    });
-
-    var wms_service$1 = unwrapExports(wms_service);
-    var wms_service_1 = wms_service.WMSService;
-
-    var projection_service = createCommonjsModule(function (module, exports) {
-    "use strict";
-    var __decorate = (commonjsGlobal && commonjsGlobal.__decorate) || function (decorators, target, key, desc) {
-        var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-        if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-        else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-        return c > 3 && r && Object.defineProperty(target, key, r), r;
-    };
-    var __metadata = (commonjsGlobal && commonjsGlobal.__metadata) || function (k, v) {
-        if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-    };
-    Object.defineProperty(exports, "__esModule", { value: true });
-
-    //import * as proj4 from 'proj4';
 
     //const proj4 = require('proj4').default;
     var ProjectionService = /** @class */ (function () {
@@ -4007,21 +3711,11 @@
             return proj4;
         };
         ProjectionService = __decorate([
-            core.Injectable(),
-            __metadata("design:paramtypes", [])
+            core.Injectable()
         ], ProjectionService);
         return ProjectionService;
     }());
-    exports.ProjectionService = ProjectionService;
 
-    });
-
-    var projection_service$1 = unwrapExports(projection_service);
-    var projection_service_1 = projection_service.ProjectionService;
-
-    var csv = createCommonjsModule(function (module, exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
     function parseCSV(txt) {
         var lines = txt.split('\n');
         var header = lines[0];
@@ -4036,7 +3730,6 @@
             return result;
         });
     }
-    exports.parseCSV = parseCSV;
     function parseVal(val) {
         // Try date...
         var components = val.split('-');
@@ -4057,72 +3750,21 @@
         return val;
     }
 
-    });
-
-    var csv$1 = unwrapExports(csv);
-    var csv_1 = csv.parseCSV;
-
-    var esm5 = createCommonjsModule(function (module, exports) {
-    "use strict";
-    var __decorate = (commonjsGlobal && commonjsGlobal.__decorate) || function (decorators, target, key, desc) {
-        var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-        if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-        else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-        return c > 3 && r && Object.defineProperty(target, key, r), r;
-    };
-    function __export(m) {
-        for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
-    }
-    Object.defineProperty(exports, "__esModule", { value: true });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    __export(catalog);
-    __export(mappedLayer);
-    __export(wms_service);
-    __export(projection_service);
-    __export(mapView_service);
-    __export(interpolation_service);
-    __export(availableDates_service);
-    __export(pointSelection_service);
-    __export(metadata_service);
-    __export(catalog_service);
-    __export(palette_service);
-    __export(staticData_service);
-    __export(opendap_service);
-    __export(timeseries_service);
-    __export(timeUtils_service);
-    __export(treeFilter_service);
-    __export(csv);
     var services = [
         //$serviceList
-        availableDates_service.AvailableDatesService,
-        pointSelection_service.PointSelectionService,
-        timeseries_service.TimeseriesService,
-        staticData_service.StaticDataService,
-        metadata_service.MetadataService,
-        opendap_service.OpendapService,
-        palette_service.PaletteService,
-        timeUtils_service.TimeUtilsService,
-        wms_service.WMSService,
-        mapView_service.MapViewParameterService,
-        projection_service.ProjectionService,
-        catalog_service.CatalogService,
-        treeFilter_service.TreeFilterService
+        AvailableDatesService,
+        PointSelectionService,
+        TimeseriesService,
+        StaticDataService,
+        MetadataService,
+        OpendapService,
+        PaletteService,
+        TimeUtilsService,
+        WMSService,
+        MapViewParameterService,
+        ProjectionService,
+        CatalogService,
+        TreeFilterService
     ];
     //import { CSVService } from './src/csv.service';
     //$importList
@@ -4152,29 +3794,41 @@
         ], MapWaldCoreModule);
         return MapWaldCoreModule;
     }());
+
+    exports.AvailableDatesService = AvailableDatesService;
+    exports.Catalog = Catalog;
+    exports.CatalogOptions = CatalogOptions;
+    exports.CatalogService = CatalogService;
+    exports.INTERPOLATED_PARAMETERS = INTERPOLATED_PARAMETERS;
+    exports.InterpolationService = InterpolationService;
+    exports.LAT_NAMES = LAT_NAMES;
+    exports.LNG_NAMES = LNG_NAMES;
+    exports.Layer = Layer;
+    exports.MapViewParameterService = MapViewParameterService;
     exports.MapWaldCoreModule = MapWaldCoreModule;
+    exports.MappedLayer = MappedLayer;
+    exports.MetadataService = MetadataService;
+    exports.OpendapService = OpendapService;
+    exports.PaletteService = PaletteService;
+    exports.PointSelectionService = PointSelectionService;
+    exports.ProjectionService = ProjectionService;
+    exports.Publication = Publication;
+    exports.StaticDataService = StaticDataService;
+    exports.TIME_NAMES = TIME_NAMES;
+    exports.Theme = Theme;
+    exports.TimeUtilsService = TimeUtilsService;
+    exports.TimeseriesService = TimeseriesService;
+    exports.TreeFilterService = TreeFilterService;
+    exports.WMSService = WMSService;
+    exports.WMS_PARAMETER_NAMES = WMS_PARAMETER_NAMES;
+    exports.WMS_URL_FORMAT = WMS_URL_FORMAT;
+    exports.parseCSV = parseCSV;
+    exports.utcDate = utcDate;
+    exports.utcDateCopy = utcDateCopy;
+    exports.ɵ0 = ɵ0;
+    exports.ɵ1 = ɵ1;
 
-    });
-
-    var index = unwrapExports(esm5);
-    var esm5_1 = esm5.MapWaldCoreModule;
-
-    var mapWald = createCommonjsModule(function (module, exports) {
-    "use strict";
-    /**
-     * Generated bundle index. Do not edit.
-     */
-    function __export(m) {
-        for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
-    }
-    Object.defineProperty(exports, "__esModule", { value: true });
-    __export(esm5);
-
-    });
-
-    var mapWald$1 = unwrapExports(mapWald);
-
-    return mapWald$1;
+    Object.defineProperty(exports, '__esModule', { value: true });
 
 }));
 //# sourceMappingURL=map-wald.umd.js.map

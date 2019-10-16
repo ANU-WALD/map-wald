@@ -1,42 +1,13 @@
-import core from '@angular/core';
-import common from '@angular/common';
-import forms from '@angular/forms';
-import http from '@angular/common/http';
-import rxjs from 'rxjs';
-import operators from 'rxjs/operators';
-import dapQuery from 'dap-query-js/dist/dap-query';
-import proj4 from 'proj4';
-
-var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
-
-function commonjsRequire () {
-	throw new Error('Dynamic requires are not currently supported by rollup-plugin-commonjs');
-}
-
-function unwrapExports (x) {
-	return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, 'default') ? x['default'] : x;
-}
-
-function createCommonjsModule(fn, module) {
-	return module = { exports: {} }, fn(module, module.exports), module.exports;
-}
-
-function getCjsExportFromNamespace (n) {
-	return n && n['default'] || n;
-}
-
-var treeFilter_service = createCommonjsModule(function (module, exports) {
-"use strict";
-var __decorate = (commonjsGlobal && commonjsGlobal.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (commonjsGlobal && commonjsGlobal.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-Object.defineProperty(exports, "__esModule", { value: true });
+import { __decorate } from 'tslib';
+import { Injectable, NgModule } from '@angular/core';
+import { Location, CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { of, forkJoin, BehaviorSubject } from 'rxjs';
+import { map, publishReplay, refCount, switchMap, switchAll, shareReplay, tap } from 'rxjs/operators';
+import { simplify, parseData, parseDAS, parseDDX } from 'dap-query-js/dist/dap-query';
+import * as proj4 from 'proj4';
+import proj4__default, {  } from 'proj4';
 
 let TreeFilterService = class TreeFilterService {
     constructor() {
@@ -68,20 +39,10 @@ let TreeFilterService = class TreeFilterService {
     }
 };
 TreeFilterService = __decorate([
-    core.Injectable(),
-    __metadata("design:paramtypes", [])
+    Injectable()
 ], TreeFilterService);
-exports.TreeFilterService = TreeFilterService;
 
-});
-
-var treeFilter_service$1 = unwrapExports(treeFilter_service);
-var treeFilter_service_1 = treeFilter_service.TreeFilterService;
-
-var colorbrewer = createCommonjsModule(function (module, exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.palettes = {
+const palettes = {
     Accent: {
         3: [
             "rgb(127,201,127)",
@@ -2397,28 +2358,6 @@ exports.palettes = {
     }
 };
 
-});
-
-var colorbrewer$1 = unwrapExports(colorbrewer);
-var colorbrewer_1 = colorbrewer.palettes;
-
-var palette_service = createCommonjsModule(function (module, exports) {
-"use strict";
-var __decorate = (commonjsGlobal && commonjsGlobal.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (commonjsGlobal && commonjsGlobal.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-
-
-
-
-
 const DEFAULT_NUM_COLOURS = 3;
 let PaletteService = class PaletteService {
     constructor(_http) {
@@ -2434,16 +2373,16 @@ let PaletteService = class PaletteService {
         if (this.namedPalettes[name]) {
             palette = this.namedPalettes[name];
         }
-        else if (colorbrewer.palettes[name]) {
-            palette = colorbrewer.palettes[name][numColours || DEFAULT_NUM_COLOURS];
+        else if (palettes[name]) {
+            palette = palettes[name][numColours || DEFAULT_NUM_COLOURS];
         }
         if (palette) {
             if (reverse) {
-                return rxjs.of(palette.slice().reverse());
+                return of(palette.slice().reverse());
             }
-            return rxjs.of(palette.slice());
+            return of(palette.slice());
         }
-        return this._http.get(this._source + '/' + name + '.pal', { responseType: 'text' }).pipe(operators.map((text) => this.parseNCWMSPalette(text)));
+        return this._http.get(this._source + '/' + name + '.pal', { responseType: 'text' }).pipe(map((text) => this.parseNCWMSPalette(text)));
     }
     parseNCWMSPalette(txt) {
         return txt.split('\n')
@@ -2458,40 +2397,18 @@ let PaletteService = class PaletteService {
     }
 };
 PaletteService.ctorParameters = () => [
-    { type: http.HttpClient }
+    { type: HttpClient }
 ];
 PaletteService = __decorate([
-    core.Injectable(),
-    __metadata("design:paramtypes", [http.HttpClient])
+    Injectable()
 ], PaletteService);
-exports.PaletteService = PaletteService;
-
-});
-
-var palette_service$1 = unwrapExports(palette_service);
-var palette_service_1 = palette_service.PaletteService;
-
-var timeUtils_service = createCommonjsModule(function (module, exports) {
-"use strict";
-var __decorate = (commonjsGlobal && commonjsGlobal.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (commonjsGlobal && commonjsGlobal.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-Object.defineProperty(exports, "__esModule", { value: true });
 
 function utcDate(y, m, d) {
     return new Date(Date.UTC(y, m, d));
 }
-exports.utcDate = utcDate;
 function utcDateCopy(d) {
     return utcDate(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate());
 }
-exports.utcDateCopy = utcDateCopy;
 let TimeUtilsService = class TimeUtilsService {
     constructor() {
         this.specialDates = {
@@ -2536,32 +2453,8 @@ let TimeUtilsService = class TimeUtilsService {
     }
 };
 TimeUtilsService = __decorate([
-    core.Injectable(),
-    __metadata("design:paramtypes", [])
+    Injectable()
 ], TimeUtilsService);
-exports.TimeUtilsService = TimeUtilsService;
-
-});
-
-var timeUtils_service$1 = unwrapExports(timeUtils_service);
-var timeUtils_service_1 = timeUtils_service.utcDate;
-var timeUtils_service_2 = timeUtils_service.utcDateCopy;
-var timeUtils_service_3 = timeUtils_service.TimeUtilsService;
-
-var staticData_service = createCommonjsModule(function (module, exports) {
-"use strict";
-var __decorate = (commonjsGlobal && commonjsGlobal.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (commonjsGlobal && commonjsGlobal.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-
-
 
 let StaticDataService = class StaticDataService {
     constructor(http) {
@@ -2579,41 +2472,17 @@ let StaticDataService = class StaticDataService {
                 uniqueUrl += '&';
             }
             uniqueUrl += `time=${new Date().getTime()}`;
-            this.cache[url] = this.http.get(uniqueUrl).pipe(operators.publishReplay(), operators.refCount());
+            this.cache[url] = this.http.get(uniqueUrl).pipe(publishReplay(), refCount());
         }
         return this.cache[url];
     }
 };
 StaticDataService.ctorParameters = () => [
-    { type: http.HttpClient }
+    { type: HttpClient }
 ];
 StaticDataService = __decorate([
-    core.Injectable(),
-    __metadata("design:paramtypes", [http.HttpClient])
+    Injectable()
 ], StaticDataService);
-exports.StaticDataService = StaticDataService;
-
-});
-
-var staticData_service$1 = unwrapExports(staticData_service);
-var staticData_service_1 = staticData_service.StaticDataService;
-
-var opendap_service = createCommonjsModule(function (module, exports) {
-"use strict";
-var __decorate = (commonjsGlobal && commonjsGlobal.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (commonjsGlobal && commonjsGlobal.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-
-
-
-
 
 let OpendapService = class OpendapService {
     constructor(http) {
@@ -2626,26 +2495,26 @@ let OpendapService = class OpendapService {
         return this.http.get(url, { responseType: 'text' });
     }
     getData(queryUrl, das) {
-        return this.get(queryUrl).pipe(operators.map((txt) => dapQuery.simplify(dapQuery.parseData(txt, das))));
+        return this.get(queryUrl).pipe(map((txt) => simplify(parseData(txt, das))));
     }
     getDAS(url) {
-        return this.get(url + '.das').pipe(operators.map(dapQuery.parseDAS));
+        return this.get(url + '.das').pipe(map(parseDAS));
     }
     getDDX(url) {
-        return this.get(url + '.ddx').pipe(operators.map(dapQuery.parseDDX));
+        return this.get(url + '.ddx').pipe(map(parseDDX));
     }
     getExtent(url) {
         console.log(url);
-        return rxjs.forkJoin([
+        return forkJoin([
             this.getDAS(url),
             this.getDDX(url)
-        ]).pipe(operators.switchMap(([theDAS, theDDX]) => {
+        ]).pipe(switchMap(([theDAS, theDDX]) => {
             var das = theDAS;
-            return rxjs.forkJoin([
+            return forkJoin([
                 this.getData(url + '.ascii?latitude', das),
                 this.getData(url + '.ascii?longitude', das)
             ]);
-        }), operators.map((ll) => {
+        }), map((ll) => {
             var lats = ll[0].latitude;
             var lons = ll[1].longitude;
             return [lats[0], lats[lats.length - 1],
@@ -2661,38 +2530,15 @@ let OpendapService = class OpendapService {
     }
 };
 OpendapService.ctorParameters = () => [
-    { type: http.HttpClient }
+    { type: HttpClient }
 ];
 OpendapService = __decorate([
-    core.Injectable(),
-    __metadata("design:paramtypes", [http.HttpClient])
+    Injectable()
 ], OpendapService);
-exports.OpendapService = OpendapService;
 
-});
-
-var opendap_service$1 = unwrapExports(opendap_service);
-var opendap_service_1 = opendap_service.OpendapService;
-
-var metadata_service = createCommonjsModule(function (module, exports) {
-"use strict";
-var __decorate = (commonjsGlobal && commonjsGlobal.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (commonjsGlobal && commonjsGlobal.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-
-
-
-
-exports.LAT_NAMES = ['latitude', 'lat'];
-exports.LNG_NAMES = ['longitude', 'lng', 'lon'];
-exports.TIME_NAMES = ['time', 't'];
+const LAT_NAMES = ['latitude', 'lat'];
+const LNG_NAMES = ['longitude', 'lng', 'lon'];
+const TIME_NAMES = ['time', 't'];
 let MetadataService = class MetadataService {
     constructor(dap) {
         this.dap = dap;
@@ -2715,7 +2561,7 @@ let MetadataService = class MetadataService {
     ddxForUrl(url) {
         if (!this.ddxCache[url]) {
             this.ddxCache[url] =
-                this.dap.getDDX(url).pipe(operators.publishReplay(), operators.refCount());
+                this.dap.getDDX(url).pipe(publishReplay(), refCount());
         }
         return this.ddxCache[url];
     }
@@ -2729,7 +2575,7 @@ let MetadataService = class MetadataService {
     dasForUrl(url) {
         if (!this.dasCache[url]) {
             this.dasCache[url] =
-                this.dap.getDAS(url).pipe(operators.publishReplay(), operators.refCount());
+                this.dap.getDAS(url).pipe(publishReplay(), refCount());
         }
         return this.dasCache[url];
     }
@@ -2738,14 +2584,14 @@ let MetadataService = class MetadataService {
     }
     getMetadata(ml) {
         if (ml.flattenedSettings.host.software !== 'tds') {
-            return rxjs.of({});
+            return of({});
         }
-        return rxjs.forkJoin([this.getDASForLayer(ml), this.getDDXForLayer(ml)]).pipe(operators.map(meta => {
+        return forkJoin([this.getDASForLayer(ml), this.getDDXForLayer(ml)]).pipe(map(meta => {
             return {
                 das: meta[0],
                 ddx: meta[1]
             };
-        }), operators.map(meta => {
+        }), map(meta => {
             return Object.assign({}, meta.das.attr || {}, meta.ddx.variables[ml.flattenedSettings.layer || ml.flattenedSettings.variable] || {});
         }));
     }
@@ -2763,22 +2609,22 @@ let MetadataService = class MetadataService {
     getGridForURL(url) {
         const ddx$ = this.ddxForUrl(url);
         const das$ = this.dasForUrl(url);
-        const res$ = rxjs.forkJoin([ddx$, das$]).pipe(operators.map((metadata) => {
+        const res$ = forkJoin([ddx$, das$]).pipe(map((metadata) => {
             const ddx = metadata[0];
             const das = metadata[1];
-            const latCoord = this.identifyCoordinate(ddx, ...exports.LAT_NAMES);
-            const lngCoord = this.identifyCoordinate(ddx, ...exports.LNG_NAMES);
-            const lat$ = this.dap.getData(`${url}.ascii?${latCoord}`, das).pipe(operators.map((dd) => dd[latCoord]));
-            const lng$ = this.dap.getData(`${url}.ascii?${lngCoord}`, das).pipe(operators.map((dd) => dd[lngCoord]));
-            return rxjs.forkJoin(lat$, lng$);
-        }), operators.switchAll(), operators.publishReplay(), operators.refCount());
+            const latCoord = this.identifyCoordinate(ddx, ...LAT_NAMES);
+            const lngCoord = this.identifyCoordinate(ddx, ...LNG_NAMES);
+            const lat$ = this.dap.getData(`${url}.ascii?${latCoord}`, das).pipe(map((dd) => dd[latCoord]));
+            const lng$ = this.dap.getData(`${url}.ascii?${lngCoord}`, das).pipe(map((dd) => dd[lngCoord]));
+            return forkJoin(lat$, lng$);
+        }), switchAll(), publishReplay(), refCount());
         return res$;
     }
     getGridForLayer(ml) {
         return this.getGrid(ml.flattenedSettings.host, ml.interpolatedFile);
     }
     getSpatialExtent(ml) {
-        return this.getGridForLayer(ml).pipe(operators.map(([lats, lngs]) => {
+        return this.getGridForLayer(ml).pipe(map(([lats, lngs]) => {
             var result = {
                 east: Math.max(...lngs),
                 west: Math.min(...lngs),
@@ -2786,7 +2632,7 @@ let MetadataService = class MetadataService {
                 south: Math.min(...lats)
             };
             return result;
-        })).pipe(operators.publishReplay(), operators.refCount());
+        })).pipe(publishReplay(), refCount());
     }
     getTimeDimension(host, file) {
         const url = this.dap.makeURL(host, file);
@@ -2796,51 +2642,24 @@ let MetadataService = class MetadataService {
         if (!this.timeCache[url]) {
             const ddx$ = this.ddxForUrl(url);
             const das$ = this.dasForUrl(url);
-            const res$ = rxjs.forkJoin([ddx$, das$]).pipe(operators.map((metadata) => {
+            const res$ = forkJoin([ddx$, das$]).pipe(map((metadata) => {
                 const ddx = metadata[0];
                 const das = metadata[1];
-                const timeCoord = this.identifyCoordinate(ddx, ...exports.TIME_NAMES);
-                const time$ = this.dap.getData(`${url}.ascii?${timeCoord}`, das).pipe(operators.map((dd) => dd[timeCoord]));
+                const timeCoord = this.identifyCoordinate(ddx, ...TIME_NAMES);
+                const time$ = this.dap.getData(`${url}.ascii?${timeCoord}`, das).pipe(map((dd) => dd[timeCoord]));
                 return time$;
-            }), operators.switchAll(), operators.shareReplay());
+            }), switchAll(), shareReplay());
             this.timeCache[url] = res$;
         }
         return this.timeCache[url];
     }
 };
 MetadataService.ctorParameters = () => [
-    { type: opendap_service.OpendapService }
+    { type: OpendapService }
 ];
 MetadataService = __decorate([
-    core.Injectable(),
-    __metadata("design:paramtypes", [opendap_service.OpendapService])
+    Injectable()
 ], MetadataService);
-exports.MetadataService = MetadataService;
-
-});
-
-var metadata_service$1 = unwrapExports(metadata_service);
-var metadata_service_1 = metadata_service.LAT_NAMES;
-var metadata_service_2 = metadata_service.LNG_NAMES;
-var metadata_service_3 = metadata_service.TIME_NAMES;
-var metadata_service_4 = metadata_service.MetadataService;
-
-var timeseries_service = createCommonjsModule(function (module, exports) {
-"use strict";
-var __decorate = (commonjsGlobal && commonjsGlobal.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (commonjsGlobal && commonjsGlobal.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-
-
-
-
 
 ;
 let TimeseriesService = class TimeseriesService {
@@ -2854,7 +2673,7 @@ let TimeseriesService = class TimeseriesService {
         var ddx$ = this.metadata.ddxForUrl(url);
         var das$ = this.metadata.dasForUrl(url);
         var variable = variable;
-        return rxjs.forkJoin(ddx$, das$, this.metadata.getGrid(host, file)).pipe(operators.switchMap(([ddx, das, latsAndLngs]) => {
+        return forkJoin(ddx$, das$, this.metadata.getGrid(host, file)).pipe(switchMap(([ddx, das, latsAndLngs]) => {
             const lats = latsAndLngs[0];
             const lngs = latsAndLngs[1];
             var latIndex = this.indexInDimension(pt.lat, lats);
@@ -2864,7 +2683,7 @@ let TimeseriesService = class TimeseriesService {
             }
             var query = this.makeTimeQuery(ddx, variable, latIndex, lngIndex, additionalIndices);
             return this.dap.getData(`${url}.ascii?${variable}${query}`, das);
-        }), operators.map((data) => {
+        }), map((data) => {
             let vals = data[variable];
             if (!vals.length) {
                 vals = [data[variable]];
@@ -2883,13 +2702,13 @@ let TimeseriesService = class TimeseriesService {
         var query = '';
         metadata.dimensions.forEach((dim) => {
             var dName = dim.name.toLowerCase();
-            if (metadata_service.TIME_NAMES.indexOf(dName) >= 0) {
+            if (TIME_NAMES.indexOf(dName) >= 0) {
                 query += this.dapRangeQuery(0, +(dim.size) - 1);
             }
-            else if (metadata_service.LAT_NAMES.indexOf(dName) >= 0) {
+            else if (LAT_NAMES.indexOf(dName) >= 0) {
                 query += this.dapRangeQuery(latIndex);
             }
-            else if (metadata_service.LNG_NAMES.indexOf(dName) >= 0) {
+            else if (LNG_NAMES.indexOf(dName) >= 0) {
                 query += this.dapRangeQuery(lngIndex);
             }
             else {
@@ -2949,23 +2768,13 @@ let TimeseriesService = class TimeseriesService {
     ;
 };
 TimeseriesService.ctorParameters = () => [
-    { type: metadata_service.MetadataService },
-    { type: opendap_service.OpendapService }
+    { type: MetadataService },
+    { type: OpendapService }
 ];
 TimeseriesService = __decorate([
-    core.Injectable(),
-    __metadata("design:paramtypes", [metadata_service.MetadataService, opendap_service.OpendapService])
+    Injectable()
 ], TimeseriesService);
-exports.TimeseriesService = TimeseriesService;
 
-});
-
-var timeseries_service$1 = unwrapExports(timeseries_service);
-var timeseries_service_1 = timeseries_service.TimeseriesService;
-
-var interpolation_service = createCommonjsModule(function (module, exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 // @dynamic
 class InterpolationService {
     static isDefined(val) {
@@ -3000,34 +2809,11 @@ class InterpolationService {
     }
 }
 InterpolationService.templateMatcher = /{{\s?([^{}\s]*)\s?}}/g;
-exports.InterpolationService = InterpolationService;
-
-});
-
-var interpolation_service$1 = unwrapExports(interpolation_service);
-var interpolation_service_1 = interpolation_service.InterpolationService;
-
-var pointSelection_service = createCommonjsModule(function (module, exports) {
-"use strict";
-var __decorate = (commonjsGlobal && commonjsGlobal.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (commonjsGlobal && commonjsGlobal.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-
-
-
-
 
 let PointSelectionService = class PointSelectionService {
     constructor(meta) {
         this.meta = meta;
-        this.latestPointSelectionSource = new rxjs.BehaviorSubject(null);
+        this.latestPointSelectionSource = new BehaviorSubject(null);
         this.latestPointSelection = this.latestPointSelectionSource.asObservable();
     }
     unchanged(current, updated) {
@@ -3068,7 +2854,7 @@ let PointSelectionService = class PointSelectionService {
     }
     fullUrl(sel) {
         let params = Object.assign({}, sel.feature ? sel.feature.properties : {}, sel.tags);
-        return interpolation_service.InterpolationService.interpolate(sel.catalog.url, params);
+        return InterpolationService.interpolate(sel.catalog.url, params);
     }
     validUrl(url) {
         return url.indexOf('{{') < 0;
@@ -3077,9 +2863,9 @@ let PointSelectionService = class PointSelectionService {
         let coords = sel.catalog.coordinates || {};
         let url = this.fullUrl(sel);
         if (!this.validUrl(url)) {
-            return rxjs.of([]);
+            return of([]);
         }
-        return this.meta.ddxForUrl(url).pipe(operators.map(ddx => {
+        return this.meta.ddxForUrl(url).pipe(map(ddx => {
             let variables = ddx.variables;
             let variableNames = Object.keys(variables).filter(v => {
                 let dims = ddx.variables[v].dimensions;
@@ -3092,7 +2878,7 @@ let PointSelectionService = class PointSelectionService {
                     let fmt = Object.assign({ variable: v }, ddx.variables[v]);
                     return {
                         value: v,
-                        label: interpolation_service.InterpolationService.interpolate(sel.catalog.displayFormat, fmt)
+                        label: InterpolationService.interpolate(sel.catalog.displayFormat, fmt)
                     };
                 }
                 if (ddx.variables[v].long_name) {
@@ -3110,35 +2896,11 @@ let PointSelectionService = class PointSelectionService {
     }
 };
 PointSelectionService.ctorParameters = () => [
-    { type: metadata_service.MetadataService }
+    { type: MetadataService }
 ];
 PointSelectionService = __decorate([
-    core.Injectable(),
-    __metadata("design:paramtypes", [metadata_service.MetadataService])
+    Injectable()
 ], PointSelectionService);
-exports.PointSelectionService = PointSelectionService;
-
-});
-
-var pointSelection_service$1 = unwrapExports(pointSelection_service);
-var pointSelection_service_1 = pointSelection_service.PointSelectionService;
-
-var availableDates_service = createCommonjsModule(function (module, exports) {
-"use strict";
-var __decorate = (commonjsGlobal && commonjsGlobal.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (commonjsGlobal && commonjsGlobal.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-
-
-
-
 
 let AvailableDatesService = class AvailableDatesService {
     constructor(metadata) {
@@ -3146,7 +2908,7 @@ let AvailableDatesService = class AvailableDatesService {
     }
     fnForYear(mapped, year) {
         const publication = mapped.layer.publications[mapped.options.publication];
-        return interpolation_service.InterpolationService.interpolate(publication.options.filepath, {
+        return InterpolationService.interpolate(publication.options.filepath, {
             year: year
         });
     }
@@ -3160,34 +2922,24 @@ let AvailableDatesService = class AvailableDatesService {
         if (layer.timePeriod.containsYear(year - 1)) {
             fn = this.fnForYear(mapped, year - 1);
             let prev$ = this.metadata.getTimeDimension(layer.host, fn);
-            res$ = rxjs.forkJoin(...[prev$, res$]).pipe(operators.map((years) => years[0].concat(years[1])));
+            res$ = forkJoin(...[prev$, res$]).pipe(map((years) => years[0].concat(years[1])));
         }
-        return res$.pipe(operators.map(dates => {
+        return res$.pipe(map(dates => {
             return dates.map(d => {
                 let res = new Date(d.getTime());
                 res.setUTCDate(d.getUTCDate() - layer.timeshift * layer.timestep);
                 return res;
             });
-        }), operators.map(dates => dates.filter((d, i) => (i >= Math.abs(layer.timeshift)) && (d.getUTCFullYear() === year))));
+        }), map(dates => dates.filter((d, i) => (i >= Math.abs(layer.timeshift)) && (d.getUTCFullYear() === year))));
     }
 };
 AvailableDatesService.ctorParameters = () => [
-    { type: metadata_service.MetadataService }
+    { type: MetadataService }
 ];
 AvailableDatesService = __decorate([
-    core.Injectable(),
-    __metadata("design:paramtypes", [metadata_service.MetadataService])
+    Injectable()
 ], AvailableDatesService);
-exports.AvailableDatesService = AvailableDatesService;
 
-});
-
-var availableDates_service$1 = unwrapExports(availableDates_service);
-var availableDates_service_1 = availableDates_service.AvailableDatesService;
-
-var catalog = createCommonjsModule(function (module, exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 const NAMED_OPTIONS = {
     host: 'namedHosts',
     interval: 'namedIntervals'
@@ -3248,7 +3000,6 @@ function instantiateNamedOptions(dest, source) {
 }
 class CatalogOptions {
 }
-exports.CatalogOptions = CatalogOptions;
 class Catalog {
     constructor(config) {
         this.themes = [];
@@ -3276,7 +3027,6 @@ class Catalog {
         return this.themes.map(t => t.layers).reduce((prev, curr) => prev.concat(curr), []);
     }
 }
-exports.Catalog = Catalog;
 class Theme {
     constructor(config) {
         this.layers = [];
@@ -3304,7 +3054,6 @@ class Theme {
         this.layers.forEach(l => l.instantiateNamedOptions(source));
     }
 }
-exports.Theme = Theme;
 class Layer {
     constructor(config) {
         this.publications = [];
@@ -3330,7 +3079,6 @@ class Layer {
         this.publications.forEach(p => p.instantiateNamedOptions(source));
     }
 }
-exports.Layer = Layer;
 class Publication {
     constructor(config) {
         this.options = new CatalogOptions();
@@ -3343,20 +3091,6 @@ class Publication {
         instantiateNamedOptions(this.options, source);
     }
 }
-exports.Publication = Publication;
-
-});
-
-var catalog$1 = unwrapExports(catalog);
-var catalog_1 = catalog.CatalogOptions;
-var catalog_2 = catalog.Catalog;
-var catalog_3 = catalog.Theme;
-var catalog_4 = catalog.Layer;
-var catalog_5 = catalog.Publication;
-
-var mappedLayer = createCommonjsModule(function (module, exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 
 const PUBLICATION_PRIORITY_ORDER = [
     'annual',
@@ -3370,13 +3104,11 @@ const ɵ0 = (host, fn) => {
 }, ɵ1 = (host, fn, ml) => {
     return ml.layer.options.downloadPath || `${host}${fn}`;
 };
-exports.ɵ0 = ɵ0;
-exports.ɵ1 = ɵ1;
 const MAKE_DOWNLOAD_URL = {
     tds: ɵ0,
     static: ɵ1
 };
-exports.WMS_PARAMETER_NAMES = {
+const WMS_PARAMETER_NAMES = {
     tds: [
         'layers',
         'styles',
@@ -3397,12 +3129,12 @@ exports.WMS_PARAMETER_NAMES = {
         'transparent'
     ]
 };
-exports.WMS_URL_FORMAT = {
+const WMS_URL_FORMAT = {
     tds: '/wms/',
     geoserver: '/wms/',
     esri: '/'
 };
-exports.INTERPOLATED_PARAMETERS = [
+const INTERPOLATED_PARAMETERS = [
     'styles',
     'layers'
 ];
@@ -3454,16 +3186,16 @@ class MappedLayer {
             day: this.leading0(this.options.date.getDate()),
         } : {}, this.options, this.options.tags || {});
         if (mapParams.timeFormat) {
-            mapParams['time'] = interpolation_service.InterpolationService.interpolate(mapParams.timeFormat, mapParams);
+            mapParams['time'] = InterpolationService.interpolate(mapParams.timeFormat, mapParams);
         }
         mapParams.layers = mapParams.layers || mapParams.layer || mapParams.variable;
-        exports.INTERPOLATED_PARAMETERS.forEach(p => {
+        INTERPOLATED_PARAMETERS.forEach(p => {
             if (mapParams[p]) {
-                mapParams[p] = interpolation_service.InterpolationService.interpolate(mapParams[p], mapParams);
+                mapParams[p] = InterpolationService.interpolate(mapParams[p], mapParams);
             }
         });
-        this.interpolatedFile = interpolation_service.InterpolationService.interpolate(this.interpolatedFile, mapParams);
-        this.url = baseURL + exports.WMS_URL_FORMAT[software] + this.interpolatedFile;
+        this.interpolatedFile = InterpolationService.interpolate(this.interpolatedFile, mapParams);
+        this.url = baseURL + WMS_URL_FORMAT[software] + this.interpolatedFile;
         if (MAKE_DOWNLOAD_URL[software]) {
             this.interpolatedDownloadURL = MAKE_DOWNLOAD_URL[software](host.downloadLink || baseURL, this.interpolatedFile, this);
         }
@@ -3472,7 +3204,7 @@ class MappedLayer {
         }
         if (this.layer.options.legend === 'wms') {
             this.legendURL = this.url + '?service=WMS&request=GetLegendGraphic&format=image/png';
-            this.legendURL += `&layer=${interpolation_service.InterpolationService.interpolate(mapParams.layers, mapParams)}`;
+            this.legendURL += `&layer=${InterpolationService.interpolate(mapParams.layers, mapParams)}`;
             this.legendURL += '&version=1.1.1';
             this.options.legend = true;
         }
@@ -3493,7 +3225,7 @@ class MappedLayer {
         else {
             this.layerType = 'wms';
             this.wmsParameters = {};
-            exports.WMS_PARAMETER_NAMES[software].forEach(param => {
+            WMS_PARAMETER_NAMES[software].forEach(param => {
                 if (mapParams[param]) {
                     this.wmsParameters[param] = mapParams[param];
                 }
@@ -3501,44 +3233,17 @@ class MappedLayer {
         }
         this.flattenedSettings = mapParams;
         if (mapParams.titleFormat) {
-            this.title = interpolation_service.InterpolationService.interpolate(mapParams.titleFormat, mapParams);
+            this.title = InterpolationService.interpolate(mapParams.titleFormat, mapParams);
         }
         else {
             this.title = this.layer.name;
         }
     }
 }
-exports.MappedLayer = MappedLayer;
 function decadeText(d) {
     let decade = d.getFullYear().toString().slice(0, 3);
     return `${decade}0-${decade}9`;
 }
-
-});
-
-var mappedLayer$1 = unwrapExports(mappedLayer);
-var mappedLayer_1 = mappedLayer.WMS_PARAMETER_NAMES;
-var mappedLayer_2 = mappedLayer.WMS_URL_FORMAT;
-var mappedLayer_3 = mappedLayer.INTERPOLATED_PARAMETERS;
-var mappedLayer_4 = mappedLayer.MappedLayer;
-
-var catalog_service = createCommonjsModule(function (module, exports) {
-"use strict";
-var __decorate = (commonjsGlobal && commonjsGlobal.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (commonjsGlobal && commonjsGlobal.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-
-
-
-
-
 
 let CatalogService = class CatalogService {
     constructor(_http, metadata) {
@@ -3546,13 +3251,13 @@ let CatalogService = class CatalogService {
         this.metadata = metadata;
     }
     load(catalogJSON) {
-        this.current = new catalog.Catalog(catalogJSON);
+        this.current = new Catalog(catalogJSON);
         this.current.allLayers().filter(l => l.options.smallExtent).forEach(l => {
             l.spatialExtent = this.findExtentOfLayer(l);
         });
     }
     loadFrom(path) {
-        return this._http.get(path).pipe(operators.tap(json => this.load(json)), operators.map(_ => this.current));
+        return this._http.get(path).pipe(tap(json => this.load(json)), map(_ => this.current));
         //   var result = new Promise<Catalog>((res,rej)=>{
         //     this._http.get(path).subscribe(json=>{
         //       this.load(json);
@@ -3562,42 +3267,21 @@ let CatalogService = class CatalogService {
         // return from(result);
     }
     findExtentOfLayer(l) {
-        const tmp = new mappedLayer.MappedLayer();
+        const tmp = new MappedLayer();
         tmp.layer = l;
         tmp.update();
         return this.metadata.getSpatialExtent(tmp);
     }
 };
 CatalogService.ctorParameters = () => [
-    { type: http.HttpClient },
-    { type: metadata_service.MetadataService }
+    { type: HttpClient },
+    { type: MetadataService }
 ];
 CatalogService = __decorate([
-    core.Injectable(),
-    __metadata("design:paramtypes", [http.HttpClient, metadata_service.MetadataService])
+    Injectable()
 ], CatalogService);
-exports.CatalogService = CatalogService;
 
-});
-
-var catalog_service$1 = unwrapExports(catalog_service);
-var catalog_service_1 = catalog_service.CatalogService;
-
-var mapView_service = createCommonjsModule(function (module, exports) {
-"use strict";
-var __decorate = (commonjsGlobal && commonjsGlobal.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (commonjsGlobal && commonjsGlobal.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
 var MapViewParameterService_1;
-Object.defineProperty(exports, "__esModule", { value: true });
-
-
 let MapViewParameterService = MapViewParameterService_1 = class MapViewParameterService {
     constructor(_location) {
         this._location = _location;
@@ -3648,46 +3332,18 @@ let MapViewParameterService = MapViewParameterService_1 = class MapViewParameter
     }
 };
 MapViewParameterService.ctorParameters = () => [
-    { type: common.Location }
+    { type: Location }
 ];
 MapViewParameterService.parameterNames = [];
 MapViewParameterService = MapViewParameterService_1 = __decorate([
-    core.Injectable(),
-    __metadata("design:paramtypes", [common.Location])
+    Injectable()
 ], MapViewParameterService);
-exports.MapViewParameterService = MapViewParameterService;
 
-});
-
-var mapView_service$1 = unwrapExports(mapView_service);
-var mapView_service_1 = mapView_service.MapViewParameterService;
-
-var wms_service = createCommonjsModule(function (module, exports) {
-"use strict";
-var __decorate = (commonjsGlobal && commonjsGlobal.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (commonjsGlobal && commonjsGlobal.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
 var WMSService_1;
-Object.defineProperty(exports, "__esModule", { value: true });
-
-//const proj4 = require('proj4');
-//const Proj = proj4.Proj;
-//const defs = proj4.defs;
-//proj4.InterfaceProjection;
-//const InterfaceCoordinates = proj4.InterfaceCoordinates;
-//const TemplateCoordinates = proj4.TemplateCoordinates;
-//const proj4 = require('proj4').default;
-
 const D2R = Math.PI / 180;
 let WMSService = WMSService_1 = class WMSService {
     constructor() {
-        this.webMercator = (proj4.default || proj4).Proj('EPSG:3857');
+        this.webMercator = (proj4__default || proj4).Proj('EPSG:3857');
         //this.webMercator = proj4.Proj(proj4.defs('EPSG:3857'));
     }
     pointToWebMercator(pt) {
@@ -3750,30 +3406,8 @@ WMSService.TILE_SIZE = 256;
 WMSService.TILE_WIDTH = WMSService_1.TILE_SIZE;
 WMSService.TILE_HEIGHT = WMSService_1.TILE_SIZE;
 WMSService = WMSService_1 = __decorate([
-    core.Injectable(),
-    __metadata("design:paramtypes", [])
+    Injectable()
 ], WMSService);
-exports.WMSService = WMSService;
-
-});
-
-var wms_service$1 = unwrapExports(wms_service);
-var wms_service_1 = wms_service.WMSService;
-
-var projection_service = createCommonjsModule(function (module, exports) {
-"use strict";
-var __decorate = (commonjsGlobal && commonjsGlobal.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (commonjsGlobal && commonjsGlobal.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-
-//import * as proj4 from 'proj4';
 
 //const proj4 = require('proj4').default;
 let ProjectionService = class ProjectionService {
@@ -3784,19 +3418,9 @@ let ProjectionService = class ProjectionService {
     }
 };
 ProjectionService = __decorate([
-    core.Injectable(),
-    __metadata("design:paramtypes", [])
+    Injectable()
 ], ProjectionService);
-exports.ProjectionService = ProjectionService;
 
-});
-
-var projection_service$1 = unwrapExports(projection_service);
-var projection_service_1 = projection_service.ProjectionService;
-
-var csv = createCommonjsModule(function (module, exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 function parseCSV(txt) {
     let lines = txt.split('\n');
     let header = lines[0];
@@ -3811,7 +3435,6 @@ function parseCSV(txt) {
         return result;
     });
 }
-exports.parseCSV = parseCSV;
 function parseVal(val) {
     // Try date...
     let components = val.split('-');
@@ -3832,73 +3455,22 @@ function parseVal(val) {
     return val;
 }
 
-});
-
-var csv$1 = unwrapExports(csv);
-var csv_1 = csv.parseCSV;
-
-var esm2015 = createCommonjsModule(function (module, exports) {
-"use strict";
-var __decorate = (commonjsGlobal && commonjsGlobal.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-function __export(m) {
-    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
-}
 var MapWaldCoreModule_1;
-Object.defineProperty(exports, "__esModule", { value: true });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-__export(catalog);
-__export(mappedLayer);
-__export(wms_service);
-__export(projection_service);
-__export(mapView_service);
-__export(interpolation_service);
-__export(availableDates_service);
-__export(pointSelection_service);
-__export(metadata_service);
-__export(catalog_service);
-__export(palette_service);
-__export(staticData_service);
-__export(opendap_service);
-__export(timeseries_service);
-__export(timeUtils_service);
-__export(treeFilter_service);
-__export(csv);
 const services = [
     //$serviceList
-    availableDates_service.AvailableDatesService,
-    pointSelection_service.PointSelectionService,
-    timeseries_service.TimeseriesService,
-    staticData_service.StaticDataService,
-    metadata_service.MetadataService,
-    opendap_service.OpendapService,
-    palette_service.PaletteService,
-    timeUtils_service.TimeUtilsService,
-    wms_service.WMSService,
-    mapView_service.MapViewParameterService,
-    projection_service.ProjectionService,
-    catalog_service.CatalogService,
-    treeFilter_service.TreeFilterService
+    AvailableDatesService,
+    PointSelectionService,
+    TimeseriesService,
+    StaticDataService,
+    MetadataService,
+    OpendapService,
+    PaletteService,
+    TimeUtilsService,
+    WMSService,
+    MapViewParameterService,
+    ProjectionService,
+    CatalogService,
+    TreeFilterService
 ];
 //import { CSVService } from './src/csv.service';
 //$importList
@@ -3912,38 +3484,21 @@ let MapWaldCoreModule = MapWaldCoreModule_1 = class MapWaldCoreModule {
     }
 };
 MapWaldCoreModule = MapWaldCoreModule_1 = __decorate([
-    core.NgModule({
+    NgModule({
         imports: [
-            common.CommonModule,
-            forms.FormsModule,
-            http.HttpClientModule
+            CommonModule,
+            FormsModule,
+            HttpClientModule
         ],
         declarations: [],
         exports: [],
         providers: services
     })
 ], MapWaldCoreModule);
-exports.MapWaldCoreModule = MapWaldCoreModule;
 
-});
-
-var index = unwrapExports(esm2015);
-var esm2015_1 = esm2015.MapWaldCoreModule;
-
-var mapWald = createCommonjsModule(function (module, exports) {
-"use strict";
 /**
  * Generated bundle index. Do not edit.
  */
-function __export(m) {
-    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
-}
-Object.defineProperty(exports, "__esModule", { value: true });
-__export(esm2015);
 
-});
-
-var mapWald$1 = unwrapExports(mapWald);
-
-export default mapWald$1;
+export { AvailableDatesService, Catalog, CatalogOptions, CatalogService, INTERPOLATED_PARAMETERS, InterpolationService, LAT_NAMES, LNG_NAMES, Layer, MapViewParameterService, MapWaldCoreModule, MappedLayer, MetadataService, OpendapService, PaletteService, PointSelectionService, ProjectionService, Publication, StaticDataService, TIME_NAMES, Theme, TimeUtilsService, TimeseriesService, TreeFilterService, WMSService, WMS_PARAMETER_NAMES, WMS_URL_FORMAT, parseCSV, utcDate, utcDateCopy, ɵ0, ɵ1 };
 //# sourceMappingURL=map-wald.js.map
