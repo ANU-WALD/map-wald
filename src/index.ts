@@ -6,11 +6,11 @@ import {NgPipesModule} from 'ngx-pipes';
 import { AgmCoreModule } from '@agm/core';
 
 import { CommonModule } from '@angular/common';
-import { MapWaldCoreModule } from './index-core';
-import { MapWaldBootstrapModule } from './index-bootstrap';
+import { MapWaldCoreModule } from 'map-wald/core';
+import { MapWaldBootstrapModule } from 'map-wald/visual';
 
-export * from './index-core';
-export * from './index-bootstrap';
+// export * from '../core/src/index-core';
+// export * from '../visual/src/index-bootstrap';
 
 //import { CSVService } from './src/csv.service';
 

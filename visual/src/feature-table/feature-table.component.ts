@@ -1,5 +1,5 @@
 import { Component, Input, AfterViewInit, OnChanges, SimpleChanges } from '@angular/core';
-import { LayerPropertyStyle } from '../data/catalog';
+import { LayerPropertyStyle } from 'map-wald/core';
 
 @Component({
   selector: 'feature-table',

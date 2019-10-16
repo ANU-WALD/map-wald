@@ -1,13 +1,9 @@
 import { Component, Input, ViewChild, AfterViewInit, OnChanges, SimpleChanges,
          Output, EventEmitter, ViewChildren, QueryList, NgZone } from '@angular/core';
-import { MappedLayer } from '../data/mapped-layer';
-import { LayerSelection } from '../data/actions';
-import { StaticDataService } from '../static-data.service';
+import { MappedLayer, Bounds, LayerSelection, StaticDataService, MetadataService  } from 'map-wald/core';
 import { DataMouseEvent, LatLng, AgmMap, AgmInfoWindow} from '@agm/core';
 import { Feature, Point, GeometryObject } from 'geojson';
 import { MapTypeControlOptions, ControlPosition } from '@agm/core/services/google-maps-types';
-import { Bounds } from '../data/bounds';
-import { MetadataService } from '../metadata.service';
 
 export interface SimpleMarker {
   loc:LatLng;

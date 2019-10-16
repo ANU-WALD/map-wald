@@ -1,5 +1,5 @@
 import { Component, Input, ViewChild, AfterViewInit, ElementRef, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
-import { TreeModel } from '../data/tree';
+import { TreeModel } from 'map-wald/core';
 
 declare var Plotly: any;
 
@@ -39,7 +39,7 @@ declare var Plotly: any;
           [options]="options"></simple-tree>
       </ul>
     </div>
-  
+
 </div>
 `,styles: [`
 .simple-tree ul{

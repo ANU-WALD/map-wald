@@ -1,12 +1,12 @@
-import { Component, Input, ViewChild, AfterViewInit, ElementRef, 
+import { Component, Input, ViewChild, AfterViewInit, ElementRef,
   EventEmitter, Output, OnChanges, SimpleChanges } from '@angular/core';
-import { TreeModel } from '../data/tree';
+import { TreeModel } from 'map-wald/core';
 
 declare var Plotly: any;
 
 @Component({
   selector: 'simple-tree-node',
-  template: `<a href="#" 
+  template: `<a href="#"
                 (click)="treeClick($event)"
                 [ngClass]="tree.klass"><i [ngClass]="icon"></i>
   &nbsp;

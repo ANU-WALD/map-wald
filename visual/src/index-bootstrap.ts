@@ -1,11 +1,11 @@
-import { NgModule } from '@angular/core';
+import { NgModule, ModuleWithProviders } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {HttpClientModule} from '@angular/common/http';
 import {NgPipesModule} from 'ngx-pipes';
 import { AgmCoreModule } from '@agm/core';
 import { CommonModule } from '@angular/common';
-import { MapWaldCoreModule } from './index-core';
+import { MapWaldCoreModule } from 'map-wald/core';
 
 import { WMSLayerComponent } from './wms-layer/wms-layer.component';
 import { MapLegendComponent } from './map-legend/map-legend.component';
@@ -34,6 +34,8 @@ import { LayerPropertiesComponent } from './layer-properties/layer-properties.co
 import { LayerControlComponent } from './layer-control/layer-control.component';
 import { LayeredMapComponent } from './layered-map/layered-map.component';
 import { ThemeNavbarComponent } from './theme-navbar/theme-navbar.component';
+
+import { GeocodingService } from './geocoding.service';
 
 export * from './wms-layer/wms-layer.component';
 export * from './map-legend/map-legend.component';
@@ -64,8 +66,10 @@ export * from './layered-map/layered-map.component';
 export * from './theme-navbar/theme-navbar.component';
 export * from './map-control/map-control.component';
 
+export * from './geocoding.service';
 
-export const components = [
+
+const components = [
   //$componentList
   DateShifterComponent,
   OneTimeSplashComponent,
@@ -96,6 +100,11 @@ export const components = [
   MapControlComponent
 ];
 
+const services = [
+  //$serviceList
+  GeocodingService
+];
+
 @NgModule({
   imports: [
     CommonModule,
@@ -108,13 +117,13 @@ export const components = [
   ],
   declarations: components,
   exports: components,
-  providers: []
+  providers: services
 })
 export class MapWaldBootstrapModule {
-  // static forRoot(moduleInitialisation:any): ModuleWithProviders {
-  //   return {
-  //     ngModule: MapWaldBootstrapModule,
-  //     providers: []
-  //   };
-  // }
+  static forRoot(moduleInitialisation:any): ModuleWithProviders {
+    return {
+      ngModule: MapWaldBootstrapModule,
+      providers: services
+    };
+  }
 }

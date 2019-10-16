@@ -1,5 +1,5 @@
 import { Component, OnInit, AfterViewInit, Input } from '@angular/core';
-import { PaletteService } from '../palette.service';
+import { PaletteService } from 'map-wald/core';
 
 @Component({
   selector: 'map-legend',

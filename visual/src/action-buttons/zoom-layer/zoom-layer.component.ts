@@ -1,7 +1,6 @@
 import { Component, Input, ViewChild, AfterViewInit, ElementRef } from '@angular/core';
 import { LayeredMapComponent } from '../../layered-map/layered-map.component';
-import { MappedLayer } from '../../data/mapped-layer';
-import { Bounds } from '../../data/bounds';
+import { MappedLayer, Bounds } from 'map-wald/core';
 
 
 declare var Plotly: any;

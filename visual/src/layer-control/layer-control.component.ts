@@ -1,7 +1,6 @@
 import { Component, Input, ViewChild, AfterViewInit, ElementRef, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
-import { MappedLayer } from "../data/mapped-layer";
+import { MappedLayer, MetadataService } from "map-wald/core";
 import { LayeredMapComponent } from '../layered-map/layered-map.component';
-import { MetadataService } from '../metadata.service';
 
 
 declare var Plotly: any;

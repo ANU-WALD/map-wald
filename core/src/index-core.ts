@@ -2,7 +2,6 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { AgmCoreModule } from '@agm/core';
 
 import { TreeFilterService } from './tree-filter.service';
 import { PaletteService } from './palette.service';
@@ -16,7 +15,6 @@ import { AvailableDatesService } from './available-dates.service';
 import { CatalogService } from './catalog.service';
 import { MapViewParameterService } from './map-view.service';
 import { WMSService } from './wms.service';
-import { GeocodingService } from './geocoding.service';
 import { ProjectionService } from './projection.service';
 
 export * from './data/catalog';
@@ -28,7 +26,6 @@ export * from './data/actions';
 export * from './wms.service';
 export * from './projection.service';
 export * from './map-view.service';
-export * from './geocoding.service';
 export * from './interpolation.service';
 export * from './available-dates.service';
 export * from './point-selection.service';
@@ -39,8 +36,9 @@ export * from './static-data.service';
 export * from './opendap.service';
 export * from './timeseries.service';
 export * from './time-utils.service';
+export * from './tree-filter.service';
 
-export const services = [
+const services = [
   //$serviceList
   AvailableDatesService,
   PointSelectionService,
@@ -53,7 +51,6 @@ export const services = [
   WMSService,
   MapViewParameterService,
   ProjectionService,
-  GeocodingService,
   CatalogService,
   TreeFilterService
 ];
@@ -63,7 +60,6 @@ export const services = [
   imports: [
     CommonModule,
     FormsModule,
-    AgmCoreModule,
     HttpClientModule
   ],
   declarations: [],

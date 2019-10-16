@@ -1,7 +1,7 @@
 import { Component, OnInit, AfterViewInit, Input,
          OnChanges, SimpleChanges, OnDestroy } from '@angular/core';
 import {GoogleMapsAPIWrapper} from '@agm/core';
-import {WMSService} from '../wms.service';
+import {WMSService} from 'map-wald/core';
 
 @Component({
   selector: 'wms-layer',

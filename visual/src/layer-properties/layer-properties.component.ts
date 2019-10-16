@@ -1,9 +1,8 @@
 import { Component, Input, ViewChild, AfterViewInit, ElementRef, Output, EventEmitter, OnDestroy } from '@angular/core';
-import { MappedLayer } from '../data/mapped-layer';
-import { Publication, LayerTagValue, LayerTagMap } from '../data/catalog';
+import { MappedLayer, Publication, LayerTagValue, LayerTagMap,
+  PointSelectionService, PointSelection } from 'map-wald/core';
 import { LayeredMapComponent } from '../layered-map/layered-map.component';
 import { GeometryObject, Feature } from 'geojson';
-import { PointSelectionService, PointSelection } from '../point-selection.service';
 
 declare var Plotly: any;
 
@@ -11,7 +10,7 @@ declare var Plotly: any;
   selector: 'layer-properties',
   template: `<div class="container-fluid">
   <p><strong>{{layer?.title}}</strong>
-    <span *ngIf="layer.description()" 
+    <span *ngIf="layer.description()"
     [ngbTooltip]="layer.description()"
     [placement]="tooltipPlacement"
     class="layer-info-target"
@@ -19,7 +18,7 @@ declare var Plotly: any;
   &nbsp;<i class="fa fa-info-circle"></i>
   </span>
   &nbsp;<span *ngIf="layer.interpolatedDownloadURL">
-    <small><a target="_blank" 
+    <small><a target="_blank"
               [href]="layer.interpolatedDownloadURL"
               [ngbTooltip]="'Download data'"
               container="body">
@@ -66,7 +65,7 @@ declare var Plotly: any;
       {{tag}}
       <select [(ngModel)]="tags[tag]" (ngModelChange)="tagChanged(tag)">
         <option *ngFor="let val of availableTags[tag]" [ngValue]="val.value">{{val.label}}</option>
-      </select> 
+      </select>
     </div>
   </div>
 

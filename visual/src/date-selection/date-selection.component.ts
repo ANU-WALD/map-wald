@@ -1,7 +1,6 @@
 import { Component, Input, ViewChild, AfterViewInit, ElementRef, Output, EventEmitter } from '@angular/core';
 import { NgbDateStruct } from "@ng-bootstrap/ng-bootstrap";
-import { TimeUtilsService } from "../time-utils.service";
-import { InterpolationService } from '../interpolation.service';
+import { TimeUtilsService, InterpolationService } from "map-wald/core";
 
 const MILLISECONDS_PER_DAY=24*60*60*1000;
 

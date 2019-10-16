@@ -1,7 +1,6 @@
 import { Component, Input, Output,
          AfterViewInit, EventEmitter } from '@angular/core';
-import { Catalog, Layer } from "../data/catalog";
-import { LayerSelection, LayerAction } from '../data/actions';
+import { Catalog, Layer, LayerSelection, LayerAction } from "map-wald/core";
 
 declare var Plotly: any;
 

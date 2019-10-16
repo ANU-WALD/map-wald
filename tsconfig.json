@@ -16,14 +16,23 @@
     "outDir": "./dist",
     "typeRoots": [
       "node_modules/@types"
-    ]
+    ],
+    "paths": {
+      "map-wald/core": [
+        "core/src/index-core.ts"
+      ],
+      "map-wald/visual": [
+        "visual/src/index-bootstrap.ts"
+      ]
+    }
   },
   "exclude": [
     "node_modules",
     "scripts/*",
     "dist",
     "**/*.spec.ts",
-    "plotly.js"
+    "plotly.js",
+    "plotly.js/**/*"
   ],
   "angularCompilerOptions": {
     "strictMetadataEmit": true,

@@ -2,12 +2,8 @@ import {
   Component, Input, ViewChild, AfterViewInit, ElementRef,
   OnChanges, Output, EventEmitter, SimpleChanges
 } from '@angular/core';
-import { Catalog,  Layer, Theme } from '../data/catalog';
-import { LayerSelection } from '../data/actions';
-import { TreeModel } from '../data/tree';
-import { TreeFilterService } from '../tree-filter.service';
-import { MetadataService } from '../metadata.service';
-import { MappedLayer } from '../data/mapped-layer';
+import { Catalog,  Layer, Theme, LayerSelection, TreeModel,
+  TreeFilterService, MetadataService, MappedLayer } from 'map-wald/core';
 import { map } from 'rxjs/operators';
 import { of } from 'rxjs';
 
@@ -33,7 +29,7 @@ export interface CatalogNodeAction {
   [(ngModel)]="filterText"/>
 </div>
 
-<simple-tree 
+<simple-tree
   [tree]="this.filterService.filterTree(tree, filterText)"
   [showTop]="false"
   [leafIcon]="leafIcon"
@@ -58,7 +54,7 @@ export class CatalogComponent implements AfterViewInit, OnChanges {
 
   layers: Array<Layer> = [];
   tree: TreeModel = { label: 'no catalog loaded' };
-  filterText = ''; 
+  filterText = '';
 
   filterService: TreeFilterService;
 
@@ -178,7 +174,7 @@ export class CatalogComponent implements AfterViewInit, OnChanges {
 
     function addChild(parent:TreeModel,child:TreeModel,i:number){
       if(i<0){
-        parent.children.push(child);            
+        parent.children.push(child);
       } else {
         parent.children.splice(i,0,child);
       }

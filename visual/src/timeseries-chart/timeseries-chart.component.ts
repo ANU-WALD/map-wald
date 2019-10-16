@@ -1,10 +1,14 @@
+/// <reference path="../decs.d.ts" />
+
 import { Component, Input, ViewChild, AfterViewInit, ElementRef, OnChanges, SimpleChanges } from '@angular/core';
-import { TimeSeries } from '../timeseries.service';
+import { TimeSeries } from 'map-wald/core';
 //import * as Plotly from 'plotly.js/dist/plotly-basic';
 
 //declare var Plotly: any;
 //const Plotly = require('plotly.js/dist/plotly-basic');
+
 import * as Plotly from 'plotly.js/dist/plotly-basic';
+// import * as Plotly from 'plotly.js';
 
 @Component({
   selector: 'timeseries-chart',
