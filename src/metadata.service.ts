@@ -10,7 +10,7 @@ import { switchMap, publishReplay, refCount, map, switchAll, tap, shareReplay } 
 
 export const LAT_NAMES=['latitude','lat'];
 export const LNG_NAMES=['longitude','lng','lon'];
-export const TIME_NAMES=['time','t'];
+export const TIME_NAMES=['time','t','Time'];
 
 @Injectable()
 export class MetadataService {
