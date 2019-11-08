@@ -2746,7 +2746,7 @@
 
     var LAT_NAMES = ['latitude', 'lat'];
     var LNG_NAMES = ['longitude', 'lng', 'lon'];
-    var TIME_NAMES = ['time', 't'];
+    var TIME_NAMES = ['time', 't', 'Time'];
     var MetadataService = /** @class */ (function () {
         function MetadataService(dap) {
             this.dap = dap;

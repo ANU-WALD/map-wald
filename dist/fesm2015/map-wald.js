@@ -2538,7 +2538,7 @@ OpendapService = __decorate([
 
 const LAT_NAMES = ['latitude', 'lat'];
 const LNG_NAMES = ['longitude', 'lng', 'lon'];
-const TIME_NAMES = ['time', 't'];
+const TIME_NAMES = ['time', 't', 'Time'];
 let MetadataService = class MetadataService {
     constructor(dap) {
         this.dap = dap;
