@@ -63,8 +63,12 @@ export class TimeseriesService {
       if(!vals.length){
         vals = [<number>data[variable]];
       }
+      let dates = <Date[]>(data.time||data.t);
+      if(dates&&!dates.length){
+        dates = <Date[]>[data.time||data.t];
+      }
       return {
-        dates:<Array<Date>> (data.time||data.t),
+        dates:dates,
         values:vals.map(v=>(v===fillValue)?NaN:v)
       };
     }));
