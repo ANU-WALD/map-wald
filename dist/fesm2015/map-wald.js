@@ -2688,8 +2688,12 @@ let TimeseriesService = class TimeseriesService {
             if (!vals.length) {
                 vals = [data[variable]];
             }
+            let dates = (data.time || data.t);
+            if (dates && !dates.length) {
+                dates = [data.time || data.t];
+            }
             return {
-                dates: (data.time || data.t),
+                dates: dates,
                 values: vals.map(v => (v === fillValue) ? NaN : v)
             };
         }));

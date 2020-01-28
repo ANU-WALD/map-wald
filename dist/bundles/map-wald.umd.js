@@ -2917,8 +2917,12 @@
                 if (!vals.length) {
                     vals = [data[variable]];
                 }
+                var dates = (data.time || data.t);
+                if (dates && !dates.length) {
+                    dates = [data.time || data.t];
+                }
                 return {
-                    dates: (data.time || data.t),
+                    dates: dates,
                     values: vals.map(function (v) { return (v === fillValue) ? NaN : v; })
                 };
             }));
