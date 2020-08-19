@@ -36,8 +36,7 @@
   "bugs": {
     "url": "https://github.com/ANU-WALD/map-wald/issues"
   },
-  "dependencies": {
-  },
+  "dependencies": {},
   "peerDependencies": {
     "@agm/core": "^1.0.0-beta.7",
     "dap-query-js": "github:flowmatters/dap-query-js",
@@ -93,7 +92,7 @@
     "core-js": "^2.5.4",
     "js-yaml": "^3.13.1",
     "merge": "^1.2.1",
-    "ng-packagr": "^5.5.1",
+    "ng-packagr": "^10.0.4",
     "ngx-pipes": "1.6.5",
     "plotly.js": "git+https://github.com/arlowhite/plotly.js#no-polyfill",
     "store": "^2.0.12",

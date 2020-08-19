@@ -6,7 +6,7 @@ import { of, forkJoin, BehaviorSubject } from 'rxjs';
 import { map, publishReplay, refCount, switchMap, switchAll, shareReplay, tap } from 'rxjs/operators';
 import { simplify, parseData, parseDAS, parseDDX } from 'dap-query-js/dist/dap-query';
 import * as proj4 from 'proj4';
-import proj4__default, {  } from 'proj4';
+import proj4__default from 'proj4';
 
 class TreeFilterService {
     constructor() {
@@ -2396,9 +2396,6 @@ class PaletteService {
         return pos;
     }
 }
-PaletteService.ctorParameters = () => [
-    { type: HttpClient }
-];
 PaletteService.decorators = [
     { type: Injectable }
 ];
@@ -2481,9 +2478,6 @@ class StaticDataService {
         return this.cache[url];
     }
 }
-StaticDataService.ctorParameters = () => [
-    { type: HttpClient }
-];
 StaticDataService.decorators = [
     { type: Injectable }
 ];
@@ -2536,9 +2530,6 @@ class OpendapService {
         return '[' + from + ':' + step + ':' + to + ']';
     }
 }
-OpendapService.ctorParameters = () => [
-    { type: HttpClient }
-];
 OpendapService.decorators = [
     { type: Injectable }
 ];
@@ -2664,9 +2655,6 @@ class MetadataService {
         return this.timeCache[url];
     }
 }
-MetadataService.ctorParameters = () => [
-    { type: OpendapService }
-];
 MetadataService.decorators = [
     { type: Injectable }
 ];
@@ -2784,10 +2772,6 @@ class TimeseriesService {
     }
     ;
 }
-TimeseriesService.ctorParameters = () => [
-    { type: MetadataService },
-    { type: OpendapService }
-];
 TimeseriesService.decorators = [
     { type: Injectable }
 ];
@@ -2916,9 +2900,6 @@ class PointSelectionService {
         }));
     }
 }
-PointSelectionService.ctorParameters = () => [
-    { type: MetadataService }
-];
 PointSelectionService.decorators = [
     { type: Injectable }
 ];
@@ -2957,9 +2938,6 @@ class AvailableDatesService {
         }), map(dates => dates.filter((d, i) => (i >= Math.abs(layer.timeshift)) && (d.getUTCFullYear() === year))));
     }
 }
-AvailableDatesService.ctorParameters = () => [
-    { type: MetadataService }
-];
 AvailableDatesService.decorators = [
     { type: Injectable }
 ];
@@ -3300,10 +3278,6 @@ class CatalogService {
         return this.metadata.getSpatialExtent(tmp);
     }
 }
-CatalogService.ctorParameters = () => [
-    { type: HttpClient },
-    { type: MetadataService }
-];
 CatalogService.decorators = [
     { type: Injectable }
 ];
@@ -3361,9 +3335,6 @@ class MapViewParameterService {
         return result;
     }
 }
-MapViewParameterService.ctorParameters = () => [
-    { type: Location }
-];
 MapViewParameterService.parameterNames = [];
 MapViewParameterService.decorators = [
     { type: Injectable }
