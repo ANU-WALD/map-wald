@@ -3425,11 +3425,14 @@ ProjectionService = __decorate([
     Injectable()
 ], ProjectionService);
 
-function parseCSV(txt) {
+function parseCSV(txt, options) {
+    let columns = options && options.columns;
     let lines = txt.split('\n');
-    let header = lines[0];
-    lines = lines.slice(1);
-    let columns = header.split(',');
+    if (!columns) {
+        let header = lines[0];
+        lines = lines.slice(1);
+        columns = header.split(',');
+    }
     return lines.filter(ln => ln.length).map(ln => {
         let data = ln.split(',');
         let result = {};

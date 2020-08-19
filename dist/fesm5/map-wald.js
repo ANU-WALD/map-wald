@@ -3526,11 +3526,14 @@ var ProjectionService = /** @class */ (function () {
     return ProjectionService;
 }());
 
-function parseCSV(txt) {
+function parseCSV(txt, options) {
+    var columns = options && options.columns;
     var lines = txt.split('\n');
-    var header = lines[0];
-    lines = lines.slice(1);
-    var columns = header.split(',');
+    if (!columns) {
+        var header = lines[0];
+        lines = lines.slice(1);
+        columns = header.split(',');
+    }
     return lines.filter(function (ln) { return ln.length; }).map(function (ln) {
         var data = ln.split(',');
         var result = {};

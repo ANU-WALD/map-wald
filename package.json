@@ -1,6 +1,7 @@
 {
   "name": "map-wald",
   "version": "0.1.0",
+  "main_ivy_ngcc": "__ivy_ngcc__/dist/bundles/map-wald.umd.js",
   "main": "dist/bundles/map-wald.umd.js",
   "typings": "dist/map-wald.d.ts",
   "ngPackage": {
@@ -17,7 +18,8 @@
     "watch": "watch 'npm run build' src --filter=./watchfilter.js",
     "watch:old": "watch 'npm run tsc' src --filter=./watchfilter.js",
     "build:watch": "watch 'npm run build' src --filter=./watchfilter.js",
-    "start": "npm run watch"
+    "start": "npm run watch",
+    "prepublishOnly": "node --eval \"console.error('ERROR: Trying to publish a package that has been compiled by NGCC. This is not allowed.\\nPlease delete and rebuild the package, without compiling with NGCC, before attempting to publish.\\nNote that NGCC may have been run by importing this package into another project that is being built with Ivy enabled.\\n')\" && exit 1"
   },
   "repository": {
     "type": "git",
@@ -80,5 +82,9 @@
   },
   "engines": {
     "node": ">=0.8.0"
+  },
+  "__processed_by_ivy_ngcc__": {
+    "main": "10.0.5",
+    "typings": "10.0.5"
   }
 }

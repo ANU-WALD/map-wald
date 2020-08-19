@@ -1,4 +1,7 @@
 export interface TableRow {
     [key: string]: any;
 }
-export declare function parseCSV(txt: string): TableRow[];
+export interface CsvParserOptions {
+    columns?: string[];
+}
+export declare function parseCSV(txt: string, options?: CsvParserOptions): TableRow[];

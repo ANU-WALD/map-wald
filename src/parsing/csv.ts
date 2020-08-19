@@ -3,11 +3,18 @@ export interface TableRow{
   [key:string]:any;
 }
 
-export function parseCSV(txt:string):TableRow[]{
+export interface CsvParserOptions {
+  columns?: string[];
+}
+
+export function parseCSV(txt:string,options?:CsvParserOptions):TableRow[]{
+  let columns = options&&options.columns;
   let lines = txt.split('\n');
-  let header = lines[0];
-  lines = lines.slice(1);
-  let columns = header.split(',');
+  if(!columns){
+    let header = lines[0];
+    lines = lines.slice(1);
+    columns = header.split(',');
+  }
 
   return lines.filter(ln=>ln.length).map(ln=>{
     let data = ln.split(',');
