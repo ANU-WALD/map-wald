@@ -1,10 +1,10 @@
-import { __decorate, __read, __values, __spread } from 'tslib';
 import { Injectable, NgModule } from '@angular/core';
 import { Location, CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { of, forkJoin, BehaviorSubject } from 'rxjs';
 import { map, publishReplay, refCount, switchMap, switchAll, shareReplay, tap } from 'rxjs/operators';
+import { __read, __values, __spread } from 'tslib';
 import { simplify, parseData, parseDAS, parseDDX } from 'dap-query-js/dist/dap-query';
 import * as proj4 from 'proj4';
 import proj4__default, {  } from 'proj4';
@@ -39,9 +39,10 @@ var TreeFilterService = /** @class */ (function () {
             tree.children.forEach(function (c) { return _this.showAll(c); });
         }
     };
-    TreeFilterService = __decorate([
-        Injectable()
-    ], TreeFilterService);
+    TreeFilterService.decorators = [
+        { type: Injectable }
+    ];
+    TreeFilterService.ctorParameters = function () { return []; };
     return TreeFilterService;
 }());
 
@@ -2372,7 +2373,7 @@ var PaletteService = /** @class */ (function () {
         set: function (val) {
             this._source = val;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     PaletteService.prototype.getPalette = function (name, reverse, numColours) {
@@ -2406,9 +2407,12 @@ var PaletteService = /** @class */ (function () {
     PaletteService.ctorParameters = function () { return [
         { type: HttpClient }
     ]; };
-    PaletteService = __decorate([
-        Injectable()
-    ], PaletteService);
+    PaletteService.decorators = [
+        { type: Injectable }
+    ];
+    PaletteService.ctorParameters = function () { return [
+        { type: HttpClient }
+    ]; };
     return PaletteService;
 }());
 
@@ -2460,9 +2464,10 @@ var TimeUtilsService = /** @class */ (function () {
             (lhs.month === rhs.month) &&
             (lhs.day === rhs.day);
     };
-    TimeUtilsService = __decorate([
-        Injectable()
-    ], TimeUtilsService);
+    TimeUtilsService.decorators = [
+        { type: Injectable }
+    ];
+    TimeUtilsService.ctorParameters = function () { return []; };
     return TimeUtilsService;
 }());
 
@@ -2489,9 +2494,12 @@ var StaticDataService = /** @class */ (function () {
     StaticDataService.ctorParameters = function () { return [
         { type: HttpClient }
     ]; };
-    StaticDataService = __decorate([
-        Injectable()
-    ], StaticDataService);
+    StaticDataService.decorators = [
+        { type: Injectable }
+    ];
+    StaticDataService.ctorParameters = function () { return [
+        { type: HttpClient }
+    ]; };
     return StaticDataService;
 }());
 
@@ -2544,9 +2552,12 @@ var OpendapService = /** @class */ (function () {
     OpendapService.ctorParameters = function () { return [
         { type: HttpClient }
     ]; };
-    OpendapService = __decorate([
-        Injectable()
-    ], OpendapService);
+    OpendapService.decorators = [
+        { type: Injectable }
+    ];
+    OpendapService.ctorParameters = function () { return [
+        { type: HttpClient }
+    ]; };
     return OpendapService;
 }());
 
@@ -2688,9 +2699,12 @@ var MetadataService = /** @class */ (function () {
     MetadataService.ctorParameters = function () { return [
         { type: OpendapService }
     ]; };
-    MetadataService = __decorate([
-        Injectable()
-    ], MetadataService);
+    MetadataService.decorators = [
+        { type: Injectable }
+    ];
+    MetadataService.ctorParameters = function () { return [
+        { type: OpendapService }
+    ]; };
     return MetadataService;
 }());
 
@@ -2810,9 +2824,13 @@ var TimeseriesService = /** @class */ (function () {
         { type: MetadataService },
         { type: OpendapService }
     ]; };
-    TimeseriesService = __decorate([
-        Injectable()
-    ], TimeseriesService);
+    TimeseriesService.decorators = [
+        { type: Injectable }
+    ];
+    TimeseriesService.ctorParameters = function () { return [
+        { type: MetadataService },
+        { type: OpendapService }
+    ]; };
     return TimeseriesService;
 }());
 
@@ -2941,9 +2959,12 @@ var PointSelectionService = /** @class */ (function () {
     PointSelectionService.ctorParameters = function () { return [
         { type: MetadataService }
     ]; };
-    PointSelectionService = __decorate([
-        Injectable()
-    ], PointSelectionService);
+    PointSelectionService.decorators = [
+        { type: Injectable }
+    ];
+    PointSelectionService.ctorParameters = function () { return [
+        { type: MetadataService }
+    ]; };
     return PointSelectionService;
 }());
 
@@ -2980,9 +3001,12 @@ var AvailableDatesService = /** @class */ (function () {
     AvailableDatesService.ctorParameters = function () { return [
         { type: MetadataService }
     ]; };
-    AvailableDatesService = __decorate([
-        Injectable()
-    ], AvailableDatesService);
+    AvailableDatesService.decorators = [
+        { type: Injectable }
+    ];
+    AvailableDatesService.ctorParameters = function () { return [
+        { type: MetadataService }
+    ]; };
     return AvailableDatesService;
 }());
 
@@ -3353,9 +3377,13 @@ var CatalogService = /** @class */ (function () {
         { type: HttpClient },
         { type: MetadataService }
     ]; };
-    CatalogService = __decorate([
-        Injectable()
-    ], CatalogService);
+    CatalogService.decorators = [
+        { type: Injectable }
+    ];
+    CatalogService.ctorParameters = function () { return [
+        { type: HttpClient },
+        { type: MetadataService }
+    ]; };
     return CatalogService;
 }());
 
@@ -3363,17 +3391,16 @@ var MapViewParameterService = /** @class */ (function () {
     function MapViewParameterService(_location) {
         this._location = _location;
     }
-    MapViewParameterService_1 = MapViewParameterService;
     MapViewParameterService.prototype.current = function () {
         if (!this._location) {
             return {};
         }
         var path = this._location.path().split('/');
-        if (path.length > MapViewParameterService_1.parameterNames.length) {
+        if (path.length > MapViewParameterService.parameterNames.length) {
             path.shift();
         }
         var result = {};
-        MapViewParameterService_1.parameterNames.forEach(function (p, i) { return result[p] = path[i] || '_'; });
+        MapViewParameterService.parameterNames.forEach(function (p, i) { return result[p] = path[i] || '_'; });
         return result;
     };
     MapViewParameterService.prototype.update = function (changes) {
@@ -3388,7 +3415,7 @@ var MapViewParameterService = /** @class */ (function () {
         var e_1, _a;
         var result = {};
         try {
-            for (var _b = __values(MapViewParameterService_1.parameterNames), _c = _b.next(); !_c.done; _c = _b.next()) {
+            for (var _b = __values(MapViewParameterService.parameterNames), _c = _b.next(); !_c.done; _c = _b.next()) {
                 var name_1 = _c.value;
                 result[name_1] = route.snapshot.params[name_1];
             }
@@ -3404,7 +3431,7 @@ var MapViewParameterService = /** @class */ (function () {
     };
     ;
     MapViewParameterService.prototype.constructRoute = function (parameters) {
-        return MapViewParameterService_1.parameterNames.map(function (n) { return parameters[n] || '_'; }).join('/');
+        return MapViewParameterService.parameterNames.map(function (n) { return parameters[n] || '_'; }).join('/');
     };
     MapViewParameterService.prototype.routerPaths = function ( /*component:any*/) {
         var e_2, _a;
@@ -3413,7 +3440,7 @@ var MapViewParameterService = /** @class */ (function () {
         result.push(path);
         try {
             //    result.push({path:path,component:component});
-            for (var _b = __values(MapViewParameterService_1.parameterNames), _c = _b.next(); !_c.done; _c = _b.next()) {
+            for (var _b = __values(MapViewParameterService.parameterNames), _c = _b.next(); !_c.done; _c = _b.next()) {
                 var name_2 = _c.value;
                 path += ":" + name_2;
                 //      result.unshift({path:path,component:component});
@@ -3430,14 +3457,16 @@ var MapViewParameterService = /** @class */ (function () {
         }
         return result;
     };
-    var MapViewParameterService_1;
     MapViewParameterService.ctorParameters = function () { return [
         { type: Location }
     ]; };
     MapViewParameterService.parameterNames = [];
-    MapViewParameterService = MapViewParameterService_1 = __decorate([
-        Injectable()
-    ], MapViewParameterService);
+    MapViewParameterService.decorators = [
+        { type: Injectable }
+    ];
+    MapViewParameterService.ctorParameters = function () { return [
+        { type: Location }
+    ]; };
     return MapViewParameterService;
 }());
 
@@ -3447,7 +3476,6 @@ var WMSService = /** @class */ (function () {
         this.webMercator = (proj4__default || proj4).Proj('EPSG:3857');
         //this.webMercator = proj4.Proj(proj4.defs('EPSG:3857'));
     }
-    WMSService_1 = WMSService;
     WMSService.prototype.pointToWebMercator = function (pt) {
         var ptRadians = { x: pt.lng() * D2R, y: pt.lat() * D2R };
         var ptWM = this.webMercator.forward({ x: ptRadians.x, y: ptRadians.y });
@@ -3457,8 +3485,8 @@ var WMSService = /** @class */ (function () {
     WMSService.prototype.computeTileBounds = function (map, coord, zoom) {
         var proj = map.getProjection();
         var zfactor = Math.pow(2, zoom);
-        var xScale = WMSService_1.TILE_WIDTH / zfactor;
-        var yScale = WMSService_1.TILE_HEIGHT / zfactor;
+        var xScale = WMSService.TILE_WIDTH / zfactor;
+        var yScale = WMSService.TILE_HEIGHT / zfactor;
         var topLeftLatLng = proj.fromPointToLatLng({ x: coord.x * xScale, y: coord.y * yScale });
         var bottomRightLatLng = proj.fromPointToLatLng({ x: (coord.x + 1) * xScale, y: (coord.y + 1) * yScale });
         var topLeftWebMercator = this.pointToWebMercator(topLeftLatLng);
@@ -3489,27 +3517,27 @@ var WMSService = /** @class */ (function () {
                 url += "&BBOX=" + bbox; // set bounding box
                 url += "&FORMAT=image/png"; //WMS format
                 var layerParams = getOptions ? getOptions(zoom) : {};
-                layerParams.width = WMSService_1.TILE_WIDTH;
-                layerParams.height = WMSService_1.TILE_HEIGHT;
+                layerParams.width = WMSService.TILE_WIDTH;
+                layerParams.height = WMSService.TILE_HEIGHT;
                 for (var key in layerParams) {
                     url += '&' + key + '=' + layerParams[key];
                 }
                 url += "&SRS=EPSG:3857"; //set Web Mercator
                 return url;
             },
-            tileSize: new window.google.maps.Size(WMSService_1.TILE_SIZE, WMSService_1.TILE_SIZE),
+            tileSize: new window.google.maps.Size(WMSService.TILE_SIZE, WMSService.TILE_SIZE),
             isPng: true,
             opacity: getOpacity ? getOpacity() : 1.0
         });
     };
     ;
-    var WMSService_1;
     WMSService.TILE_SIZE = 256;
-    WMSService.TILE_WIDTH = WMSService_1.TILE_SIZE;
-    WMSService.TILE_HEIGHT = WMSService_1.TILE_SIZE;
-    WMSService = WMSService_1 = __decorate([
-        Injectable()
-    ], WMSService);
+    WMSService.TILE_WIDTH = WMSService.TILE_SIZE;
+    WMSService.TILE_HEIGHT = WMSService.TILE_SIZE;
+    WMSService.decorators = [
+        { type: Injectable }
+    ];
+    WMSService.ctorParameters = function () { return []; };
     return WMSService;
 }());
 
@@ -3520,11 +3548,14 @@ var ProjectionService = /** @class */ (function () {
     ProjectionService.prototype.proj4 = function () {
         return proj4;
     };
-    ProjectionService = __decorate([
-        Injectable()
-    ], ProjectionService);
+    ProjectionService.decorators = [
+        { type: Injectable }
+    ];
+    ProjectionService.ctorParameters = function () { return []; };
     return ProjectionService;
 }());
+
+;
 
 function parseCSV(txt, options) {
     var columns = options && options.columns;
@@ -3585,26 +3616,24 @@ var services = [
 var MapWaldCoreModule = /** @class */ (function () {
     function MapWaldCoreModule() {
     }
-    MapWaldCoreModule_1 = MapWaldCoreModule;
     MapWaldCoreModule.forRoot = function (moduleInitialisation) {
         return {
-            ngModule: MapWaldCoreModule_1,
+            ngModule: MapWaldCoreModule,
             providers: services
         };
     };
-    var MapWaldCoreModule_1;
-    MapWaldCoreModule = MapWaldCoreModule_1 = __decorate([
-        NgModule({
-            imports: [
-                CommonModule,
-                FormsModule,
-                HttpClientModule
-            ],
-            declarations: [],
-            exports: [],
-            providers: services
-        })
-    ], MapWaldCoreModule);
+    MapWaldCoreModule.decorators = [
+        { type: NgModule, args: [{
+                    imports: [
+                        CommonModule,
+                        FormsModule,
+                        HttpClientModule
+                    ],
+                    declarations: [],
+                    exports: [],
+                    providers: services
+                },] }
+    ];
     return MapWaldCoreModule;
 }());
 

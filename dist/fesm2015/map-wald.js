@@ -1,4 +1,3 @@
-import { __decorate } from 'tslib';
 import { Injectable, NgModule } from '@angular/core';
 import { Location, CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -9,7 +8,7 @@ import { simplify, parseData, parseDAS, parseDDX } from 'dap-query-js/dist/dap-q
 import * as proj4 from 'proj4';
 import proj4__default, {  } from 'proj4';
 
-let TreeFilterService = class TreeFilterService {
+class TreeFilterService {
     constructor() {
     }
     filterTree(tree, filterText) {
@@ -37,10 +36,11 @@ let TreeFilterService = class TreeFilterService {
             tree.children.forEach(c => this.showAll(c));
         }
     }
-};
-TreeFilterService = __decorate([
-    Injectable()
-], TreeFilterService);
+}
+TreeFilterService.decorators = [
+    { type: Injectable }
+];
+TreeFilterService.ctorParameters = () => [];
 
 const palettes = {
     Accent: {
@@ -2359,7 +2359,7 @@ const palettes = {
 };
 
 const DEFAULT_NUM_COLOURS = 3;
-let PaletteService = class PaletteService {
+class PaletteService {
     constructor(_http) {
         this._http = _http;
         this.namedPalettes = {};
@@ -2395,13 +2395,16 @@ let PaletteService = class PaletteService {
         let pos = Math.round(point * (count - 1));
         return pos;
     }
-};
+}
 PaletteService.ctorParameters = () => [
     { type: HttpClient }
 ];
-PaletteService = __decorate([
-    Injectable()
-], PaletteService);
+PaletteService.decorators = [
+    { type: Injectable }
+];
+PaletteService.ctorParameters = () => [
+    { type: HttpClient }
+];
 
 function utcDate(y, m, d) {
     return new Date(Date.UTC(y, m, d));
@@ -2409,7 +2412,7 @@ function utcDate(y, m, d) {
 function utcDateCopy(d) {
     return utcDate(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate());
 }
-let TimeUtilsService = class TimeUtilsService {
+class TimeUtilsService {
     constructor() {
         this.specialDates = {
             yesterday: () => {
@@ -2451,12 +2454,13 @@ let TimeUtilsService = class TimeUtilsService {
             (lhs.month === rhs.month) &&
             (lhs.day === rhs.day);
     }
-};
-TimeUtilsService = __decorate([
-    Injectable()
-], TimeUtilsService);
+}
+TimeUtilsService.decorators = [
+    { type: Injectable }
+];
+TimeUtilsService.ctorParameters = () => [];
 
-let StaticDataService = class StaticDataService {
+class StaticDataService {
     constructor(http) {
         this.http = http;
         this.cache = {};
@@ -2476,15 +2480,18 @@ let StaticDataService = class StaticDataService {
         }
         return this.cache[url];
     }
-};
+}
 StaticDataService.ctorParameters = () => [
     { type: HttpClient }
 ];
-StaticDataService = __decorate([
-    Injectable()
-], StaticDataService);
+StaticDataService.decorators = [
+    { type: Injectable }
+];
+StaticDataService.ctorParameters = () => [
+    { type: HttpClient }
+];
 
-let OpendapService = class OpendapService {
+class OpendapService {
     constructor(http) {
         this.http = http;
     }
@@ -2528,18 +2535,21 @@ let OpendapService = class OpendapService {
         }
         return '[' + from + ':' + step + ':' + to + ']';
     }
-};
+}
 OpendapService.ctorParameters = () => [
     { type: HttpClient }
 ];
-OpendapService = __decorate([
-    Injectable()
-], OpendapService);
+OpendapService.decorators = [
+    { type: Injectable }
+];
+OpendapService.ctorParameters = () => [
+    { type: HttpClient }
+];
 
 const LAT_NAMES = ['latitude', 'lat'];
 const LNG_NAMES = ['longitude', 'lng', 'lon'];
 const TIME_NAMES = ['time', 't', 'Time'];
-let MetadataService = class MetadataService {
+class MetadataService {
     constructor(dap) {
         this.dap = dap;
         this.ddxCache = {};
@@ -2653,16 +2663,19 @@ let MetadataService = class MetadataService {
         }
         return this.timeCache[url];
     }
-};
+}
 MetadataService.ctorParameters = () => [
     { type: OpendapService }
 ];
-MetadataService = __decorate([
-    Injectable()
-], MetadataService);
+MetadataService.decorators = [
+    { type: Injectable }
+];
+MetadataService.ctorParameters = () => [
+    { type: OpendapService }
+];
 
 ;
-let TimeseriesService = class TimeseriesService {
+class TimeseriesService {
     constructor(metadata, dap) {
         this.metadata = metadata;
         this.dap = dap;
@@ -2770,14 +2783,18 @@ let TimeseriesService = class TimeseriesService {
         return currentIndex;
     }
     ;
-};
+}
 TimeseriesService.ctorParameters = () => [
     { type: MetadataService },
     { type: OpendapService }
 ];
-TimeseriesService = __decorate([
-    Injectable()
-], TimeseriesService);
+TimeseriesService.decorators = [
+    { type: Injectable }
+];
+TimeseriesService.ctorParameters = () => [
+    { type: MetadataService },
+    { type: OpendapService }
+];
 
 // @dynamic
 class InterpolationService {
@@ -2814,7 +2831,7 @@ class InterpolationService {
 }
 InterpolationService.templateMatcher = /{{\s?([^{}\s]*)\s?}}/g;
 
-let PointSelectionService = class PointSelectionService {
+class PointSelectionService {
     constructor(meta) {
         this.meta = meta;
         this.latestPointSelectionSource = new BehaviorSubject(null);
@@ -2898,15 +2915,18 @@ let PointSelectionService = class PointSelectionService {
             });
         }));
     }
-};
+}
 PointSelectionService.ctorParameters = () => [
     { type: MetadataService }
 ];
-PointSelectionService = __decorate([
-    Injectable()
-], PointSelectionService);
+PointSelectionService.decorators = [
+    { type: Injectable }
+];
+PointSelectionService.ctorParameters = () => [
+    { type: MetadataService }
+];
 
-let AvailableDatesService = class AvailableDatesService {
+class AvailableDatesService {
     constructor(metadata) {
         this.metadata = metadata;
     }
@@ -2936,13 +2956,16 @@ let AvailableDatesService = class AvailableDatesService {
             });
         }), map(dates => dates.filter((d, i) => (i >= Math.abs(layer.timeshift)) && (d.getUTCFullYear() === year))));
     }
-};
+}
 AvailableDatesService.ctorParameters = () => [
     { type: MetadataService }
 ];
-AvailableDatesService = __decorate([
-    Injectable()
-], AvailableDatesService);
+AvailableDatesService.decorators = [
+    { type: Injectable }
+];
+AvailableDatesService.ctorParameters = () => [
+    { type: MetadataService }
+];
 
 const NAMED_OPTIONS = {
     host: 'namedHosts',
@@ -3249,7 +3272,7 @@ function decadeText(d) {
     return `${decade}0-${decade}9`;
 }
 
-let CatalogService = class CatalogService {
+class CatalogService {
     constructor(_http, metadata) {
         this._http = _http;
         this.metadata = metadata;
@@ -3276,17 +3299,20 @@ let CatalogService = class CatalogService {
         tmp.update();
         return this.metadata.getSpatialExtent(tmp);
     }
-};
+}
 CatalogService.ctorParameters = () => [
     { type: HttpClient },
     { type: MetadataService }
 ];
-CatalogService = __decorate([
-    Injectable()
-], CatalogService);
+CatalogService.decorators = [
+    { type: Injectable }
+];
+CatalogService.ctorParameters = () => [
+    { type: HttpClient },
+    { type: MetadataService }
+];
 
-var MapViewParameterService_1;
-let MapViewParameterService = MapViewParameterService_1 = class MapViewParameterService {
+class MapViewParameterService {
     constructor(_location) {
         this._location = _location;
     }
@@ -3295,11 +3321,11 @@ let MapViewParameterService = MapViewParameterService_1 = class MapViewParameter
             return {};
         }
         let path = this._location.path().split('/');
-        if (path.length > MapViewParameterService_1.parameterNames.length) {
+        if (path.length > MapViewParameterService.parameterNames.length) {
             path.shift();
         }
         let result = {};
-        MapViewParameterService_1.parameterNames.forEach((p, i) => result[p] = path[i] || '_');
+        MapViewParameterService.parameterNames.forEach((p, i) => result[p] = path[i] || '_');
         return result;
     }
     update(changes) {
@@ -3312,21 +3338,21 @@ let MapViewParameterService = MapViewParameterService_1 = class MapViewParameter
     }
     retrieveFromRoute(route) {
         let result = {};
-        for (let name of MapViewParameterService_1.parameterNames) {
+        for (let name of MapViewParameterService.parameterNames) {
             result[name] = route.snapshot.params[name];
         }
         return result;
     }
     ;
     constructRoute(parameters) {
-        return MapViewParameterService_1.parameterNames.map(n => parameters[n] || '_').join('/');
+        return MapViewParameterService.parameterNames.map(n => parameters[n] || '_').join('/');
     }
     routerPaths( /*component:any*/) {
         let result = [];
         let path = '';
         result.push(path);
         //    result.push({path:path,component:component});
-        for (let name of MapViewParameterService_1.parameterNames) {
+        for (let name of MapViewParameterService.parameterNames) {
             path += `:${name}`;
             //      result.unshift({path:path,component:component});
             result.unshift(path);
@@ -3334,18 +3360,20 @@ let MapViewParameterService = MapViewParameterService_1 = class MapViewParameter
         }
         return result;
     }
-};
+}
 MapViewParameterService.ctorParameters = () => [
     { type: Location }
 ];
 MapViewParameterService.parameterNames = [];
-MapViewParameterService = MapViewParameterService_1 = __decorate([
-    Injectable()
-], MapViewParameterService);
+MapViewParameterService.decorators = [
+    { type: Injectable }
+];
+MapViewParameterService.ctorParameters = () => [
+    { type: Location }
+];
 
-var WMSService_1;
 const D2R = Math.PI / 180;
-let WMSService = WMSService_1 = class WMSService {
+class WMSService {
     constructor() {
         this.webMercator = (proj4__default || proj4).Proj('EPSG:3857');
         //this.webMercator = proj4.Proj(proj4.defs('EPSG:3857'));
@@ -3359,8 +3387,8 @@ let WMSService = WMSService_1 = class WMSService {
     computeTileBounds(map, coord, zoom) {
         var proj = map.getProjection();
         var zfactor = Math.pow(2, zoom);
-        var xScale = WMSService_1.TILE_WIDTH / zfactor;
-        var yScale = WMSService_1.TILE_HEIGHT / zfactor;
+        var xScale = WMSService.TILE_WIDTH / zfactor;
+        var yScale = WMSService.TILE_HEIGHT / zfactor;
         var topLeftLatLng = proj.fromPointToLatLng({ x: coord.x * xScale, y: coord.y * yScale });
         var bottomRightLatLng = proj.fromPointToLatLng({ x: (coord.x + 1) * xScale, y: (coord.y + 1) * yScale });
         var topLeftWebMercator = this.pointToWebMercator(topLeftLatLng);
@@ -3391,39 +3419,43 @@ let WMSService = WMSService_1 = class WMSService {
                 url += "&BBOX=" + bbox; // set bounding box
                 url += "&FORMAT=image/png"; //WMS format
                 var layerParams = getOptions ? getOptions(zoom) : {};
-                layerParams.width = WMSService_1.TILE_WIDTH;
-                layerParams.height = WMSService_1.TILE_HEIGHT;
+                layerParams.width = WMSService.TILE_WIDTH;
+                layerParams.height = WMSService.TILE_HEIGHT;
                 for (var key in layerParams) {
                     url += '&' + key + '=' + layerParams[key];
                 }
                 url += "&SRS=EPSG:3857"; //set Web Mercator
                 return url;
             },
-            tileSize: new window.google.maps.Size(WMSService_1.TILE_SIZE, WMSService_1.TILE_SIZE),
+            tileSize: new window.google.maps.Size(WMSService.TILE_SIZE, WMSService.TILE_SIZE),
             isPng: true,
             opacity: getOpacity ? getOpacity() : 1.0
         });
     }
     ;
-};
+}
 WMSService.TILE_SIZE = 256;
-WMSService.TILE_WIDTH = WMSService_1.TILE_SIZE;
-WMSService.TILE_HEIGHT = WMSService_1.TILE_SIZE;
-WMSService = WMSService_1 = __decorate([
-    Injectable()
-], WMSService);
+WMSService.TILE_WIDTH = WMSService.TILE_SIZE;
+WMSService.TILE_HEIGHT = WMSService.TILE_SIZE;
+WMSService.decorators = [
+    { type: Injectable }
+];
+WMSService.ctorParameters = () => [];
 
 //const proj4 = require('proj4').default;
-let ProjectionService = class ProjectionService {
+class ProjectionService {
     constructor() {
     }
     proj4() {
         return proj4;
     }
-};
-ProjectionService = __decorate([
-    Injectable()
-], ProjectionService);
+}
+ProjectionService.decorators = [
+    { type: Injectable }
+];
+ProjectionService.ctorParameters = () => [];
+
+;
 
 function parseCSV(txt, options) {
     let columns = options && options.columns;
@@ -3462,7 +3494,6 @@ function parseVal(val) {
     return val;
 }
 
-var MapWaldCoreModule_1;
 const services = [
     //$serviceList
     AvailableDatesService,
@@ -3482,26 +3513,26 @@ const services = [
 //import { CSVService } from './src/csv.service';
 //$importList
 //$exportList
-let MapWaldCoreModule = MapWaldCoreModule_1 = class MapWaldCoreModule {
+class MapWaldCoreModule {
     static forRoot(moduleInitialisation) {
         return {
-            ngModule: MapWaldCoreModule_1,
+            ngModule: MapWaldCoreModule,
             providers: services
         };
     }
-};
-MapWaldCoreModule = MapWaldCoreModule_1 = __decorate([
-    NgModule({
-        imports: [
-            CommonModule,
-            FormsModule,
-            HttpClientModule
-        ],
-        declarations: [],
-        exports: [],
-        providers: services
-    })
-], MapWaldCoreModule);
+}
+MapWaldCoreModule.decorators = [
+    { type: NgModule, args: [{
+                imports: [
+                    CommonModule,
+                    FormsModule,
+                    HttpClientModule
+                ],
+                declarations: [],
+                exports: [],
+                providers: services
+            },] }
+];
 
 /**
  * Generated bundle index. Do not edit.

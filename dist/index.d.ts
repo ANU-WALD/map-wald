@@ -20,5 +20,5 @@ export * from './time-utils.service';
 export * from './tree-filter.service';
 export * from './parsing/csv';
 export declare class MapWaldCoreModule {
-    static forRoot(moduleInitialisation: any): ModuleWithProviders;
+    static forRoot(moduleInitialisation: any): ModuleWithProviders<MapWaldCoreModule>;
 }

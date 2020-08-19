@@ -2,30 +2,30 @@
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@angular/common'), require('@angular/forms'), require('@angular/common/http'), require('rxjs'), require('rxjs/operators'), require('dap-query-js/dist/dap-query'), require('proj4')) :
     typeof define === 'function' && define.amd ? define('map-wald', ['exports', '@angular/core', '@angular/common', '@angular/forms', '@angular/common/http', 'rxjs', 'rxjs/operators', 'dap-query-js/dist/dap-query', 'proj4'], factory) :
     (global = global || self, factory(global['map-wald'] = {}, global.ng.core, global.ng.common, global.ng.forms, global.ng.common.http, global.rxjs, global.rxjs.operators, global.dapQuery, global.proj4));
-}(this, function (exports, core, common, forms, http, rxjs, operators, dapQuery, proj4) { 'use strict';
+}(this, (function (exports, core, common, forms, http, rxjs, operators, dapQuery, proj4) { 'use strict';
 
     var proj4__default = 'default' in proj4 ? proj4['default'] : proj4;
 
     /*! *****************************************************************************
-    Copyright (c) Microsoft Corporation. All rights reserved.
-    Licensed under the Apache License, Version 2.0 (the "License"); you may not use
-    this file except in compliance with the License. You may obtain a copy of the
-    License at http://www.apache.org/licenses/LICENSE-2.0
+    Copyright (c) Microsoft Corporation.
 
-    THIS CODE IS PROVIDED ON AN *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-    KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED
-    WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE,
-    MERCHANTABLITY OR NON-INFRINGEMENT.
+    Permission to use, copy, modify, and/or distribute this software for any
+    purpose with or without fee is hereby granted.
 
-    See the Apache Version 2.0 License for specific language governing permissions
-    and limitations under the License.
+    THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+    REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+    AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+    INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+    LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+    OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+    PERFORMANCE OF THIS SOFTWARE.
     ***************************************************************************** */
     /* global Reflect, Promise */
 
     var extendStatics = function(d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
         return extendStatics(d, b);
     };
 
@@ -74,10 +74,11 @@
     }
 
     function __awaiter(thisArg, _arguments, P, generator) {
+        function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
         return new (P || (P = Promise))(function (resolve, reject) {
             function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
             function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-            function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+            function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
             step((generator = generator.apply(thisArg, _arguments || [])).next());
         });
     }
@@ -110,19 +111,28 @@
         }
     }
 
-    function __exportStar(m, exports) {
-        for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
+    var __createBinding = Object.create ? (function(o, m, k, k2) {
+        if (k2 === undefined) k2 = k;
+        Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+    }) : (function(o, m, k, k2) {
+        if (k2 === undefined) k2 = k;
+        o[k2] = m[k];
+    });
+
+    function __exportStar(m, o) {
+        for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(o, p)) __createBinding(o, m, p);
     }
 
     function __values(o) {
-        var m = typeof Symbol === "function" && o[Symbol.iterator], i = 0;
+        var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
         if (m) return m.call(o);
-        return {
+        if (o && typeof o.length === "number") return {
             next: function () {
                 if (o && i >= o.length) o = void 0;
                 return { value: o && o[i++], done: !o };
             }
         };
+        throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
     }
 
     function __read(o, n) {
@@ -191,16 +201,37 @@
         return cooked;
     };
 
+    var __setModuleDefault = Object.create ? (function(o, v) {
+        Object.defineProperty(o, "default", { enumerable: true, value: v });
+    }) : function(o, v) {
+        o["default"] = v;
+    };
+
     function __importStar(mod) {
         if (mod && mod.__esModule) return mod;
         var result = {};
-        if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
-        result.default = mod;
+        if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+        __setModuleDefault(result, mod);
         return result;
     }
 
     function __importDefault(mod) {
         return (mod && mod.__esModule) ? mod : { default: mod };
+    }
+
+    function __classPrivateFieldGet(receiver, privateMap) {
+        if (!privateMap.has(receiver)) {
+            throw new TypeError("attempted to get private field on non-instance");
+        }
+        return privateMap.get(receiver);
+    }
+
+    function __classPrivateFieldSet(receiver, privateMap, value) {
+        if (!privateMap.has(receiver)) {
+            throw new TypeError("attempted to set private field on non-instance");
+        }
+        privateMap.set(receiver, value);
+        return value;
     }
 
     var TreeFilterService = /** @class */ (function () {
@@ -233,9 +264,10 @@
                 tree.children.forEach(function (c) { return _this.showAll(c); });
             }
         };
-        TreeFilterService = __decorate([
-            core.Injectable()
-        ], TreeFilterService);
+        TreeFilterService.decorators = [
+            { type: core.Injectable }
+        ];
+        TreeFilterService.ctorParameters = function () { return []; };
         return TreeFilterService;
     }());
 
@@ -2566,7 +2598,7 @@
             set: function (val) {
                 this._source = val;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         PaletteService.prototype.getPalette = function (name, reverse, numColours) {
@@ -2600,9 +2632,12 @@
         PaletteService.ctorParameters = function () { return [
             { type: http.HttpClient }
         ]; };
-        PaletteService = __decorate([
-            core.Injectable()
-        ], PaletteService);
+        PaletteService.decorators = [
+            { type: core.Injectable }
+        ];
+        PaletteService.ctorParameters = function () { return [
+            { type: http.HttpClient }
+        ]; };
         return PaletteService;
     }());
 
@@ -2654,9 +2689,10 @@
                 (lhs.month === rhs.month) &&
                 (lhs.day === rhs.day);
         };
-        TimeUtilsService = __decorate([
-            core.Injectable()
-        ], TimeUtilsService);
+        TimeUtilsService.decorators = [
+            { type: core.Injectable }
+        ];
+        TimeUtilsService.ctorParameters = function () { return []; };
         return TimeUtilsService;
     }());
 
@@ -2683,9 +2719,12 @@
         StaticDataService.ctorParameters = function () { return [
             { type: http.HttpClient }
         ]; };
-        StaticDataService = __decorate([
-            core.Injectable()
-        ], StaticDataService);
+        StaticDataService.decorators = [
+            { type: core.Injectable }
+        ];
+        StaticDataService.ctorParameters = function () { return [
+            { type: http.HttpClient }
+        ]; };
         return StaticDataService;
     }());
 
@@ -2738,9 +2777,12 @@
         OpendapService.ctorParameters = function () { return [
             { type: http.HttpClient }
         ]; };
-        OpendapService = __decorate([
-            core.Injectable()
-        ], OpendapService);
+        OpendapService.decorators = [
+            { type: core.Injectable }
+        ];
+        OpendapService.ctorParameters = function () { return [
+            { type: http.HttpClient }
+        ]; };
         return OpendapService;
     }());
 
@@ -2882,9 +2924,12 @@
         MetadataService.ctorParameters = function () { return [
             { type: OpendapService }
         ]; };
-        MetadataService = __decorate([
-            core.Injectable()
-        ], MetadataService);
+        MetadataService.decorators = [
+            { type: core.Injectable }
+        ];
+        MetadataService.ctorParameters = function () { return [
+            { type: OpendapService }
+        ]; };
         return MetadataService;
     }());
 
@@ -3004,9 +3049,13 @@
             { type: MetadataService },
             { type: OpendapService }
         ]; };
-        TimeseriesService = __decorate([
-            core.Injectable()
-        ], TimeseriesService);
+        TimeseriesService.decorators = [
+            { type: core.Injectable }
+        ];
+        TimeseriesService.ctorParameters = function () { return [
+            { type: MetadataService },
+            { type: OpendapService }
+        ]; };
         return TimeseriesService;
     }());
 
@@ -3135,9 +3184,12 @@
         PointSelectionService.ctorParameters = function () { return [
             { type: MetadataService }
         ]; };
-        PointSelectionService = __decorate([
-            core.Injectable()
-        ], PointSelectionService);
+        PointSelectionService.decorators = [
+            { type: core.Injectable }
+        ];
+        PointSelectionService.ctorParameters = function () { return [
+            { type: MetadataService }
+        ]; };
         return PointSelectionService;
     }());
 
@@ -3174,9 +3226,12 @@
         AvailableDatesService.ctorParameters = function () { return [
             { type: MetadataService }
         ]; };
-        AvailableDatesService = __decorate([
-            core.Injectable()
-        ], AvailableDatesService);
+        AvailableDatesService.decorators = [
+            { type: core.Injectable }
+        ];
+        AvailableDatesService.ctorParameters = function () { return [
+            { type: MetadataService }
+        ]; };
         return AvailableDatesService;
     }());
 
@@ -3547,9 +3602,13 @@
             { type: http.HttpClient },
             { type: MetadataService }
         ]; };
-        CatalogService = __decorate([
-            core.Injectable()
-        ], CatalogService);
+        CatalogService.decorators = [
+            { type: core.Injectable }
+        ];
+        CatalogService.ctorParameters = function () { return [
+            { type: http.HttpClient },
+            { type: MetadataService }
+        ]; };
         return CatalogService;
     }());
 
@@ -3557,17 +3616,16 @@
         function MapViewParameterService(_location) {
             this._location = _location;
         }
-        MapViewParameterService_1 = MapViewParameterService;
         MapViewParameterService.prototype.current = function () {
             if (!this._location) {
                 return {};
             }
             var path = this._location.path().split('/');
-            if (path.length > MapViewParameterService_1.parameterNames.length) {
+            if (path.length > MapViewParameterService.parameterNames.length) {
                 path.shift();
             }
             var result = {};
-            MapViewParameterService_1.parameterNames.forEach(function (p, i) { return result[p] = path[i] || '_'; });
+            MapViewParameterService.parameterNames.forEach(function (p, i) { return result[p] = path[i] || '_'; });
             return result;
         };
         MapViewParameterService.prototype.update = function (changes) {
@@ -3582,7 +3640,7 @@
             var e_1, _a;
             var result = {};
             try {
-                for (var _b = __values(MapViewParameterService_1.parameterNames), _c = _b.next(); !_c.done; _c = _b.next()) {
+                for (var _b = __values(MapViewParameterService.parameterNames), _c = _b.next(); !_c.done; _c = _b.next()) {
                     var name_1 = _c.value;
                     result[name_1] = route.snapshot.params[name_1];
                 }
@@ -3598,7 +3656,7 @@
         };
         ;
         MapViewParameterService.prototype.constructRoute = function (parameters) {
-            return MapViewParameterService_1.parameterNames.map(function (n) { return parameters[n] || '_'; }).join('/');
+            return MapViewParameterService.parameterNames.map(function (n) { return parameters[n] || '_'; }).join('/');
         };
         MapViewParameterService.prototype.routerPaths = function ( /*component:any*/) {
             var e_2, _a;
@@ -3607,7 +3665,7 @@
             result.push(path);
             try {
                 //    result.push({path:path,component:component});
-                for (var _b = __values(MapViewParameterService_1.parameterNames), _c = _b.next(); !_c.done; _c = _b.next()) {
+                for (var _b = __values(MapViewParameterService.parameterNames), _c = _b.next(); !_c.done; _c = _b.next()) {
                     var name_2 = _c.value;
                     path += ":" + name_2;
                     //      result.unshift({path:path,component:component});
@@ -3624,14 +3682,16 @@
             }
             return result;
         };
-        var MapViewParameterService_1;
         MapViewParameterService.ctorParameters = function () { return [
             { type: common.Location }
         ]; };
         MapViewParameterService.parameterNames = [];
-        MapViewParameterService = MapViewParameterService_1 = __decorate([
-            core.Injectable()
-        ], MapViewParameterService);
+        MapViewParameterService.decorators = [
+            { type: core.Injectable }
+        ];
+        MapViewParameterService.ctorParameters = function () { return [
+            { type: common.Location }
+        ]; };
         return MapViewParameterService;
     }());
 
@@ -3641,7 +3701,6 @@
             this.webMercator = (proj4__default || proj4).Proj('EPSG:3857');
             //this.webMercator = proj4.Proj(proj4.defs('EPSG:3857'));
         }
-        WMSService_1 = WMSService;
         WMSService.prototype.pointToWebMercator = function (pt) {
             var ptRadians = { x: pt.lng() * D2R, y: pt.lat() * D2R };
             var ptWM = this.webMercator.forward({ x: ptRadians.x, y: ptRadians.y });
@@ -3651,8 +3710,8 @@
         WMSService.prototype.computeTileBounds = function (map, coord, zoom) {
             var proj = map.getProjection();
             var zfactor = Math.pow(2, zoom);
-            var xScale = WMSService_1.TILE_WIDTH / zfactor;
-            var yScale = WMSService_1.TILE_HEIGHT / zfactor;
+            var xScale = WMSService.TILE_WIDTH / zfactor;
+            var yScale = WMSService.TILE_HEIGHT / zfactor;
             var topLeftLatLng = proj.fromPointToLatLng({ x: coord.x * xScale, y: coord.y * yScale });
             var bottomRightLatLng = proj.fromPointToLatLng({ x: (coord.x + 1) * xScale, y: (coord.y + 1) * yScale });
             var topLeftWebMercator = this.pointToWebMercator(topLeftLatLng);
@@ -3683,27 +3742,27 @@
                     url += "&BBOX=" + bbox; // set bounding box
                     url += "&FORMAT=image/png"; //WMS format
                     var layerParams = getOptions ? getOptions(zoom) : {};
-                    layerParams.width = WMSService_1.TILE_WIDTH;
-                    layerParams.height = WMSService_1.TILE_HEIGHT;
+                    layerParams.width = WMSService.TILE_WIDTH;
+                    layerParams.height = WMSService.TILE_HEIGHT;
                     for (var key in layerParams) {
                         url += '&' + key + '=' + layerParams[key];
                     }
                     url += "&SRS=EPSG:3857"; //set Web Mercator
                     return url;
                 },
-                tileSize: new window.google.maps.Size(WMSService_1.TILE_SIZE, WMSService_1.TILE_SIZE),
+                tileSize: new window.google.maps.Size(WMSService.TILE_SIZE, WMSService.TILE_SIZE),
                 isPng: true,
                 opacity: getOpacity ? getOpacity() : 1.0
             });
         };
         ;
-        var WMSService_1;
         WMSService.TILE_SIZE = 256;
-        WMSService.TILE_WIDTH = WMSService_1.TILE_SIZE;
-        WMSService.TILE_HEIGHT = WMSService_1.TILE_SIZE;
-        WMSService = WMSService_1 = __decorate([
-            core.Injectable()
-        ], WMSService);
+        WMSService.TILE_WIDTH = WMSService.TILE_SIZE;
+        WMSService.TILE_HEIGHT = WMSService.TILE_SIZE;
+        WMSService.decorators = [
+            { type: core.Injectable }
+        ];
+        WMSService.ctorParameters = function () { return []; };
         return WMSService;
     }());
 
@@ -3714,11 +3773,14 @@
         ProjectionService.prototype.proj4 = function () {
             return proj4;
         };
-        ProjectionService = __decorate([
-            core.Injectable()
-        ], ProjectionService);
+        ProjectionService.decorators = [
+            { type: core.Injectable }
+        ];
+        ProjectionService.ctorParameters = function () { return []; };
         return ProjectionService;
     }());
+
+    ;
 
     function parseCSV(txt, options) {
         var columns = options && options.columns;
@@ -3779,26 +3841,24 @@
     var MapWaldCoreModule = /** @class */ (function () {
         function MapWaldCoreModule() {
         }
-        MapWaldCoreModule_1 = MapWaldCoreModule;
         MapWaldCoreModule.forRoot = function (moduleInitialisation) {
             return {
-                ngModule: MapWaldCoreModule_1,
+                ngModule: MapWaldCoreModule,
                 providers: services
             };
         };
-        var MapWaldCoreModule_1;
-        MapWaldCoreModule = MapWaldCoreModule_1 = __decorate([
-            core.NgModule({
-                imports: [
-                    common.CommonModule,
-                    forms.FormsModule,
-                    http.HttpClientModule
-                ],
-                declarations: [],
-                exports: [],
-                providers: services
-            })
-        ], MapWaldCoreModule);
+        MapWaldCoreModule.decorators = [
+            { type: core.NgModule, args: [{
+                        imports: [
+                            common.CommonModule,
+                            forms.FormsModule,
+                            http.HttpClientModule
+                        ],
+                        declarations: [],
+                        exports: [],
+                        providers: services
+                    },] }
+        ];
         return MapWaldCoreModule;
     }());
 
@@ -3837,5 +3897,5 @@
 
     Object.defineProperty(exports, '__esModule', { value: true });
 
-}));
+})));
 //# sourceMappingURL=map-wald.umd.js.map

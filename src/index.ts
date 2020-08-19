@@ -75,7 +75,7 @@ const services = [
   providers: services
 })
 export class MapWaldCoreModule {
-  static forRoot(moduleInitialisation: any): ModuleWithProviders {
+  static forRoot(moduleInitialisation: any): ModuleWithProviders<MapWaldCoreModule> {
     return {
       ngModule: MapWaldCoreModule,
       providers: services

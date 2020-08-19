@@ -9,7 +9,7 @@ export declare class PaletteService {
     };
     constructor(_http: HttpClient);
     private _source;
-    source: string;
+    set source(val: string);
     getPalette(name: string, reverse?: boolean, numColours?: number): Observable<ColourPalette>;
     parseNCWMSPalette(txt: string): ColourPalette;
     colourIndex(val: number, min: number, max: number, count: number): number;
