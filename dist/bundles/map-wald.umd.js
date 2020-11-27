@@ -1,10 +1,33 @@
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@angular/common'), require('@angular/forms'), require('@angular/common/http'), require('rxjs'), require('rxjs/operators'), require('dap-query-js/dist/dap-query'), require('proj4')) :
     typeof define === 'function' && define.amd ? define('map-wald', ['exports', '@angular/core', '@angular/common', '@angular/forms', '@angular/common/http', 'rxjs', 'rxjs/operators', 'dap-query-js/dist/dap-query', 'proj4'], factory) :
-    (global = global || self, factory(global['map-wald'] = {}, global.ng.core, global.ng.common, global.ng.forms, global.ng.common.http, global.rxjs, global.rxjs.operators, global.dapQuery, global.proj4));
+    (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global['map-wald'] = {}, global.ng.core, global.ng.common, global.ng.forms, global.ng.common.http, global.rxjs, global.rxjs.operators, global.dapQuery, global.proj4));
 }(this, (function (exports, core, common, forms, http, rxjs, operators, dapQuery, proj4) { 'use strict';
 
-    var proj4__default = 'default' in proj4 ? proj4['default'] : proj4;
+    function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+    function _interopNamespace(e) {
+        if (e && e.__esModule) return e;
+        var n = Object.create(null);
+        if (e) {
+            Object.keys(e).forEach(function (k) {
+                if (k !== 'default') {
+                    var d = Object.getOwnPropertyDescriptor(e, k);
+                    Object.defineProperty(n, k, d.get ? d : {
+                        enumerable: true,
+                        get: function () {
+                            return e[k];
+                        }
+                    });
+                }
+            });
+        }
+        n['default'] = e;
+        return Object.freeze(n);
+    }
+
+    var proj4__default = /*#__PURE__*/_interopDefaultLegacy(proj4);
+    var proj4__namespace = /*#__PURE__*/_interopNamespace(proj4);
 
     var TreeFilterService = /** @class */ (function () {
         function TreeFilterService() {
@@ -3742,7 +3765,7 @@
     var D2R = Math.PI / 180;
     var WMSService = /** @class */ (function () {
         function WMSService() {
-            this.webMercator = (proj4__default || proj4).Proj('EPSG:3857');
+            this.webMercator = (proj4__default['default'] || proj4__namespace).Proj('EPSG:3857');
             //this.webMercator = proj4.Proj(proj4.defs('EPSG:3857'));
         }
         WMSService.prototype.pointToWebMercator = function (pt) {
@@ -3815,7 +3838,7 @@
         function ProjectionService() {
         }
         ProjectionService.prototype.proj4 = function () {
-            return proj4;
+            return proj4__namespace;
         };
         return ProjectionService;
     }());
