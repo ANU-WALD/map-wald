@@ -1,7 +1,6 @@
 {
   "name": "map-wald",
   "version": "0.1.0",
-  "main_ivy_ngcc": "__ivy_ngcc__/dist/bundles/map-wald.umd.js",
   "main": "bundles/map-wald.umd.js",
   "typings": "map-wald.d.ts",
   "repository": {
@@ -31,10 +30,6 @@
   },
   "engines": {
     "node": ">=0.8.0"
-  },
-  "__processed_by_ivy_ngcc__": {
-    "main": "10.0.5",
-    "typings": "10.0.5"
   },
   "module": "fesm2015/map-wald.js",
   "es2015": "fesm2015/map-wald.js",
