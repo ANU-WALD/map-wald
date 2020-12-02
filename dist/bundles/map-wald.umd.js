@@ -3849,6 +3849,59 @@
 
     ;
 
+    // export interface LayerTimePeriod {
+    //   timeperiod?: number[];
+    // }
+    var MAXIMUM_DATE_SHIFT = 60;
+    var DateRange = /** @class */ (function () {
+        function DateRange() {
+        }
+        DateRange.dateFromConfig = function (json, end) {
+            if (!json) {
+                return new Date();
+            }
+            if ('number' === typeof json) {
+                if (json < MAXIMUM_DATE_SHIFT) {
+                    var d = new Date();
+                    d.setUTCDate(d.getUTCDate() + json);
+                    return d;
+                }
+                if (end) {
+                    return utcDate(json, 11, 31);
+                }
+                return utcDate(json, 0, 1);
+            }
+            // ? expect a string and parse out dd/mm/yyyy?
+            var _a = __read(json.split('/').map(function (elem) { return +elem; }), 3), yyyy = _a[0], mm = _a[1], dd = _a[2];
+            return new Date(yyyy, mm - 1, dd);
+        };
+        DateRange.fromJSON = function (json) {
+            var result = new DateRange();
+            if (json) {
+                result.start = DateRange.dateFromConfig(json.start);
+                result.end = DateRange.dateFromConfig(json.end, true);
+                result.format = json.format || result.format;
+            }
+            return result;
+        };
+        DateRange.prototype.containsYear = function (yr) {
+            return (yr >= this.start.getUTCFullYear()) &&
+                (yr <= this.end.getUTCFullYear());
+        };
+        DateRange.prototype.contains = function (d) {
+            var yr = d.getUTCFullYear();
+            if ((yr < this.start.getUTCFullYear()) ||
+                (yr > this.end.getUTCFullYear())) {
+                return false;
+            }
+            if (yr < this.end.getUTCFullYear()) {
+                return true;
+            }
+            return d <= this.end;
+        };
+        return DateRange;
+    }());
+
     function parseCSV(txt, options) {
         var columns = options && options.columns;
         var lines = txt.split('\n');
@@ -3937,6 +3990,7 @@
     exports.Catalog = Catalog;
     exports.CatalogOptions = CatalogOptions;
     exports.CatalogService = CatalogService;
+    exports.DateRange = DateRange;
     exports.INTERPOLATED_PARAMETERS = INTERPOLATED_PARAMETERS;
     exports.InterpolationService = InterpolationService;
     exports.LAT_NAMES = LAT_NAMES;

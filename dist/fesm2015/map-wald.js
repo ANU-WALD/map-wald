@@ -3428,6 +3428,56 @@ ProjectionService.ctorParameters = () => [];
 
 ;
 
+// export interface LayerTimePeriod {
+//   timeperiod?: number[];
+// }
+const MAXIMUM_DATE_SHIFT = 60;
+class DateRange {
+    static dateFromConfig(json, end) {
+        if (!json) {
+            return new Date();
+        }
+        if ('number' === typeof json) {
+            if (json < MAXIMUM_DATE_SHIFT) {
+                let d = new Date();
+                d.setUTCDate(d.getUTCDate() + json);
+                return d;
+            }
+            if (end) {
+                return utcDate(json, 11, 31);
+            }
+            return utcDate(json, 0, 1);
+        }
+        // ? expect a string and parse out dd/mm/yyyy?
+        var [yyyy, mm, dd] = json.split('/').map(elem => +elem);
+        return new Date(yyyy, mm - 1, dd);
+    }
+    static fromJSON(json) {
+        var result = new DateRange();
+        if (json) {
+            result.start = DateRange.dateFromConfig(json.start);
+            result.end = DateRange.dateFromConfig(json.end, true);
+            result.format = json.format || result.format;
+        }
+        return result;
+    }
+    containsYear(yr) {
+        return (yr >= this.start.getUTCFullYear()) &&
+            (yr <= this.end.getUTCFullYear());
+    }
+    contains(d) {
+        let yr = d.getUTCFullYear();
+        if ((yr < this.start.getUTCFullYear()) ||
+            (yr > this.end.getUTCFullYear())) {
+            return false;
+        }
+        if (yr < this.end.getUTCFullYear()) {
+            return true;
+        }
+        return d <= this.end;
+    }
+}
+
 function parseCSV(txt, options) {
     let columns = options && options.columns;
     let lines = txt.split('\n');
@@ -3509,5 +3559,5 @@ MapWaldCoreModule.decorators = [
  * Generated bundle index. Do not edit.
  */
 
-export { AvailableDatesService, Catalog, CatalogOptions, CatalogService, INTERPOLATED_PARAMETERS, InterpolationService, LAT_NAMES, LNG_NAMES, Layer, MapViewParameterService, MapWaldCoreModule, MappedLayer, MetadataService, OpendapService, PaletteService, PointSelectionService, ProjectionService, Publication, StaticDataService, TIME_NAMES, Theme, TimeUtilsService, TimeseriesService, TreeFilterService, WMSService, WMS_PARAMETER_NAMES, WMS_URL_FORMAT, parseCSV, utcDate, utcDateCopy, ɵ0, ɵ1 };
+export { AvailableDatesService, Catalog, CatalogOptions, CatalogService, DateRange, INTERPOLATED_PARAMETERS, InterpolationService, LAT_NAMES, LNG_NAMES, Layer, MapViewParameterService, MapWaldCoreModule, MappedLayer, MetadataService, OpendapService, PaletteService, PointSelectionService, ProjectionService, Publication, StaticDataService, TIME_NAMES, Theme, TimeUtilsService, TimeseriesService, TreeFilterService, WMSService, WMS_PARAMETER_NAMES, WMS_URL_FORMAT, parseCSV, utcDate, utcDateCopy, ɵ0, ɵ1 };
 //# sourceMappingURL=map-wald.js.map
