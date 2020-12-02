@@ -17,11 +17,7 @@ import { MapViewParameterService } from './map-view.service';
 import { WMSService } from './wms.service';
 import { ProjectionService } from './projection.service';
 
-export * from './data/catalog';
-export * from './data/mapped-layer';
-export * from './data/tree';
-export * from './data/bounds';
-export * from './data/actions';
+export * from './data';
 
 export * from './wms.service';
 export * from './projection.service';
