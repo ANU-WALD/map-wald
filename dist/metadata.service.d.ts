@@ -4,6 +4,7 @@ import { OpendapService } from './opendap.service';
 import { Bounds } from './data/bounds';
 import { CatalogHost } from './data/catalog';
 import { Observable } from 'rxjs';
+import * as ɵngcc0 from '@angular/core';
 export declare const LAT_NAMES: string[];
 export declare const LNG_NAMES: string[];
 export declare const TIME_NAMES: string[];
@@ -34,4 +35,8 @@ export declare class MetadataService {
         [key: string]: Observable<Date[]>;
     };
     getTimeDimensionForURL(url: string): Observable<Date[]>;
+    static ɵfac: ɵngcc0.ɵɵFactoryDef<MetadataService, never>;
+    static ɵprov: ɵngcc0.ɵɵInjectableDef<MetadataService>;
 }
+
+//# sourceMappingURL=metadata.service.d.ts.map

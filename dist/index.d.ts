@@ -1,4 +1,8 @@
 import { ModuleWithProviders } from '@angular/core';
+import * as ɵngcc0 from '@angular/core';
+import * as ɵngcc1 from '@angular/common';
+import * as ɵngcc2 from '@angular/forms';
+import * as ɵngcc3 from '@angular/common/http';
 export * from './data';
 export * from './wms.service';
 export * from './projection.service';
@@ -17,4 +21,8 @@ export * from './tree-filter.service';
 export * from './parsing/csv';
 export declare class MapWaldCoreModule {
     static forRoot(moduleInitialisation: any): ModuleWithProviders<MapWaldCoreModule>;
+    static ɵmod: ɵngcc0.ɵɵNgModuleDefWithMeta<MapWaldCoreModule, never, [typeof ɵngcc1.CommonModule, typeof ɵngcc2.FormsModule, typeof ɵngcc3.HttpClientModule], never>;
+    static ɵinj: ɵngcc0.ɵɵInjectorDef<MapWaldCoreModule>;
 }
+
+//# sourceMappingURL=index.d.ts.map
