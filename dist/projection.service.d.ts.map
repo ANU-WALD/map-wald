@@ -1,0 +1,1 @@
+{"version":3,"file":"projection.service.d.ts","sources":["projection.service.d.ts"],"names":[],"mappings":"AAAA;;AACA;AACA;AACA;;;AACA","sourcesContent":["import * as proj4 from 'proj4';\nexport declare class ProjectionService {\n    constructor();\n    proj4(): typeof proj4;\n}\n"]}
