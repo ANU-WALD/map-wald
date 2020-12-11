@@ -6,6 +6,7 @@ import { DapDDX, DapDAS, DapData } from 'dap-query-js/dist/dap-query';
 import { CatalogHost } from './data/catalog';
 import { forkJoin, Observable } from 'rxjs';
 import { switchMap, map } from 'rxjs/operators';
+import { UTCDate } from './time-utils.service';
 
 export interface LatLng {
   // google maps
@@ -16,7 +17,7 @@ export interface LatLng {
 }
 
 export interface TimeSeries{
-  dates:Array<Date>;
+  dates:Array<UTCDate>;
   values:Array<number>;
   label?:string;
   tags?:{
@@ -63,9 +64,9 @@ export class TimeseriesService {
       if(!vals.length){
         vals = [<number>data[variable]];
       }
-      let dates = <Date[]>(data.time||data.t);
+      let dates = <UTCDate[]>(data.time||data.t);
       if(dates&&!dates.length){
-        dates = <Date[]>[data.time||data.t];
+        dates = <UTCDate[]>[data.time||data.t];
       }
       return {
         dates:dates,

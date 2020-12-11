@@ -7,6 +7,7 @@ import { Bounds } from './data/bounds';
 import { CatalogHost } from './data/catalog';
 import { forkJoin, Observable, of } from 'rxjs';
 import { switchMap, publishReplay, refCount, map, switchAll, tap, shareReplay } from 'rxjs/operators';
+import { UTCDate } from './time-utils.service';
 
 export const LAT_NAMES=['latitude','lat'];
 export const LNG_NAMES=['longitude','lng','lon'];
@@ -138,18 +139,18 @@ export class MetadataService {
     })).pipe(publishReplay(), refCount());
   }
 
-  getTimeDimension(host:CatalogHost,file:string):Observable<Date[]>{
+  getTimeDimension(host:CatalogHost,file:string):Observable<UTCDate[]>{
     const url = this.dap.makeURL(host,file);
     return this.getTimeDimensionForURL(url);
   }
 
-  timeCache:{[key:string]:Observable<Date[]>}={};
+  timeCache:{[key:string]:Observable<UTCDate[]>}={};
 
-  getTimeDimensionForURL(url:string):Observable<Date[]>{
+  getTimeDimensionForURL(url:string):Observable<UTCDate[]>{
     if(!this.timeCache[url]){
       const ddx$ = this.ddxForUrl(url);
       const das$ = this.dasForUrl(url);
-      const res$ = <Observable<Date[]>>forkJoin([ddx$,das$]).pipe(
+      const res$ = <Observable<UTCDate[]>>forkJoin([ddx$,das$]).pipe(
         map((metadata:any[])=>{
           const ddx:DapDDX = metadata[0];
           const das:DapDAS = metadata[1];
@@ -158,7 +159,7 @@ export class MetadataService {
 
           const time$ =
             this.dap.getData(`${url}.ascii?${timeCoord}`,das).pipe(
-              map((dd:DapData)=><Date[]>dd[timeCoord]));
+              map((dd:DapData)=><UTCDate[]>dd[timeCoord]));
 
           return time$;
         }),switchAll(),shareReplay());

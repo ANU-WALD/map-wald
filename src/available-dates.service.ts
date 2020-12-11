@@ -21,7 +21,7 @@ export class AvailableDatesService {
     });
   }
 
-  availableDates(mapped:MappedLayer,year?:number):Observable<Date[]>{
+  availableDates(mapped:MappedLayer,year?:number):Observable<UTCDate[]>{
     let layer = mapped.layer;
     let fn = this.fnForYear(mapped,year);
 
