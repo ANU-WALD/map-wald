@@ -3902,6 +3902,38 @@
         return DateRange;
     }());
 
+    var CategoricalStyle = /** @class */ (function () {
+        function CategoricalStyle(property, categories) {
+            this.property = property;
+            this.categories = categories;
+            this.values = {};
+        }
+        CategoricalStyle.prototype.getStyleValue = function (feature) {
+            return this.values[feature.properties[this.property]];
+        };
+        return CategoricalStyle;
+    }());
+    var RangeStyle = /** @class */ (function () {
+        function RangeStyle(property, values, breakpoints) {
+            this.property = property;
+            this.values = values;
+            this.breakpoints = breakpoints;
+        }
+        RangeStyle.prototype.idx = function (val) {
+            for (var i = 1; i < this.breakpoints.length; i++) {
+                if (val < this.breakpoints[i]) {
+                    return i - 1;
+                }
+            }
+            return this.breakpoints.length - 1;
+        };
+        RangeStyle.prototype.getStyleValue = function (feature) {
+            var idx = this.idx(feature.properties[this.property]);
+            return this.values[idx];
+        };
+        return RangeStyle;
+    }());
+
     function parseCSV(txt, options) {
         var columns = options && options.columns;
         var lines = txt.split('\n');
@@ -3990,6 +4022,7 @@
     exports.Catalog = Catalog;
     exports.CatalogOptions = CatalogOptions;
     exports.CatalogService = CatalogService;
+    exports.CategoricalStyle = CategoricalStyle;
     exports.DateRange = DateRange;
     exports.INTERPOLATED_PARAMETERS = INTERPOLATED_PARAMETERS;
     exports.InterpolationService = InterpolationService;
@@ -4005,6 +4038,7 @@
     exports.PointSelectionService = PointSelectionService;
     exports.ProjectionService = ProjectionService;
     exports.Publication = Publication;
+    exports.RangeStyle = RangeStyle;
     exports.StaticDataService = StaticDataService;
     exports.TIME_NAMES = TIME_NAMES;
     exports.Theme = Theme;

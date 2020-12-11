@@ -4,6 +4,7 @@ import { MetadataService } from './metadata.service';
 import { DapDDX } from 'dap-query-js/dist/dap-query';
 import { CatalogHost } from './data/catalog';
 import { Observable } from 'rxjs';
+import { UTCDate } from './time-utils.service';
 import * as ɵngcc0 from '@angular/core';
 export interface LatLng {
     lat(): number;
@@ -12,7 +13,7 @@ export interface LatLng {
     toString(): string;
 }
 export interface TimeSeries {
-    dates: Array<Date>;
+    dates: Array<UTCDate>;
     values: Array<number>;
     label?: string;
     tags?: {

@@ -100,9 +100,5 @@
   },
   "engines": {
     "node": ">=0.8.0"
-  },
-  "__processed_by_ivy_ngcc__": {
-    "main": "11.0.2",
-    "typings": "11.0.2"
   }
 }

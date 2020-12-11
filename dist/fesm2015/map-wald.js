@@ -3478,6 +3478,36 @@ class DateRange {
     }
 }
 
+class CategoricalStyle {
+    constructor(property, categories) {
+        this.property = property;
+        this.categories = categories;
+        this.values = {};
+    }
+    getStyleValue(feature) {
+        return this.values[feature.properties[this.property]];
+    }
+}
+class RangeStyle {
+    constructor(property, values, breakpoints) {
+        this.property = property;
+        this.values = values;
+        this.breakpoints = breakpoints;
+    }
+    idx(val) {
+        for (let i = 1; i < this.breakpoints.length; i++) {
+            if (val < this.breakpoints[i]) {
+                return i - 1;
+            }
+        }
+        return this.breakpoints.length - 1;
+    }
+    getStyleValue(feature) {
+        const idx = this.idx(feature.properties[this.property]);
+        return this.values[idx];
+    }
+}
+
 function parseCSV(txt, options) {
     let columns = options && options.columns;
     let lines = txt.split('\n');
@@ -3559,5 +3589,5 @@ MapWaldCoreModule.decorators = [
  * Generated bundle index. Do not edit.
  */
 
-export { AvailableDatesService, Catalog, CatalogOptions, CatalogService, DateRange, INTERPOLATED_PARAMETERS, InterpolationService, LAT_NAMES, LNG_NAMES, Layer, MapViewParameterService, MapWaldCoreModule, MappedLayer, MetadataService, OpendapService, PaletteService, PointSelectionService, ProjectionService, Publication, StaticDataService, TIME_NAMES, Theme, TimeUtilsService, TimeseriesService, TreeFilterService, WMSService, WMS_PARAMETER_NAMES, WMS_URL_FORMAT, parseCSV, utcDate, utcDateCopy, ɵ0, ɵ1 };
+export { AvailableDatesService, Catalog, CatalogOptions, CatalogService, CategoricalStyle, DateRange, INTERPOLATED_PARAMETERS, InterpolationService, LAT_NAMES, LNG_NAMES, Layer, MapViewParameterService, MapWaldCoreModule, MappedLayer, MetadataService, OpendapService, PaletteService, PointSelectionService, ProjectionService, Publication, RangeStyle, StaticDataService, TIME_NAMES, Theme, TimeUtilsService, TimeseriesService, TreeFilterService, WMSService, WMS_PARAMETER_NAMES, WMS_URL_FORMAT, parseCSV, utcDate, utcDateCopy, ɵ0, ɵ1 };
 //# sourceMappingURL=map-wald.js.map
