@@ -3403,7 +3403,7 @@
     var MappedLayer = /** @class */ (function () {
         function MappedLayer(data) {
             this.options = {
-                date: new Date(2016, 0, 1) // Set to most recent available date
+                date: new Date(2019, 0, 1) // Set to most recent available date
             };
             this.retrievedMetadata = {};
             this.wmsParameters = {};
