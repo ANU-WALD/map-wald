@@ -4,19 +4,23 @@ export interface TableRow{
 }
 
 export interface CsvParserOptions {
+  headerRows?:number;
   columns?: string[];
 }
 
 export function parseCSV(txt:string,options?:CsvParserOptions):TableRow[]{
-  let columns = options&&options.columns;
-  let lines = txt.split('\n');
+  const lines = txt.split('\n');
+  const headerLength = options?.headerRows || (options?.columns ? 0 : 1);
+  const headerLines = lines.slice(0,headerLength);
+  const bodyLines = lines.slice(headerLength);
+
+  let columns = options?.columns;
   if(!columns){
-    let header = lines[0];
-    lines = lines.slice(1);
+    const header = headerLines[0];
     columns = header.split(',');
   }
 
-  return lines.filter(ln=>ln.length).map(ln=>{
+  return bodyLines.filter(ln=>ln.length).map(ln=>{
     let data = ln.split(',');
 
     let result:TableRow = {};
