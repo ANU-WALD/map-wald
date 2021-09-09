@@ -6,7 +6,6 @@ import { of, forkJoin, BehaviorSubject } from 'rxjs';
 import { map, publishReplay, refCount, switchMap, switchAll, shareReplay, tap } from 'rxjs/operators';
 import { simplify, parseData, parseDAS, parseDDX } from 'dap-query-js/dist/dap-query';
 import * as proj4 from 'proj4';
-import proj4__default from 'proj4';
 
 class TreeFilterService {
     constructor() {
@@ -3346,7 +3345,7 @@ MapViewParameterService.ctorParameters = () => [
 const D2R = Math.PI / 180;
 class WMSService {
     constructor() {
-        this.webMercator = (proj4__default || proj4).Proj('EPSG:3857');
+        this.webMercator = (proj4.default || proj4).Proj('EPSG:3857');
         //this.webMercator = proj4.Proj(proj4.defs('EPSG:3857'));
     }
     pointToWebMercator(pt) {
@@ -3509,14 +3508,16 @@ class RangeStyle {
 }
 
 function parseCSV(txt, options) {
-    let columns = options && options.columns;
-    let lines = txt.split('\n');
+    const lines = txt.split('\n');
+    const headerLength = (options === null || options === void 0 ? void 0 : options.headerRows) || ((options === null || options === void 0 ? void 0 : options.columns) ? 0 : 1);
+    const headerLines = lines.slice(0, headerLength);
+    const bodyLines = lines.slice(headerLength);
+    let columns = options === null || options === void 0 ? void 0 : options.columns;
     if (!columns) {
-        let header = lines[0];
-        lines = lines.slice(1);
+        const header = headerLines[0];
         columns = header.split(',');
     }
-    return lines.filter(ln => ln.length).map(ln => {
+    return bodyLines.filter(ln => ln.length).map(ln => {
         let data = ln.split(',');
         let result = {};
         data.forEach((val, i) => {

@@ -4,8 +4,6 @@
     (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global['map-wald'] = {}, global.ng.core, global.ng.common, global.ng.forms, global.ng.common.http, global.rxjs, global.rxjs.operators, global.dapQuery, global.proj4));
 }(this, (function (exports, core, common, forms, http, rxjs, operators, dapQuery, proj4) { 'use strict';
 
-    function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
-
     function _interopNamespace(e) {
         if (e && e.__esModule) return e;
         var n = Object.create(null);
@@ -26,7 +24,6 @@
         return Object.freeze(n);
     }
 
-    var proj4__default = /*#__PURE__*/_interopDefaultLegacy(proj4);
     var proj4__namespace = /*#__PURE__*/_interopNamespace(proj4);
 
     var TreeFilterService = /** @class */ (function () {
@@ -3765,7 +3762,7 @@
     var D2R = Math.PI / 180;
     var WMSService = /** @class */ (function () {
         function WMSService() {
-            this.webMercator = (proj4__default['default'] || proj4__namespace).Proj('EPSG:3857');
+            this.webMercator = (proj4__namespace.default || proj4__namespace).Proj('EPSG:3857');
             //this.webMercator = proj4.Proj(proj4.defs('EPSG:3857'));
         }
         WMSService.prototype.pointToWebMercator = function (pt) {
@@ -3935,14 +3932,16 @@
     }());
 
     function parseCSV(txt, options) {
-        var columns = options && options.columns;
         var lines = txt.split('\n');
+        var headerLength = (options === null || options === void 0 ? void 0 : options.headerRows) || ((options === null || options === void 0 ? void 0 : options.columns) ? 0 : 1);
+        var headerLines = lines.slice(0, headerLength);
+        var bodyLines = lines.slice(headerLength);
+        var columns = options === null || options === void 0 ? void 0 : options.columns;
         if (!columns) {
-            var header = lines[0];
-            lines = lines.slice(1);
+            var header = headerLines[0];
             columns = header.split(',');
         }
-        return lines.filter(function (ln) { return ln.length; }).map(function (ln) {
+        return bodyLines.filter(function (ln) { return ln.length; }).map(function (ln) {
             var data = ln.split(',');
             var result = {};
             data.forEach(function (val, i) {
