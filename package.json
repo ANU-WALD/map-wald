@@ -83,7 +83,7 @@
     "karma-coverage-istanbul-reporter": "~3.0.2",
     "karma-jasmine": "~3.3.0",
     "karma-jasmine-html-reporter": "^1.5.0",
-    "merge": "^1.2.1",
+    "merge": "^2.1.1",
     "ng-packagr": "^11.2.4",
     "ngx-pipes": "1.6.5",
     "plotly.js": "git+https://github.com/arlowhite/plotly.js#no-polyfill",
