@@ -5,6 +5,11 @@ import { utcDate, UTCDate } from '../time-utils.service';
 //   timeperiod?: number[];
 // }
 
+export interface TimeInterval {
+  days?: number;
+  months?: number;
+  years?: number;
+}
 
 const MAXIMUM_DATE_SHIFT=60;
 
@@ -12,6 +17,7 @@ export class DateRange {
   start: UTCDate;
   end: UTCDate;
   format: string;
+  interval?: TimeInterval;
 
   static dateFromConfig(json: any, end?: boolean): UTCDate {
     if (!json) {
@@ -43,6 +49,7 @@ export class DateRange {
       result.start = DateRange.dateFromConfig(json.start);
       result.end = DateRange.dateFromConfig(json.end, true);
       result.format = json.format || result.format;
+      result.interval = json.interval || result.interval;
     }
 
     return result;
