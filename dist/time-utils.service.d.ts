@@ -1,4 +1,7 @@
 import * as ɵngcc0 from '@angular/core';
+import * as ɵngcc0 from '@angular/core';
+import * as ɵngcc0 from '@angular/core';
+import * as ɵngcc0 from '@angular/core';
 export interface DateStruct {
     day: number;
     month: number;
@@ -22,6 +25,12 @@ export declare class TimeUtilsService {
     };
     convertDate(d: (UTCDate | string)): DateStruct;
     datesEqual(lhs: DateStruct, rhs: DateStruct): boolean;
+    static ɵfac: ɵngcc0.ɵɵFactoryDef<TimeUtilsService, never>;
+    static ɵprov: ɵngcc0.ɵɵInjectableDef<TimeUtilsService>;
+    static ɵfac: ɵngcc0.ɵɵFactoryDef<TimeUtilsService, never>;
+    static ɵprov: ɵngcc0.ɵɵInjectableDef<TimeUtilsService>;
+    static ɵfac: ɵngcc0.ɵɵFactoryDef<TimeUtilsService, never>;
+    static ɵprov: ɵngcc0.ɵɵInjectableDef<TimeUtilsService>;
     static ɵfac: ɵngcc0.ɵɵFactoryDef<TimeUtilsService, never>;
     static ɵprov: ɵngcc0.ɵɵInjectableDef<TimeUtilsService>;
 }

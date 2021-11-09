@@ -3,6 +3,9 @@ import { PointData, LayerTagValue } from './data/catalog';
 import { Feature, GeometryObject } from 'geojson';
 import { MetadataService } from './metadata.service';
 import * as ɵngcc0 from '@angular/core';
+import * as ɵngcc0 from '@angular/core';
+import * as ɵngcc0 from '@angular/core';
+import * as ɵngcc0 from '@angular/core';
 export interface PointSelection {
     catalog: PointData;
     variable: string;
@@ -21,6 +24,12 @@ export declare class PointSelectionService {
     fullUrl(sel: PointSelection): string;
     validUrl(url: string): boolean;
     timeseriesVariables(sel: PointSelection): Observable<LayerTagValue[]>;
+    static ɵfac: ɵngcc0.ɵɵFactoryDef<PointSelectionService, never>;
+    static ɵprov: ɵngcc0.ɵɵInjectableDef<PointSelectionService>;
+    static ɵfac: ɵngcc0.ɵɵFactoryDef<PointSelectionService, never>;
+    static ɵprov: ɵngcc0.ɵɵInjectableDef<PointSelectionService>;
+    static ɵfac: ɵngcc0.ɵɵFactoryDef<PointSelectionService, never>;
+    static ɵprov: ɵngcc0.ɵɵInjectableDef<PointSelectionService>;
     static ɵfac: ɵngcc0.ɵɵFactoryDef<PointSelectionService, never>;
     static ɵprov: ɵngcc0.ɵɵInjectableDef<PointSelectionService>;
 }

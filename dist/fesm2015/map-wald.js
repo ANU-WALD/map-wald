@@ -3427,9 +3427,6 @@ ProjectionService.ctorParameters = () => [];
 
 ;
 
-// export interface LayerTimePeriod {
-//   timeperiod?: number[];
-// }
 const MAXIMUM_DATE_SHIFT = 60;
 class DateRange {
     static dateFromConfig(json, end) {
@@ -3457,6 +3454,7 @@ class DateRange {
             result.start = DateRange.dateFromConfig(json.start);
             result.end = DateRange.dateFromConfig(json.end, true);
             result.format = json.format || result.format;
+            result.interval = json.interval || result.interval;
         }
         return result;
     }

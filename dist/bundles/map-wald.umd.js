@@ -3846,9 +3846,6 @@
 
     ;
 
-    // export interface LayerTimePeriod {
-    //   timeperiod?: number[];
-    // }
     var MAXIMUM_DATE_SHIFT = 60;
     var DateRange = /** @class */ (function () {
         function DateRange() {
@@ -3878,6 +3875,7 @@
                 result.start = DateRange.dateFromConfig(json.start);
                 result.end = DateRange.dateFromConfig(json.end, true);
                 result.format = json.format || result.format;
+                result.interval = json.interval || result.interval;
             }
             return result;
         };

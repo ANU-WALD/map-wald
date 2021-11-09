@@ -6,6 +6,9 @@ import { CatalogHost } from './data/catalog';
 import { Observable } from 'rxjs';
 import { UTCDate } from './time-utils.service';
 import * as ɵngcc0 from '@angular/core';
+import * as ɵngcc0 from '@angular/core';
+import * as ɵngcc0 from '@angular/core';
+import * as ɵngcc0 from '@angular/core';
 export declare const LAT_NAMES: string[];
 export declare const LNG_NAMES: string[];
 export declare const TIME_NAMES: string[];
@@ -36,6 +39,12 @@ export declare class MetadataService {
         [key: string]: Observable<UTCDate[]>;
     };
     getTimeDimensionForURL(url: string): Observable<UTCDate[]>;
+    static ɵfac: ɵngcc0.ɵɵFactoryDef<MetadataService, never>;
+    static ɵprov: ɵngcc0.ɵɵInjectableDef<MetadataService>;
+    static ɵfac: ɵngcc0.ɵɵFactoryDef<MetadataService, never>;
+    static ɵprov: ɵngcc0.ɵɵInjectableDef<MetadataService>;
+    static ɵfac: ɵngcc0.ɵɵFactoryDef<MetadataService, never>;
+    static ɵprov: ɵngcc0.ɵɵInjectableDef<MetadataService>;
     static ɵfac: ɵngcc0.ɵɵFactoryDef<MetadataService, never>;
     static ɵprov: ɵngcc0.ɵɵInjectableDef<MetadataService>;
 }

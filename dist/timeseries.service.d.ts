@@ -6,6 +6,9 @@ import { CatalogHost } from './data/catalog';
 import { Observable } from 'rxjs';
 import { UTCDate } from './time-utils.service';
 import * as ɵngcc0 from '@angular/core';
+import * as ɵngcc0 from '@angular/core';
+import * as ɵngcc0 from '@angular/core';
+import * as ɵngcc0 from '@angular/core';
 export interface LatLng {
     lat(): number;
     lng(): number;
@@ -36,6 +39,12 @@ export declare class TimeseriesService {
     makeTimeQuery(ddx: DapDDX, variable: string, latIndex: number, lngIndex: number, additionalIndices: any): string;
     dapRangeQuery(from: number, to?: number, step?: number): string;
     indexInDimension(c: number, dim: Array<number>, trim?: number): number;
+    static ɵfac: ɵngcc0.ɵɵFactoryDef<TimeseriesService, never>;
+    static ɵprov: ɵngcc0.ɵɵInjectableDef<TimeseriesService>;
+    static ɵfac: ɵngcc0.ɵɵFactoryDef<TimeseriesService, never>;
+    static ɵprov: ɵngcc0.ɵɵInjectableDef<TimeseriesService>;
+    static ɵfac: ɵngcc0.ɵɵFactoryDef<TimeseriesService, never>;
+    static ɵprov: ɵngcc0.ɵɵInjectableDef<TimeseriesService>;
     static ɵfac: ɵngcc0.ɵɵFactoryDef<TimeseriesService, never>;
     static ɵprov: ɵngcc0.ɵɵInjectableDef<TimeseriesService>;
 }
